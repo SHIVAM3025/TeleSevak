@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
+    android:layout_height="match_parent"
+    tools:context=".DoctorConfirm">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/fbutton_color_peter_river"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/TEXT_cINFIRM"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:text="डॉक्टर ने पुष्टि की"/>
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_below="@+id/TEXT_cINFIRM"
+        android:layout_marginTop="50dp"
+        android:id="@+id/box"
+        android:backgroundTint="@color/fbutton_color_peter_river"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/border"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/D_name"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:text="Dr Sharma"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/D_degree"
+            android:layout_below="@+id/D_name"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="12dp"
+            android:layout_marginBottom="10dp"
+            android:text="pune,Maharatra"/>
+
+       <!-- <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/D_address"
+            android:layout_below="@+id/D_degree"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:text="Lucknow"/>-->
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/fbutton_color_peter_river"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/doctorcallpatiet"
+        android:gravity="center"
+        android:layout_below="@+id/box"
+        android:layout_marginTop="50dp"
+        android:textSize="16dp"
+        android:text="कृपया थोड़ी देर वेट करे डॉक्टर दुरा आपको वीडियो या एडीओ कॉल आ जाएगा "/>
+
+
+    <!--<Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/doctorcallpatiet"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/ViewPastConsultations"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="Send Scans to Doctor" />-->
+
+    <info.hoang8f.widget.FButton
+        fbutton:shadowColor="@color/fbutton_color_asbestos"
+        app:fButtonColor="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        fbutton:shadowEnabled="true"
+        android:textColor="@color/fbutton_color_peter_river"
+        android:textStyle="bold"
+        android:textSize="12dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/doctorcallpatiet"
+        android:layout_marginLeft="200dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ViewPastConsultations"
+        android:text="डॉक्टर को स्कैन भेजें"
+        fbutton:shadowHeight="5dp"
+        fbutton:cornerRadius="5dp"
+        />
+</RelativeLayout>

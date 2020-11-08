@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Status.StatusThreeActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/fbutton_color_peter_river"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/doctorcallpatiet"
+        android:gravity="center"
+        android:minLines="3"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/box"
+        android:layout_marginTop="50dp"
+        android:textSize="16dp"
+        android:text="Follow up Successfully"/>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/fbutton_color_peter_river"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/doctorcallpatiet2"
+        android:gravity="center"
+        android:minLines="3"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/doctorcallpatiet"
+        android:layout_marginTop="10dp"
+        android:textSize="16dp"
+        android:text="कृपया थोड़ी देर वेट करे डॉक्टर दुरा आपको वीडियो या एडीओ कॉल आ जाएगा "/>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:background="#ffffff"
+        android:id="@+id/bootombutton"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/consult"
+            android:drawableTop="@drawable/ic_doctor"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="परमार्थ ले"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/Past"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_document"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="पुराना परमर्श"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/card"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_card"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textSize="12dp"
+            android:text="कार्ड खरीदें"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/odoctor"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:drawableTop="@drawable/ic_ourdoctors"
+            android:textSize="12dp"
+            android:text="हमारे डॉक्टर"/>
+    </LinearLayout>
+
+</RelativeLayout>

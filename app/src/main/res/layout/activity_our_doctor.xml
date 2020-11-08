@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Buycard">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/appbar"
+        android:background="@color/fbutton_color_peter_river"
+        android:layout_height="70dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="हमारे डॉक्टर"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content">
+
+        </TextView>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="ये डॉक्टर हैं जो हमारे आवेदन के माध्यम से परामर्श करते हैं"
+        android:textColor="#4A86E8"
+        android:textSize="20dp"
+        android:id="@+id/buytitla"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/appbar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#A9A9"
+        android:id="@+id/view"
+        android:layout_below="@+id/buytitla"
+        android:layout_height="1dp"/>
+
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friend_list"
+        android:layout_marginBottom="65dp"
+        android:layout_below="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#00000000"/>
+
+
+   <!-- <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="10dp"
+        android:id="@+id/overlaybrands"
+        card_view:cardBackgroundColor="@android:color/white">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_marginTop="20dp"
+                android:text="Patel Medical Store"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/subTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paitepur Road"
+                android:layout_below="@+id/title"
+                android:textColor="#02979c"
+                />
+
+            <TextView
+                android:id="@+id/longsubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mahummdabad Ditrict"
+                android:layout_below="@+id/subTitle"
+                android:textColor="#02979c"
+                />
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#A9A9"
+        android:id="@+id/view2"
+        android:layout_below="@+id/overlaybrands"
+        android:layout_height="1dp"/>
+
+
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/view2"
+        android:layout_marginTop="10dp"
+        android:id="@+id/overlaybrands2"
+        card_view:cardBackgroundColor="@android:color/white">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_marginTop="20dp"
+                android:text="Three line item"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/subTitle2"
+                android:maxLines="3"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seconary line text.Lorem ipsum dolor sit amt,
+consectetur adipiscing alit.nullia vel ornare ex,vel pulvinar sapien"
+                android:layout_below="@+id/title2"
+                android:textColor="#02979c"
+                />
+
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#A9A9"
+        android:id="@+id/view3"
+        android:layout_below="@+id/overlaybrands2"
+        android:layout_height="1dp"/>
+
+
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/view3"
+        android:layout_marginTop="10dp"
+        android:id="@+id/overlaybrands3"
+        card_view:cardBackgroundColor="@android:color/white">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_marginTop="20dp"
+                android:text="Three line item"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/subTitle3"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seconary line text.Lorem ipsum dolor sit amt,
+consectetur adipiscing alit.nullia vel ornare ex,vel "
+                android:layout_below="@+id/title3"
+                android:textColor="#02979c"
+                />
+
+
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#A9A9"
+        android:id="@+id/view4"
+        android:layout_below="@+id/overlaybrands3"
+        android:layout_height="1dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:background="#0095b6"
+        android:id="@+id/bootombutton"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:id="@+id/consult"
+            android:drawableTop="@drawable/ic_baseline_favorite_24"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:background="#0095b6"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="Consult"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:id="@+id/Past"
+            android:layout_marginTop="10dp"
+            android:drawableTop="@drawable/ic_baseline_history_24"
+            android:layout_weight="1"
+            android:background="#0095b6"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="Past Con"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:id="@+id/card"
+            android:layout_marginTop="10dp"
+            android:drawableTop="@drawable/ic_baseline_payment_24"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:background="#0095b6"
+            android:textSize="12dp"
+            android:text="Buy Card"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:id="@+id/odoctor"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:background="#0095b6"
+            android:textAllCaps="false"
+            android:drawableTop="@drawable/ic_baseline_event_note_24"
+            android:textSize="12dp"
+            android:text="Our Doctor"/>
+    </LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:background="#ffffff"
+        android:id="@+id/bootombutton"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/consult"
+            android:drawableTop="@drawable/ic_doctor"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="परामर्श ले"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/Past"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_document"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="पुराने परामर्श"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/card"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_card"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textSize="12dp"
+            android:text="कार्ड खरीदें"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/odoctor"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:background="@drawable/settop"
+            android:textAllCaps="false"
+            android:drawableTop="@drawable/ic_ourdoctors"
+            android:textSize="12dp"
+            android:text="हमारे डॉक्टर"/>
+    </LinearLayout>
+
+</RelativeLayout>

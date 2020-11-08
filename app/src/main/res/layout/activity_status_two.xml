@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
+    android:layout_height="match_parent"
+    tools:context=".DoctorConfirm">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/fbutton_color_peter_river"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/doctorcallpatiet"
+        android:gravity="center"
+        android:minLines="3"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/box"
+        android:layout_marginTop="50dp"
+        android:textSize="16dp"
+        android:text="Primary have Used FollowUp Remaining"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/doctorcallpatiet"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textColor="#ffffff"
+        android:layout_centerVertical="true"
+        android:id="@+id/viewbill"
+        android:visibility="gone"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@color/fbutton_color_peter_river"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:text="11,2020 सितंबर को अंतिम परामर्श देखें" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/viewbill"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:textColor="#ffffff"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        android:id="@+id/followup"
+        android:background="@color/fbutton_color_peter_river"
+        android:gravity="center"
+        android:text="अंतिम परामर्श के लिए अनुरोध का पालन करें" />
+
+
+    <!--<Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/doctorcallpatiet"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/ViewPastConsultations"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="Send Scans to Doctor" />-->
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:background="#ffffff"
+        android:id="@+id/bootombutton"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/consult"
+            android:drawableTop="@drawable/ic_doctor"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="परामर्श ले"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/Past"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_document"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="पुराना परमर्श"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/card"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_card"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textSize="12dp"
+            android:text="कार्ड खरीदें"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/odoctor"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:drawableTop="@drawable/ic_ourdoctors"
+            android:textSize="12dp"
+            android:text="हमारे डॉक्टर"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

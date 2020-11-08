@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PetientLoading">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/P_SUBMITED"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:text="Patient Submitted"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/lookdoctor"
+        android:layout_below="@+id/P_SUBMITED"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:text="Looking for doctors..."/>
+
+    <ProgressBar
+    style="?android:attr/progressBarStyleHorizontal"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/progress"
+    android:layout_below="@+id/lookdoctor"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:max="100"
+    android:progress="45"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/few_munute"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:text="This can take a few minutes"/>
+
+</RelativeLayout>

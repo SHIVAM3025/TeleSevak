@@ -1,0 +1,130 @@
+{
+  "project_info": {
+    "project_number": "151360520671",
+    "firebase_url": "https://telesevak-55938.firebaseio.com",
+    "project_id": "telesevak-55938",
+    "storage_bucket": "telesevak-55938.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151360520671:android:77c5c30e4fbeac2094c46a",
+        "android_client_info": {
+          "package_name": "app.sagar.telesevek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151360520671-7bicnkt837j4u8iukehk03oj5mbalg9b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.sagar.telesevek",
+            "certificate_hash": "74371538b90076ab4b9b01675f168f071a257943"
+          }
+        },
+        {
+          "client_id": "151360520671-t53aauvf5oasi44g387gl89e2bt78ti5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.sagar.telesevek",
+            "certificate_hash": "7c4bdc48ed801e43b582ff06a86f9afe3fbf50fd"
+          }
+        },
+        {
+          "client_id": "151360520671-6jcbj3474mns25hnqqch963dn2m162jn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.sagar.telesevek",
+            "certificate_hash": "1fdc655e055205c4f0308cc339f46d78b803dc66"
+          }
+        },
+        {
+          "client_id": "151360520671-ct5o61smuoujrfs89qhsl9tpcsjicbg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTer4jthb3pAuIHRcUHKbU1bnaS1M6PUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "151360520671-ct5o61smuoujrfs89qhsl9tpcsjicbg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151360520671:android:b814f46f9a1c818394c46a",
+        "android_client_info": {
+          "package_name": "app.telesevek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151360520671-l3dvkcapsr8vt4fdicpk9v43bn092lmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.telesevek",
+            "certificate_hash": "1fdc655e055205c4f0308cc339f46d78b803dc66"
+          }
+        },
+        {
+          "client_id": "151360520671-ct5o61smuoujrfs89qhsl9tpcsjicbg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTer4jthb3pAuIHRcUHKbU1bnaS1M6PUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "151360520671-ct5o61smuoujrfs89qhsl9tpcsjicbg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151360520671:android:8c0df73baf79b42f94c46a",
+        "android_client_info": {
+          "package_name": "com.guidoapps.firestorerecycleradaptersample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151360520671-ct5o61smuoujrfs89qhsl9tpcsjicbg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTer4jthb3pAuIHRcUHKbU1bnaS1M6PUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "151360520671-ct5o61smuoujrfs89qhsl9tpcsjicbg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
