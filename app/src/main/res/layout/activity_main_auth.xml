@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:digits="0123456789"
+            android:inputType="phone"
             android:hint="अपना नंबर दर्ज करें"
             android:maxLength="10" />
 
@@ -58,6 +59,19 @@
         android:textAllCaps="false"
         android:textColor="#ffffff" />-->
 
+    <EditText
+        android:id="@+id/etScratch"
+        android:layout_width="267dp"
+        android:inputType="number"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="134dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="237dp"
+        android:hint="अपना स्क्रैच कार्ड दर्ज करें" />
+
     <Button
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -69,8 +83,22 @@
         android:id="@+id/buttonContinue"
         android:layout_marginTop="20dp"
         android:text="जारी रखें"
-        android:textSize="12dp"
+        android:textSize="12sp"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_above="@+id/etScratch"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="242dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="9dp"
+        android:text="या"
+        android:textAlignment="center"
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

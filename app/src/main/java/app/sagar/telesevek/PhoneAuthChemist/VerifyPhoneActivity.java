@@ -86,7 +86,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                             SharedPreferences.Editor chemistsave = getSharedPreferences("doctor", MODE_PRIVATE).edit();
                             chemistsave.putString("cadd", "chemistname");
                             chemistsave.putString("phone", phonenumber);
-                            chemistsave.commit();
+                            chemistsave.apply();
 
 
 

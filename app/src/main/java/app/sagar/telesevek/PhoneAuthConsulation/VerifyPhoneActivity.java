@@ -89,7 +89,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                             SharedPreferences.Editor doctorsave = getSharedPreferences("past", MODE_PRIVATE).edit();
                             doctorsave.putString("passdata", "already");
                             doctorsave.putString("pastphonenumber",phonenumber);
-                            doctorsave.commit();
+                            doctorsave.apply();
 
                             startActivity(intent);
 

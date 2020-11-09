@@ -60,6 +60,7 @@ public class PastCounsulation extends AppCompatActivity {
     ProgressDialog pd;
     FirestoreRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
+    FirestoreRecyclerOptions<ConsultResponse> response;
     ProgressBar progressBar;
     RecyclerView friendList;
     @Override
@@ -76,17 +77,29 @@ public class PastCounsulation extends AppCompatActivity {
         pd = new ProgressDialog(PastCounsulation.this);
         pd.setMessage("loading..");
 
+        String scratchCardNumber=getIntent().getStringExtra("cardNumber");
+        boolean isScratchCard=getIntent().getBooleanExtra("isScratchCard",false);
+
         SharedPreferences prefs = getSharedPreferences("past", MODE_PRIVATE);
         final String phonenumber = prefs.getString("pastphonenumber", "nodata");
 
         Toast.makeText(this, ""+phonenumber, Toast.LENGTH_SHORT).show();
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Consultation").whereEqualTo("PatientPhone",phonenumber);
+        if(!isScratchCard) {
+            Query query = fStore.collection("Consultation").whereEqualTo("PatientPhone", phonenumber);
 
-        FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
-                .setQuery(query, ConsultResponse.class)
-                .build();
+             response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
+                    .setQuery(query, ConsultResponse.class)
+                    .build();
+
+        }else {
+            Query query = fStore.collection("Consultation").whereEqualTo("PatientCard", scratchCardNumber);
+
+             response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
+                    .setQuery(query, ConsultResponse.class)
+                    .build();
+        }
 
 
 
