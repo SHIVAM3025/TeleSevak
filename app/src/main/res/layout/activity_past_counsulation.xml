@@ -295,6 +295,8 @@
             android:layout_height="match_parent"
             android:id="@+id/Past"
             android:paddingTop="10dp"
+            android:textColor="@color/fbutton_color_peter_river"
+            android:drawableTint="@color/fbutton_color_peter_river"
             android:drawableTop="@drawable/ic_document"
             android:layout_weight="1"
             android:background="@drawable/settop"

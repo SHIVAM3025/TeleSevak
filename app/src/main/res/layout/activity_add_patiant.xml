@@ -277,6 +277,8 @@
             android:drawableTop="@drawable/ic_doctor"
             android:layout_weight="1"
             android:paddingTop="10dp"
+            android:textColor="@color/fbutton_color_peter_river"
+            android:drawableTint="@color/fbutton_color_peter_river"
             android:background="@drawable/settop"
             android:textAllCaps="false"
             android:textSize="12dp"
