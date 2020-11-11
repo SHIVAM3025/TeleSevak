@@ -14,9 +14,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -63,6 +66,7 @@ public class PastCounsulation extends AppCompatActivity {
     FirestoreRecyclerOptions<ConsultResponse> response;
     ProgressBar progressBar;
     RecyclerView friendList;
+    boolean isNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +88,11 @@ public class PastCounsulation extends AppCompatActivity {
         final String phonenumber = prefs.getString("pastphonenumber", "nodata");
 
         Toast.makeText(this, ""+phonenumber, Toast.LENGTH_SHORT).show();
+        /*EditText etField=findViewById(R.id.etScratchOrPhone);
+        if(etField.isInEditMode()){
+        String Number=etField.getText().toString().trim();
+
+        isNumber= Number.length() == 10;}*/
 
         fStore = FirebaseFirestore.getInstance();
         if(!isScratchCard) {
@@ -155,6 +164,36 @@ public class PastCounsulation extends AppCompatActivity {
         friendList.setAdapter(adapter);
 
 
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.pastConsult);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.pastConsult:
+                        return true;
+
+                    case R.id.buyCard:
+                        startActivity(new Intent(getApplicationContext(),Buycard.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.ourDoctors:
+                        startActivity(new Intent(getApplicationContext(),OurDoctor.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.consultDoctor:
+                        startActivity(new Intent(getApplicationContext(),ScratchCardNew.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
 
        /* overlaybrands = findViewById(R.id.overlaybrands);
         overlaybrands.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +236,7 @@ public class PastCounsulation extends AppCompatActivity {
 
 
 
+        /*
         past = findViewById(R.id.consult);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,6 +269,7 @@ public class PastCounsulation extends AppCompatActivity {
                         startActivity(chemistinten);
                     }
                 });
+        */
 
     }
 

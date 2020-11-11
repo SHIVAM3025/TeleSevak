@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
 
-                if(editText.isEnabled()&& editText.isInEditMode()){
+                if(editText.isEnabled()){
 
                     String number = editText.getText().toString().trim();
 

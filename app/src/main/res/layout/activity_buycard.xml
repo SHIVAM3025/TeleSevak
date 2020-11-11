@@ -61,6 +61,18 @@
         android:layout_height="match_parent"
         android:divider="#00000000"/>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="#fff"
+        app:menu="@menu/patient_menu" />
+
    <!-- <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -223,7 +235,7 @@ consectetur adipiscing alit.nullia vel ornare ex,vel "
         android:id="@+id/view4"
         android:layout_below="@+id/overlaybrands3"
         android:layout_height="1dp"/>-->
-
+<!--
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -285,4 +297,6 @@ consectetur adipiscing alit.nullia vel ornare ex,vel "
             android:textSize="12dp"
             android:text="हमारे डॉक्टर"/>
     </LinearLayout>
+
+    -->
 </RelativeLayout>
