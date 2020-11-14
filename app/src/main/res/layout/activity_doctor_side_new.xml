@@ -108,6 +108,10 @@
         android:id="@+id/friend_list"
         android:layout_width="409dp"
 
+        android:outlineAmbientShadowColor="@color/fbutton_color_peter_river"
+        android:outlineSpotShadowColor="@color/fbutton_color_peter_river"
+        android:backgroundTint="@color/fbutton_color_peter_river"
+        app:labelVisibilityMode="labeled"
         android:layout_height="547dp"
         android:layout_alignParentStart="true"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"

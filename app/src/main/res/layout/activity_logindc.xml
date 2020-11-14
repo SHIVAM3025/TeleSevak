@@ -14,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:alpha="1"
         android:orientation="vertical"
         android:weightSum="3"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,43 +24,43 @@
 
 
         <TextView
-            android:layout_width="294dp"
-            android:layout_height="34dp"
+            android:id="@+id/textView6"
+            android:layout_width="319dp"
+            android:layout_height="39dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
-            android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif-black"
             android:text="प्रसिद्द डॉक्टरों से करें परामर्श"
-            android:textAlignment="center"
 
+            android:textAlignment="center"
             android:textColor="#382727"
             android:textSize="25sp"
-            app:layout_constraintBottom_toTopOf="@+id/dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/dp"
-            android:layout_width="274dp"
-            android:layout_height="400dp"
-            android:layout_marginTop="64dp"
-            android:alpha="0.6"
-            android:src="@drawable/doctors"
+            android:layout_width="482dp"
+            android:layout_height="535dp"
+            android:alpha="1"
+            android:src="@drawable/doctorsfinal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/doctor"
             android:layout_width="271dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
+            android:alpha="1"
             android:background="@drawable/border"
             android:backgroundTint="@color/fbutton_color_peter_river"
             android:text="मैं डाक्टर हूँ"
@@ -69,22 +70,23 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rel"
-            app:layout_constraintVertical_bias="0.15" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <RelativeLayout
             android:id="@+id/rel"
             android:layout_width="271dp"
             android:layout_height="147dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="420dp"
+            android:alpha="1"
             android:background="@drawable/borderb"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dp">
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintVertical_bias="0.123">
 
 
             <ImageView
@@ -94,6 +96,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
+                android:alpha="1"
                 android:background="@drawable/doctoricon" />
 
 
@@ -104,6 +107,7 @@
                 android:layout_below="@+id/iconp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:alpha="1"
                 android:background="@drawable/bottomradies"
                 android:gravity="center"
                 android:text="डॉक्टर से परामर्श लें"

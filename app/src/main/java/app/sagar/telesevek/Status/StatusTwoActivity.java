@@ -58,6 +58,7 @@ import app.sagar.telesevek.Doctowillcallyou;
 import app.sagar.telesevek.Models.Doctor;
 import app.sagar.telesevek.Models.FirebaseUserModel;
 import app.sagar.telesevek.OurDoctor;
+import app.sagar.telesevek.PastCounsulation;
 import app.sagar.telesevek.PhoneAuthConsulation.MainActivity;
 import app.sagar.telesevek.R;
 import app.sagar.telesevek.ScratchCardNew;
@@ -405,7 +406,7 @@ public class StatusTwoActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.pastConsult:
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         overridePendingTransition(0,0);
                         return true;
 

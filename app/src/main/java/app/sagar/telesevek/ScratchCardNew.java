@@ -93,6 +93,11 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
         fStore = FirebaseFirestore.getInstance();
 
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        fStore.setFirestoreSettings(settings);
+
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.consultDoctor);
 
@@ -101,7 +106,7 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.pastConsult:
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
                         overridePendingTransition(0,0);
                         return true;
 
@@ -156,10 +161,7 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
 
         //
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build();
-                fStore.setFirestoreSettings(settings);
+
 
 
                 submit.setOnClickListener(new View.OnClickListener() {

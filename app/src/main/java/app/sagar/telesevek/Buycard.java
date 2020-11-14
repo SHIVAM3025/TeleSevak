@@ -54,7 +54,7 @@ public class Buycard extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.pastConsult:
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
                         overridePendingTransition(0,0);
                         return true;
 
@@ -195,8 +195,8 @@ public class Buycard extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Intent intent = new Intent(Buycard.this,ScratchCardNew.class);
-                        startActivity(intent);
+                        /*Intent intent = new Intent(Buycard.this,ScratchCardNew.class);
+                        startActivity(intent);*/
                         finish();
 
                         System.exit(0);

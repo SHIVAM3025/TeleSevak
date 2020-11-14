@@ -309,8 +309,8 @@ public class PastCounsulation extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Intent intent = new Intent(PastCounsulation.this,ScratchCardNew.class);
-                        startActivity(intent);
+                        /*Intent intent = new Intent(PastCounsulation.this,ScratchCardNew.class);
+                        startActivity(intent);*/
                         finish();
 
                         System.exit(0);

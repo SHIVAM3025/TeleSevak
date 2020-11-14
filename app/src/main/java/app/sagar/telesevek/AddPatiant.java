@@ -206,7 +206,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.pastConsult:
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
                         overridePendingTransition(0,0);
                         return true;
 

@@ -85,6 +85,14 @@ public class LogindcActivity extends AppCompatActivity {
 
         }*/
 
+       findViewById(R.id.rel).setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent chemistinten = new Intent(LogindcActivity.this, app.sagar.telesevek.ScratchCardNew.class);
+               startActivity(chemistinten);
+           }
+       });
+
 
         icondoctor = findViewById(R.id.iconp);
         icondoctor.setOnClickListener(new View.OnClickListener() {

@@ -36,7 +36,7 @@ public class StatusFourActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.pastConsult:
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(StatusFourActivity.this,MainActivity.class));
                         overridePendingTransition(0,0);
                         return true;
 
