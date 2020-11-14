@@ -187,7 +187,7 @@ public class Buycard extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-    @Override
+    /*@Override
     public void onBackPressed() {
         new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
                 .setMessage("Are you sure?")
@@ -195,12 +195,22 @@ public class Buycard extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        /*Intent intent = new Intent(Buycard.this,ScratchCardNew.class);
-                        startActivity(intent);*/
+                        Intent intent = new Intent(Buycard.this,ScratchCardNew.class);
+                        startActivity(intent);
                         finish();
 
                         System.exit(0);
                     }
                 }).setNegativeButton("no", null).show();
+    }*/
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 }

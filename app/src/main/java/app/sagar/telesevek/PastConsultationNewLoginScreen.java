@@ -170,6 +170,16 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
     }

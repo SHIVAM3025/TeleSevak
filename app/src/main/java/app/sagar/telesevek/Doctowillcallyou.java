@@ -108,7 +108,7 @@ public class Doctowillcallyou extends AppCompatActivity{
 
 
     }
-    @Override
+    /*@Override
     public void onBackPressed() {
         new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
                 .setMessage("Are you sure?")
@@ -123,7 +123,17 @@ public class Doctowillcallyou extends AppCompatActivity{
                         System.exit(0);
                     }
                 }).setNegativeButton("no", null).show();
+    }*/
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
+
 
 
 
