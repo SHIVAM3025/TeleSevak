@@ -92,7 +92,7 @@
         android:fontFamily="sans-serif-black"
         android:text="अपना कार्ड नंबर या फ़ोन नंबर दर्ज करें"
         android:textColor="#707070"
-        android:textSize="22sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/etEnterNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -170,8 +170,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
             android:src="@drawable/ic_card"
             android:tint="#D1CDCD" />
     </RelativeLayout>
