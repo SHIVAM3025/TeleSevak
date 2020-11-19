@@ -75,7 +75,9 @@
         android:outlineSpotShadowColor="@color/fbutton_color_peter_river"
         android:backgroundTint="@color/fbutton_color_peter_river"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/patient_menu" />
+        app:menu="@menu/patient_menu"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"/>
 
 
    <!-- <androidx.cardview.widget.CardView

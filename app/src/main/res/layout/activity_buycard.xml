@@ -75,7 +75,9 @@
         android:backgroundTint="@color/fbutton_color_peter_river"
         app:labelVisibilityMode="labeled"
         android:background="#fff"
-        app:menu="@menu/patient_menu" />
+        app:menu="@menu/patient_menu"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"/>
 
    <!-- <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"

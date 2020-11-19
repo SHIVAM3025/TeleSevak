@@ -28,65 +28,36 @@
             android:layout_width="319dp"
             android:layout_height="39dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
+            android:layout_marginBottom="150dp"
             android:fontFamily="sans-serif-black"
-            android:text="प्रसिद्द डॉक्टरों से करें परामर्श"
 
+            android:text="प्रसिद्द डॉक्टरों से करें परामर्श"
             android:textAlignment="center"
             android:textColor="#382727"
             android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/dp"
-            android:layout_width="482dp"
-            android:layout_height="535dp"
-            android:alpha="1"
-            android:src="@drawable/doctorsfinal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/doctor"
-            android:layout_width="271dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:alpha="1"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/fbutton_color_peter_river"
-            android:text="मैं डाक्टर हूँ"
-            android:textAllCaps="false"
-            android:textColor="#ffffff"
-            android:textSize="12dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rel"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.023" />
 
         <RelativeLayout
             android:id="@+id/rel"
             android:layout_width="271dp"
             android:layout_height="147dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="420dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="50dp"
             android:alpha="1"
             android:background="@drawable/borderb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.123">
+            app:layout_constraintTop_toBottomOf="@+id/dp"
+            app:layout_constraintVertical_bias="0.221">
 
 
             <ImageView
@@ -116,6 +87,45 @@
 
 
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/dp"
+            android:layout_width="250dp"
+            android:layout_height="397.6dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="292dp"
+            android:alpha="1"
+            android:src="@drawable/doctorsdr"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/doctor"
+            android:layout_width="271dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="52dp"
+            android:alpha="1"
+            android:background="@drawable/border"
+            android:backgroundTint="@color/fbutton_color_peter_river"
+            android:text="मैं डाक्टर हूँ"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.521"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rel"
+            app:layout_constraintVertical_bias="0.535" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

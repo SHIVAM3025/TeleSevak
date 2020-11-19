@@ -289,4 +289,11 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
         mSpinner.setMessage("Please wait...");
         mSpinner.show();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0,0);
+
+    }
 }
