@@ -128,7 +128,7 @@ public class ScrachCard extends AppCompatActivity {
 */
 
 
-            scrached = findViewById(R.id.ed_scrach);
+            scrached = findViewById(R.id.etScratch);
             submit = findViewById(R.id.submit);
 
             viewbill = findViewById(R.id.viewbill);

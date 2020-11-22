@@ -55,7 +55,7 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
     private ProgressDialog mSpinner;
     FirebaseFirestore fStore;
-    EditText scrached;
+     private EditText scrached;
     Button submit;
 
     ProgressDialog pd;
@@ -86,7 +86,7 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
         //
 
-        scrached = findViewById(R.id.ed_scrach);
+        scrached = findViewById(R.id.etScratch);
         submit = findViewById(R.id.submit);
 
 
