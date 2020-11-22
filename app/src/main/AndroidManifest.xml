@@ -15,10 +15,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!--Rishpreet comment-->
 
-
-    <!--sagar-->
 
     <application
         android:allowBackup="true"
@@ -168,7 +165,7 @@
         <service
             android:name=".Notify.ForegroundService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity android:name=".ProfileDoctor" />
 

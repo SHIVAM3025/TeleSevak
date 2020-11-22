@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,6 +31,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -114,6 +116,61 @@ public class YesterdayPatient extends AppCompatActivity {
 
         date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
+        //bottomNav
+
+        BottomNavigationView bottomNavDoctor=findViewById(R.id.bottomNavigationView);
+        bottomNavDoctor.setSelectedItemId(R.id.current_menu);
+
+        bottomNavDoctor.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.viewPast_menu:
+                        startActivity(new Intent(getApplicationContext(),DoctorSidePastConsulation.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.followUp_menu:
+                        startActivity(new Intent(getApplicationContext(),DoctorSideFollowupConsulation.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.current_menu:
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        //upNav
+        BottomNavigationView upNav=findViewById(R.id.bottomNavigationView2);
+        upNav.setSelectedItemId(R.id.oneDayAgo_UpDoctor_menu);
+
+        upNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.oneDayAgo_UpDoctor_menu:
+                        return true;
+
+                    case R.id.twoDaysAgo_UpDoctor_menu:
+                        startActivity(new Intent(getApplicationContext(),TommarowPatient.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.todayUpDoctor_menu:
+                        startActivity(new Intent(getApplicationContext(),DoctorSideNew.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
+        /*
         past = findViewById(R.id.past);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +210,7 @@ public class YesterdayPatient extends AppCompatActivity {
                 startActivity(chemistinten);
             }
         });
+        */
 
         SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
         final String phonenumber = prefs.getString("phone", null);

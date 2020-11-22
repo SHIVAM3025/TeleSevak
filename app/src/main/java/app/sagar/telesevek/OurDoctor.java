@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -54,6 +56,36 @@ public class OurDoctor extends AppCompatActivity {
         init();
         getFriendList();
 
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.ourDoctors);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.pastConsult:
+                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.buyCard:
+                        startActivity(new Intent(getApplicationContext(),Buycard.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.ourDoctors:
+                        return true;
+
+                    case R.id.consultDoctor:
+                        startActivity(new Intent(getApplicationContext(),ScratchCardNew.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        /*
         past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +118,8 @@ public class OurDoctor extends AppCompatActivity {
                         startActivity(chemistinten);
                     }
                 });
+
+        */
 
     }
     private void init(){
@@ -159,7 +193,7 @@ public class OurDoctor extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-    @Override
+    /*@Override
     public void onBackPressed() {
         new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
                 .setMessage("Are you sure?")
@@ -174,5 +208,15 @@ public class OurDoctor extends AppCompatActivity {
                         System.exit(0);
                     }
                 }).setNegativeButton("no", null).show();
+    }*/
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 }

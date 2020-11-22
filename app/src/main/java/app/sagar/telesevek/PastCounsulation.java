@@ -14,9 +14,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -60,8 +63,10 @@ public class PastCounsulation extends AppCompatActivity {
     ProgressDialog pd;
     FirestoreRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
+    FirestoreRecyclerOptions<ConsultResponse> response;
     ProgressBar progressBar;
     RecyclerView friendList;
+    boolean isNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,17 +81,34 @@ public class PastCounsulation extends AppCompatActivity {
         pd = new ProgressDialog(PastCounsulation.this);
         pd.setMessage("loading..");
 
+        String scratchCardNumber=getIntent().getStringExtra("cardNumber");
+        boolean isScratchCard=getIntent().getBooleanExtra("isScratchCard",false);
+
         SharedPreferences prefs = getSharedPreferences("past", MODE_PRIVATE);
         final String phonenumber = prefs.getString("pastphonenumber", "nodata");
 
         Toast.makeText(this, ""+phonenumber, Toast.LENGTH_SHORT).show();
+        /*EditText etField=findViewById(R.id.etScratchOrPhone);
+        if(etField.isInEditMode()){
+        String Number=etField.getText().toString().trim();
+
+        isNumber= Number.length() == 10;}*/
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Consultation").whereEqualTo("PatientPhone",phonenumber);
+        if(!isScratchCard) {
+            Query query = fStore.collection("Consultation").whereEqualTo("PatientPhone", phonenumber);
 
-        FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
-                .setQuery(query, ConsultResponse.class)
-                .build();
+             response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
+                    .setQuery(query, ConsultResponse.class)
+                    .build();
+
+        }else {
+            Query query = fStore.collection("Consultation").whereEqualTo("PatientCard", scratchCardNumber);
+
+             response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
+                    .setQuery(query, ConsultResponse.class)
+                    .build();
+        }
 
 
 
@@ -142,6 +164,36 @@ public class PastCounsulation extends AppCompatActivity {
         friendList.setAdapter(adapter);
 
 
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.pastConsult);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.pastConsult:
+                        return true;
+
+                    case R.id.buyCard:
+                        startActivity(new Intent(getApplicationContext(),Buycard.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.ourDoctors:
+                        startActivity(new Intent(getApplicationContext(),OurDoctor.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.consultDoctor:
+                        startActivity(new Intent(getApplicationContext(),ScratchCardNew.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
 
        /* overlaybrands = findViewById(R.id.overlaybrands);
         overlaybrands.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +236,7 @@ public class PastCounsulation extends AppCompatActivity {
 
 
 
+        /*
         past = findViewById(R.id.consult);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,6 +269,7 @@ public class PastCounsulation extends AppCompatActivity {
                         startActivity(chemistinten);
                     }
                 });
+        */
 
     }
 
@@ -247,7 +301,7 @@ public class PastCounsulation extends AppCompatActivity {
         adapter.stopListening();
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
                 .setMessage("Are you sure?")
@@ -262,6 +316,15 @@ public class PastCounsulation extends AppCompatActivity {
                         System.exit(0);
                     }
                 }).setNegativeButton("no", null).show();
-    }
+    }*/
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
+    }
 }

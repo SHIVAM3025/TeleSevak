@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -53,7 +55,7 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
     private ProgressDialog mSpinner;
     FirebaseFirestore fStore;
-    EditText scrached;
+     private EditText scrached;
     Button submit;
 
     ProgressDialog pd;
@@ -84,13 +86,48 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
         //
 
-        scrached = findViewById(R.id.ed_scrach);
+        scrached = findViewById(R.id.etScratch);
         submit = findViewById(R.id.submit);
 
 
 
         fStore = FirebaseFirestore.getInstance();
 
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        fStore.setFirestoreSettings(settings);
+
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.consultDoctor);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.pastConsult:
+                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.buyCard:
+                        startActivity(new Intent(getApplicationContext(),Buycard.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.ourDoctors:
+                        startActivity(new Intent(getApplicationContext(),OurDoctor.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.consultDoctor:
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        /*
         past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,13 +157,11 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
                         startActivity(chemistinten);
                     }
                 });
+        */
 
 
         //
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build();
-                fStore.setFirestoreSettings(settings);
+
 
 
                 submit.setOnClickListener(new View.OnClickListener() {
@@ -253,5 +288,12 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
         mSpinner.setTitle("Logging in");
         mSpinner.setMessage("Please wait...");
         mSpinner.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0,0);
+
     }
 }

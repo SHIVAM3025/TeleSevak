@@ -45,227 +45,251 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
 
+
+    <!-- <androidx.cardview.widget.CardView
+         xmlns:card_view="http://schemas.android.com/apk/res-auto"
+         android:layout_width="match_parent"
+         android:layout_height="100dp"
+         android:layout_below="@+id/appbar"
+         android:layout_marginTop="50dp"
+         android:id="@+id/overlaybrands"
+         card_view:cardBackgroundColor="@android:color/white">
+
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="100dp"
+             android:gravity="center"
+             android:orientation="horizontal">
+
+             <de.hdodenhof.circleimageview.CircleImageView
+                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                 android:id="@+id/icon"
+                 android:layout_width="50dp"
+                 android:background="#a9a9a9"
+                 android:layout_height="50dp"
+                 android:src="@drawable/ic_baseline_folder_24"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true"
+                 android:layout_marginRight="20dp"
+                 android:layout_marginLeft="10dp"
+                 android:layout_marginTop="5dp"
+                 />
+
+             <TextView
+                 android:id="@+id/title"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="18sp"
+                 android:gravity="center_vertical"
+                 android:textColor="#000"
+                 android:text="Consultation with Dr.jain"
+                 android:textStyle="bold"
+                 android:layout_alignParentTop="true"
+                 android:layout_toRightOf="@+id/icon"
+                 android:layout_toEndOf="@+id/icon" />
+
+             <TextView android:id="@+id/subTitle"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="1 sep 2020"
+                 android:layout_toRightOf="@+id/icon"
+                 android:layout_below="@+id/title"
+                 android:textColor="#02979c"
+                 android:layout_alignParentRight="true"
+                 android:layout_alignParentEnd="true" />
+
+
+             <ImageView
+                 android:id="@+id/icon3"
+                 android:layout_width="30dp"
+                 android:layout_height="25dp"
+                 android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                 android:layout_alignParentRight="true"
+                 android:layout_alignParentEnd="true"
+                 android:layout_marginTop="15dp"
+                 />
+
+
+         </RelativeLayout>
+     </androidx.cardview.widget.CardView>
+
+     <View
+         android:layout_width="match_parent"
+         android:background="#A9A9"
+         android:id="@+id/view"
+         android:layout_below="@+id/overlaybrands"
+         android:layout_height="1dp"/>
+
+     <androidx.cardview.widget.CardView
+         xmlns:card_view="http://schemas.android.com/apk/res-auto"
+         android:layout_width="match_parent"
+         android:layout_height="100dp"
+         android:layout_below="@+id/view"
+         android:layout_marginTop="10dp"
+         android:id="@+id/overlaybrands2"
+         card_view:cardBackgroundColor="@android:color/white">
+
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="100dp"
+             android:gravity="center"
+             android:orientation="horizontal">
+
+             <de.hdodenhof.circleimageview.CircleImageView
+                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                 android:id="@+id/icon2"
+                 android:layout_width="50dp"
+                 android:background="#a9a9a9"
+                 android:layout_height="50dp"
+                 android:src="@drawable/ic_baseline_folder_24"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true"
+                 android:layout_marginRight="20dp"
+                 android:layout_marginLeft="10dp"
+                 android:layout_marginTop="5dp"
+                 />
+
+             <TextView
+                 android:id="@+id/title2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="18sp"
+                 android:gravity="center_vertical"
+                 android:textColor="#000"
+                 android:text="Consultation with Dr.jain"
+                 android:textStyle="bold"
+                 android:layout_alignParentTop="true"
+                 android:layout_toRightOf="@+id/icon2"
+                 android:layout_toEndOf="@+id/icon2" />
+
+             <TextView android:id="@+id/subTitle2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="1 sep 2020"
+                 android:layout_toRightOf="@+id/icon2"
+                 android:layout_below="@+id/title2"
+                 android:textColor="#02979c"
+                 android:layout_alignParentRight="true"
+                 android:layout_alignParentEnd="true" />
+
+
+             <ImageView
+                 android:id="@+id/icon4"
+                 android:layout_width="30dp"
+                 android:layout_height="25dp"
+                 android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                 android:layout_alignParentRight="true"
+                 android:layout_alignParentEnd="true"
+                 android:layout_marginTop="15dp"
+                 />
+
+
+         </RelativeLayout>
+     </androidx.cardview.widget.CardView>
+
+     <View
+         android:layout_width="match_parent"
+         android:background="#A9A9"
+         android:layout_below="@+id/overlaybrands2"
+         android:layout_height="1dp"/>
+
+
+
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_marginTop="10dp"
+         android:orientation="horizontal"
+         android:weightSum="4"
+         android:background="#0095b6"
+         android:id="@+id/bootombutton"
+         android:layout_alignParentBottom="true"
+         android:layout_height="60dp">
+
+         <Button
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/consult"
+             android:drawableTop="@drawable/ic_baseline_favorite_24"
+             android:layout_weight="1"
+             android:layout_marginTop="10dp"
+             android:background="#0095b6"
+             android:textAllCaps="false"
+             android:textSize="12dp"
+             android:text="Consult"/>
+
+         <Button
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textColor="#ffffff"
+             android:id="@+id/Past"
+             android:layout_marginTop="10dp"
+             android:drawableTop="@drawable/ic_baseline_history_24"
+             android:layout_weight="1"
+             android:background="#0095b6"
+             android:textAllCaps="false"
+             android:textSize="12dp"
+             android:text="Past Con"/>
+
+         <Button
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/card"
+             android:layout_marginTop="10dp"
+             android:drawableTop="@drawable/ic_baseline_payment_24"
+             android:textAllCaps="false"
+             android:layout_weight="1"
+             android:background="#0095b6"
+             android:textSize="12dp"
+             android:text="Buy Card"/>
+
+         <Button
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/odoctor"
+             android:layout_weight="1"
+             android:layout_marginTop="10dp"
+             android:background="#0095b6"
+             android:textAllCaps="false"
+             android:drawableTop="@drawable/ic_baseline_event_note_24"
+             android:textSize="12dp"
+             android:text="Our Doctor"/>
+     </LinearLayout>
+ -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friend_list"
         android:layout_width="match_parent"
+        android:layout_height="603dp"
+        android:layout_above="@+id/bottomNav"
         android:layout_below="@+id/appbar"
-        android:layout_marginBottom="65dp"
-        android:layout_height="match_parent"
-        android:divider="#00000000"/>
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginBottom="3dp"
+        android:divider="#00000000" />
 
-
-   <!-- <androidx.cardview.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/appbar"
-        android:layout_marginTop="50dp"
-        android:id="@+id/overlaybrands"
-        card_view:cardBackgroundColor="@android:color/white">
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/icon"
-                android:layout_width="50dp"
-                android:background="#a9a9a9"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_baseline_folder_24"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:gravity="center_vertical"
-                android:textColor="#000"
-                android:text="Consultation with Dr.jain"
-                android:textStyle="bold"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/icon"
-                android:layout_toEndOf="@+id/icon" />
-
-            <TextView android:id="@+id/subTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 sep 2020"
-                android:layout_toRightOf="@+id/icon"
-                android:layout_below="@+id/title"
-                android:textColor="#02979c"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-
-            <ImageView
-                android:id="@+id/icon3"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp"
-                />
-
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-    <View
-        android:layout_width="match_parent"
-        android:background="#A9A9"
-        android:id="@+id/view"
-        android:layout_below="@+id/overlaybrands"
-        android:layout_height="1dp"/>
-
-    <androidx.cardview.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/view"
-        android:layout_marginTop="10dp"
-        android:id="@+id/overlaybrands2"
-        card_view:cardBackgroundColor="@android:color/white">
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/icon2"
-                android:layout_width="50dp"
-                android:background="#a9a9a9"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_baseline_folder_24"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
-                android:id="@+id/title2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:gravity="center_vertical"
-                android:textColor="#000"
-                android:text="Consultation with Dr.jain"
-                android:textStyle="bold"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/icon2"
-                android:layout_toEndOf="@+id/icon2" />
-
-            <TextView android:id="@+id/subTitle2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 sep 2020"
-                android:layout_toRightOf="@+id/icon2"
-                android:layout_below="@+id/title2"
-                android:textColor="#02979c"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-
-            <ImageView
-                android:id="@+id/icon4"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp"
-                />
-
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-    <View
-        android:layout_width="match_parent"
-        android:background="#A9A9"
-        android:layout_below="@+id/overlaybrands2"
-        android:layout_height="1dp"/>
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        android:background="#0095b6"
-        android:id="@+id/bootombutton"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_height="60dp">
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="#fff"
+        android:outlineAmbientShadowColor="@color/fbutton_color_peter_river"
+        android:outlineSpotShadowColor="@color/fbutton_color_peter_river"
+        android:backgroundTint="@color/fbutton_color_peter_river"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/patient_menu"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/consult"
-            android:drawableTop="@drawable/ic_baseline_favorite_24"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:background="#0095b6"
-            android:textAllCaps="false"
-            android:textSize="12dp"
-            android:text="Consult"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:id="@+id/Past"
-            android:layout_marginTop="10dp"
-            android:drawableTop="@drawable/ic_baseline_history_24"
-            android:layout_weight="1"
-            android:background="#0095b6"
-            android:textAllCaps="false"
-            android:textSize="12dp"
-            android:text="Past Con"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/card"
-            android:layout_marginTop="10dp"
-            android:drawableTop="@drawable/ic_baseline_payment_24"
-            android:textAllCaps="false"
-            android:layout_weight="1"
-            android:background="#0095b6"
-            android:textSize="12dp"
-            android:text="Buy Card"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/odoctor"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:background="#0095b6"
-            android:textAllCaps="false"
-            android:drawableTop="@drawable/ic_baseline_event_note_24"
-            android:textSize="12dp"
-            android:text="Our Doctor"/>
-    </LinearLayout>
--->
+    <!--
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -330,5 +354,7 @@
             android:textSize="12dp"
             android:text="हमारे डॉक्टर"/>
     </LinearLayout>
+
+    -->
 
 </RelativeLayout>
