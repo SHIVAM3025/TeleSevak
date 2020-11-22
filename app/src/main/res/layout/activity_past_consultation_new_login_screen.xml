@@ -202,9 +202,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="9dp"
-                android:src="@drawable/ic_card"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="7dp"
+                android:src="@drawable/ic_card_scratch_new"
                 android:tint="#D1CDCD" />
 
 
@@ -241,12 +241,12 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="100dp"
-        android:background="#efefef"
-        android:backgroundTint="#E4E4E4"
+        android:background="@drawable/light_box"
+
         android:fontFamily="sans-serif"
         android:hint="फ़ोन नंबर भरें"
         android:inputType="number"
-        android:paddingStart="10dp"
+        android:paddingStart="20dp"
         android:textAlignment="textStart"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/bottomNavPastLoginNew"

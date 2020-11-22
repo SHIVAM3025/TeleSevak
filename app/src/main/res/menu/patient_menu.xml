@@ -3,17 +3,17 @@
 
     <item
         android:title="परामर्श लें"
-        android:icon="@drawable/ic_consult_new"
+        android:icon="@drawable/ic_consult_new_new"
         android:id="@+id/consultDoctor"/>
 
     <item
         android:title="पुराने परामर्श"
-        android:icon="@drawable/ic_documentat"
+        android:icon="@drawable/ic_documentation_new_new"
         android:id="@+id/pastConsult"/>
 
     <item
         android:title="कार्ड खरीदें"
-        android:icon="@drawable/ic_cards_new"
+        android:icon="@drawable/ic_card_scratch_new"
         android:id="@+id/buyCard"/>
 
     <item

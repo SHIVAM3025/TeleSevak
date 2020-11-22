@@ -8,7 +8,7 @@
         android:bottomLeftRadius="13dp"
         android:topLeftRadius="13dp" />
     <solid
-        android:color="#09B4DA"/>
+        android:color="#03A9CD"/>
     <!--<gradient
         android:startColor="@color/colorPrimary"
         android:endColor="#ABD9E3"

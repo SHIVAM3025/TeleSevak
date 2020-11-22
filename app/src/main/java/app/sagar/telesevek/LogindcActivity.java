@@ -1,5 +1,6 @@
 package app.sagar.telesevek;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -11,19 +12,30 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 import app.sagar.telesevek.VideoPKG.activity.LoginActivity;
 import cz.msebera.android.httpclient.HttpHeaders;
@@ -36,10 +48,10 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
 
 public class LogindcActivity extends AppCompatActivity {
-    Button mButton,mButton2;
-    ImageView icondoctor;
-    TextView textclick;
+    Button consultDoctor;
+    TextView iAmDoctor;
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore fstore;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private View parentLayout;
     @Override
@@ -50,6 +62,7 @@ public class LogindcActivity extends AppCompatActivity {
         if (!checkPermission()) {
             requestPermission();
         }
+        //updateId();
 
        /* String url = "https://fcm.googleapis.com/fcm/send";
         AsyncHttpClient client = new AsyncHttpClient();
@@ -85,6 +98,25 @@ public class LogindcActivity extends AppCompatActivity {
 
         }*/
 
+       consultDoctor=findViewById(R.id.btConsultDoctor);
+       consultDoctor.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent chemistinten = new Intent(LogindcActivity.this, app.sagar.telesevek.ScratchCardNew.class);
+               startActivity(chemistinten);
+           }
+       });
+
+       iAmDoctor=findViewById(R.id.tvIAmDoctor);
+       iAmDoctor.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent chemistinten = new Intent(LogindcActivity.this,  app.sagar.telesevek.PhoneAuthDoctor.MainActivity.class);
+               startActivity(chemistinten);
+           }
+       });
+
+       /*
        findViewById(R.id.rel).setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -112,11 +144,11 @@ public class LogindcActivity extends AppCompatActivity {
                 Intent chemistinten = new Intent(LogindcActivity.this, app.sagar.telesevek.ScratchCardNew.class);
                 startActivity(chemistinten);
             }
-        });
+        });*/
 
 
 
-        mButton2 = findViewById(R.id.doctor);
+       /* mButton2 = findViewById(R.id.doctor);
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -124,7 +156,7 @@ public class LogindcActivity extends AppCompatActivity {
                 Intent chemistinten = new Intent(LogindcActivity.this,  app.sagar.telesevek.PhoneAuthDoctor.MainActivity.class);
                 startActivity(chemistinten);
             }
-        });
+        });*/
     }
 
     private boolean checkPermission() {
@@ -203,4 +235,51 @@ public class LogindcActivity extends AppCompatActivity {
 
 
     }
+
+   /* public void updateId(){
+        fstore=FirebaseFirestore.getInstance();
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        fstore.setFirestoreSettings(settings);
+        fstore.collection("ScratchCard")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> snapshotList=queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot snapshot:snapshotList) {
+                            String id = snapshot.getId();
+                            String validity = (String) snapshot.get("ValidTillDate");
+                            if (validity != null) {
+                                DocumentReference documentReference = fstore.collection("ScratchCard").document(id);
+                                documentReference.update("ValidTillDate", "3/31/2021")
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.i("Update", "Successfull");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("ErrorUpdate", "NotUpdated");
+                                            }
+                                        });
+
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Error","onFailure",e);
+                    }
+                });
+
+
+
+    }*/
 }
