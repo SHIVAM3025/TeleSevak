@@ -154,7 +154,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                 startActivity(intent);
 
                 DocumentReference ststusup = fStore.collection("ScratchCard").document(Patientcard);
-                ststusup.update("Status","2");
+               /* ststusup.update("Status","2");*/
                 ststusup.update("ConsultationID",consultitemid)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -170,7 +170,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
 
                 DocumentReference consult = fStore.collection("Patient").document(itemid);
-                consult.update("Status","2")
+                consult.update("Status","Completed")
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -184,7 +184,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
 
                 DocumentReference consultitem = fStore.collection("Consultation").document(consultitemid);
-                consultitem.update("Status","2")
+                consultitem.update("Status","Completed")
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -320,7 +320,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
 
         DocumentReference ststusup = fStore.collection("ScratchCard").document(Patientcard);
-        ststusup.update("Status","2");
+       /* ststusup.update("Status","Completed");*/
         ststusup.update("ConsultationID",consultitemid)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -336,7 +336,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
 
         DocumentReference consult = fStore.collection("Patient").document(itemid);
-        consult.update("Status","2")
+        consult.update("Status","Completed")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -350,7 +350,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
 
         DocumentReference consultitem = fStore.collection("Consultation").document(consultitemid);
-        consultitem.update("Status","2")
+        consultitem.update("Status","Completed")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

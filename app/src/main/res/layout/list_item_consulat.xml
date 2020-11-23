@@ -39,6 +39,24 @@
                 android:fontFamily="sans-serif-condensed"
                 tools:text="Dicoding" />
 
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/company"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="#ffffff"
+                android:textAllCaps="false"
+                android:id="@+id/followup"
+                android:background="@color/fbutton_color_peter_river"
+                android:gravity="center"
+                android:text="अंतिम परामर्श के लिए अनुरोध का पालन करें" />
+
+
         </LinearLayout>
 
     </RelativeLayout>

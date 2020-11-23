@@ -39,9 +39,10 @@ import app.sagar.telesevek.Status.StatusTwoActivity;
 import app.sagar.telesevek.VideoPKG.activity.BaseActivity;
 import app.sagar.telesevek.VideoPKG.service.SinchService;
 
+import static app.sagar.telesevek.AddPatiant.TAG;
 import static com.google.firebase.firestore.FirebaseFirestoreSettings.*;
 
-public class ScratchCardNew extends BaseActivity implements SinchService.StartFailedListener {
+public class ScratchCardNew extends AppCompatActivity{
 
    Date date1;
    Date date;
@@ -129,6 +130,11 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
                 fStore.setFirestoreSettings(settings);
 
 
+         //videocall
+
+
+
+
                 submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,14 +158,12 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
                         if (documentSnapshot.exists()) {
                             pd.dismiss();
 
-                            oldcard = documentSnapshot.getString("Status");
+                            oldcard = documentSnapshot.getString("ValidityStatus");
                             Toast.makeText(ScratchCardNew.this, ""+oldcard, Toast.LENGTH_SHORT).show();
-                            if("0".equals(oldcard)){
-                                Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
-                                sendStuff.putExtra("cardpass", cardnumber);
-                                startActivity(sendStuff);
+                            if("inactive".equals(oldcard)){
+                                Toast.makeText(ScratchCardNew.this, "your ScratchCard is inactive", Toast.LENGTH_SHORT).show();
                             }
-                            else if ("1".equals(oldcard)){
+                           /* else if ("1".equals(oldcard)){
 
 
                                 SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
@@ -184,19 +188,25 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
                             }
                             else if ("2".equals(oldcard)){
-                               /* Intent two = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusTwoActivity.class);
-                                startActivity(two);*/
+                               *//* Intent two = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusTwoActivity.class);
+                                startActivity(two);*//*
                                 Intent sendStuff = new Intent(ScratchCardNew.this, StatusTwoActivity.class);
                                 sendStuff.putExtra("card", cardnumber);
                                 startActivity(sendStuff);
+                            }*/
+                            else if("active".equals(oldcard)){
+                                /*Intent Doctowillcallyou = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusThreeActivity.class);
+                                startActivity(Doctowillcallyou);*/
+
+                                /*Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
+                                sendStuff.putExtra("cardpass", cardnumber);
+                                startActivity(sendStuff);*/
+
+                                status();
                             }
-                            else if("3".equals(oldcard)){
-                                Intent Doctowillcallyou = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusThreeActivity.class);
-                                startActivity(Doctowillcallyou);
+                            else if("expired".equals(oldcard)){
+                                Toast.makeText(ScratchCardNew.this, "your ScratchCard is expired", Toast.LENGTH_SHORT).show();
                             }
-                            else if("4".equals(oldcard)){
-                                Intent Doctowillcallyou = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusFourActivity.class);
-                                startActivity(Doctowillcallyou);   }
                             else {
 
                                   }
@@ -218,7 +228,7 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
     }
 
-    @Override
+    /*@Override
     protected void onServiceConnected() {
         getSinchServiceInterface().setStartListener(this);
     }
@@ -253,5 +263,31 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
         mSpinner.setTitle("Logging in");
         mSpinner.setMessage("Please wait...");
         mSpinner.show();
+    }
+*/
+    public void status(){
+        DocumentReference get = fStore.collection("ScratchCard").document(cardnumber);
+        get.addSnapshotListener(ScratchCardNew.this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (documentSnapshot.exists()) {
+                    Integer oldcardNEW = (Integer) documentSnapshot.getLong("RemainingConsultations").intValue();
+                    if(0 < oldcardNEW){
+                        Integer carde = oldcardNEW - 1;
+                        Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
+                        sendStuff.putExtra("cardpass", cardnumber);
+                        sendStuff.putExtra("remainconsult", carde);
+                        startActivity(sendStuff);
+                    }
+                    else {
+                        Toast.makeText(ScratchCardNew.this, "your ScratchCard is expired", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Log.d("tag", "onEvent: Document do not exists");
+                    pd.dismiss();
+                }
+            }
+        });
     }
 }

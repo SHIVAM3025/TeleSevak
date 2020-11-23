@@ -137,7 +137,7 @@ public class DoctorSideNew extends AppCompatActivity{
             }
         });
 
-        oneday = findViewById(R.id.yesterday);
+      /*  oneday = findViewById(R.id.yesterday);
         oneday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -155,7 +155,7 @@ public class DoctorSideNew extends AppCompatActivity{
                 Intent chemistinten = new Intent(DoctorSideNew.this, TommarowPatient.class);
                 startActivity(chemistinten);
             }
-        });
+        });*/
 
         SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
         String phonenumber = prefs.getString("phone", null);
@@ -210,7 +210,7 @@ public class DoctorSideNew extends AppCompatActivity{
             });
         }
 
-        t = new Thread() {
+        /*t = new Thread() {
 
             @Override
             public void run() {
@@ -220,7 +220,7 @@ public class DoctorSideNew extends AppCompatActivity{
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                               /* check();*/
+                               *//* check();*//*
                             }
                         });
                     }
@@ -229,18 +229,18 @@ public class DoctorSideNew extends AppCompatActivity{
             }
         };
 
-        t.start();
+        t.start();*/
 
 
         String datetime = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Patient").whereEqualTo("Status","1").whereEqualTo("DateTime",datetime);
+        Query query = fStore.collection("Consultation").whereEqualTo("Status","Requested").whereEqualTo("TypeOfConsultation","Primary").orderBy("Time",Query.Direction.ASCENDING);
 
 
 
-        FirestoreRecyclerOptions<PatientResponse> response = new FirestoreRecyclerOptions.Builder<PatientResponse>()
-                .setQuery(query, PatientResponse.class)
+        FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
+                .setQuery(query, ConsultResponse.class)
                 .build();
 
 
@@ -250,12 +250,12 @@ public class DoctorSideNew extends AppCompatActivity{
 
 
 
-        adapter = new FirestoreRecyclerAdapter<PatientResponse, FriendsHolder>(response) {
+        adapter = new FirestoreRecyclerAdapter<ConsultResponse, FriendsHolder>(response) {
             @Override
-            public void onBindViewHolder(final FriendsHolder holder, int position, final PatientResponse model) {
+            public void onBindViewHolder(final FriendsHolder holder, int position, final ConsultResponse model) {
                 progressBar.setVisibility(View.GONE);
-                holder.textName.setText(model.getName());
-                holder.textTitle.setText(model.getSymptoms());
+                holder.textName.setText(model.getPName());
+                holder.textTitle.setText(model.getSymtoms());
                 holder.textCompany.setText(model.getDateTime());
                 /*Glide.with(getApplicationContext())
                         .load(model.getImage())
@@ -331,7 +331,35 @@ public class DoctorSideNew extends AppCompatActivity{
                             }
                         });*/
 
-                        date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault()).format(new Date());
+                        DocumentReference consultitem = fStore.collection("Consultation").document(model.getConsultationId());
+                        consultitem.update("DoctorId",Did);
+                        consultitem.update("DoctorName",Dname)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Intent sendStuff = new Intent(DoctorSideNew.this, DoctorCallActivity.class);
+                                        sendStuff.putExtra("PatientPassId", model.getPatientPhone());
+                                        sendStuff.putExtra("PatientCard", model.getPatientCard());
+                                        sendStuff.putExtra("Pname", model.getPName());
+                                        sendStuff.putExtra("Symtoms", model.getSymtoms());
+                                        sendStuff.putExtra("itemid", model.getItemId());
+                                        sendStuff.putExtra("page", model.getAge());
+                                        sendStuff.putExtra("pgender", model.getGender());
+                                        sendStuff.putExtra("consultitemid", model.getConsultationId());
+                                        startActivity(sendStuff);
+
+                                        pd.dismiss();
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(DoctorSideNew.this, "wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                       /* date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault()).format(new Date());
                         DocumentReference documentReference2 = fStore.collection("Consultation").document(id);
                         Map<String,Object> user2 = new HashMap<>();
                         user2.put("ConsultationId",id);
@@ -343,23 +371,23 @@ public class DoctorSideNew extends AppCompatActivity{
                         user2.put("Symtoms",model.getSymptoms());
                         user2.put("Age",model.getAge());
                         user2.put("Gender",model.getGender());
-               /* user.put("ChemistId",ChemistId);
+               *//* user.put("ChemistId",ChemistId);
                 user.put("ChemistName",ChemistName);
-                user.put("ChemistPhoneNumber",ChemistPhoneNumber);*/
+                user.put("ChemistPhoneNumber",ChemistPhoneNumber);*//*
                         user2.put("DoctorId",Did);
                         user2.put("DoctorName",Dname);
                         user2.put("Block","none");
                         user2.put("DateTime",date);
-                        user2.put("Status","1");
+                        user2.put("Status","Requested");
                         user2.put("Time",model.getTime());
                         user2.put("url","");
                         user2.put("urldescription","");
                         documentReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                        /*Intent sendStuff = new Intent(DoctorSide.this, ActivityCallDoctortoP.class);
+                        *//*Intent sendStuff = new Intent(DoctorSide.this, ActivityCallDoctortoP.class);
                         sendStuff.putExtra("PatientPassId", pPhoneNumber);
-                        startActivity(sendStuff);*/
+                        startActivity(sendStuff);*//*
 
                                 Intent sendStuff = new Intent(DoctorSideNew.this, DoctorCallActivity.class);
                                 sendStuff.putExtra("PatientPassId", model.getPhoneNumber());
@@ -385,7 +413,7 @@ public class DoctorSideNew extends AppCompatActivity{
                             public void onFailure(@NonNull Exception e) {
                                 pd.dismiss();
                             }
-                        });
+                        });*/
                     }
                 });
 

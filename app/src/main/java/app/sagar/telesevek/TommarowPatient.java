@@ -133,7 +133,7 @@ public class TommarowPatient extends AppCompatActivity {
             }
         });
 
-        oneday = findViewById(R.id.today);
+        /*oneday = findViewById(R.id.today);
         oneday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -151,7 +151,7 @@ public class TommarowPatient extends AppCompatActivity {
                 Intent chemistinten = new Intent(TommarowPatient.this, YesterdayPatient.class);
                 startActivity(chemistinten);
             }
-        });
+        });*/
 
         SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
         String phonenumber = prefs.getString("phone", null);
@@ -233,7 +233,7 @@ public class TommarowPatient extends AppCompatActivity {
         String datetime = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Patient").whereEqualTo("Status","1").whereEqualTo("DateTime3",datetime);
+        Query query = fStore.collection("Patient").whereEqualTo("Status","Requested").whereEqualTo("DateTime3",datetime).whereEqualTo("TypeOfConsultation","Primary");
 
 
 

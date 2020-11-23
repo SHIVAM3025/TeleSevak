@@ -135,13 +135,14 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
                 holder.call.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                                Intent sendStuff = new Intent(DoctorSidePastConsulation.this, DoctorCallActivityFollow.class);
-                                sendStuff.putExtra("PatientPassId", model.getPatientId());
+                                Intent sendStuff = new Intent(DoctorSidePastConsulation.this, DoctorCallActivity.class);
+                                sendStuff.putExtra("PatientPassId", model.getPatientPhone());
                                 sendStuff.putExtra("PatientCard", model.getPatientCard());
                                 sendStuff.putExtra("Pname", model.getPName());
                                 sendStuff.putExtra("Symtoms", model.getSymtoms());
                                 sendStuff.putExtra("page", model.getAge());
                                 sendStuff.putExtra("pgender", model.getGender());
+                                sendStuff.putExtra("itemid", model.getItemId());
                                 sendStuff.putExtra("consultitemid", model.getConsultationId());
                                 startActivity(sendStuff);
 

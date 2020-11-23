@@ -32,7 +32,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.AsyncHttpClient;
@@ -48,6 +51,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import app.sagar.telesevek.Models.FirebaseUserModel;
 import app.sagar.telesevek.Models.Doctor;
 import app.sagar.telesevek.PhoneAuthConsulation.MainActivity;
@@ -71,11 +77,13 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
     Button ourdoctor;
     FirebaseFirestore fStore;
     String card;
+    int remainconsult;
     String phone;
     RadioGroup radioGroup;
     RadioButton radioButton;
     RadioButton radioButton2;
     String date;
+    String date2;
     String userID,Chemistname,chemistid,chemistphonenumber;
     private RequestQueue mRequestQue;
     private String URL = "https://fcm.googleapis.com/fcm/send";
@@ -249,6 +257,8 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         });*/
 
         card = getIntent().getStringExtra("cardpass");
+        remainconsult = getIntent().getIntExtra("remainconsult",0);
+        Toast.makeText(AddPatiant.this, ""+remainconsult, Toast.LENGTH_SHORT).show();
        /* phone = getIntent().getStringExtra("phonenumber");*/
 
        /* mPhone.setText(phone);
@@ -259,7 +269,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         SimpleDateFormat dateFormatWithZone = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         final String currentTime = dateFormatWithZone.format(dateonly);
 
-        Toast.makeText(this, ""+currentTime, Toast.LENGTH_SHORT).show();
+
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,6 +312,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 pd.show();;
 
                 String id = fStore.collection("Patient").document().getId();
+                String id_consult = fStore.collection("Consultation").document().getId();
 
 
                 date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
@@ -320,7 +331,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
                 // register the user in firebase
 
-                DocumentReference documentReference = fStore.collection("Patient").document(id);
+                DocumentReference documentReference = fStore.collection("Patient").document(phone);
                 Map<String,Object> user = new HashMap<>();
                 user.put("Name",fullName);
                 user.put("PhoneNumber","+91"+phone);
@@ -329,11 +340,10 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 user.put("Gender",result);
                 user.put("DateTime",date);
                 user.put("Card",card);
-                user.put("DateTime2",finalexpiredate1);
-                user.put("DateTime3",finalexpiredate2);
                 user.put("Time",currentTime);
-                user.put("Status","1");
+                user.put("Status","Requested");
                 user.put("ItemId",id);
+                user.put("TypeOfConsultation","Primary");
                /* user.put("ChemistId",chemistid);
                 user.put("ChemistName",Chemistname);
                 user.put("ChemistPhoneNumber",chemistphonenumber);*/
@@ -424,15 +434,17 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 });
 
 
+
+
                 DocumentReference ststusup = fStore.collection("ScratchCard").document(card);
                 ststusup.update("Code",card);
-                ststusup.update("Status","1")
-               .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "onSuccess: user Profile is created for "+ userID);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                ststusup.update("RemainingConsultations",remainconsult)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "onSuccess: user Profile is created for "+ userID);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d(TAG, "onFailure: " + e.toString());
@@ -440,21 +452,44 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 });
 
 
-                DocumentReference pushnotify = fStore.collection("Notification").document("PatientRequestNotification");
-                Map<String,Object> usernotify = new HashMap<>();
-                usernotify.put("Notification","True");
-                usernotify.put("Name",fullName);
-                pushnotify.set(usernotify).addOnSuccessListener(new OnSuccessListener<Void>() {
+                date2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault()).format(new Date());
+                DocumentReference documentReference2 = fStore.collection("Consultation").document(id_consult);
+                Map<String,Object> user2 = new HashMap<>();
+                user2.put("ConsultationId",id_consult);
+                user2.put("PatientId",id);
+                user2.put("PatientPhone","+91"+phone);
+                user2.put("ItemId",id);
+                user2.put("PName",fullName);
+                user2.put("PatientCard",card);
+                user2.put("Symtoms",symtoms);
+                user2.put("Age",Age);
+                user2.put("Gender",result);
+               /* user.put("ChemistId",ChemistId);
+                user.put("ChemistName",ChemistName);
+                user.put("ChemistPhoneNumber",ChemistPhoneNumber);*/
+                user2.put("DoctorId","");
+                user2.put("DoctorName","");
+                user2.put("Block","none");
+                user2.put("DateTime",date2);
+                user2.put("Status","Requested");
+                user2.put("TypeOfConsultation","Primary");
+                user2.put("Time",currentTime);
+                user2.put("url","");
+                user2.put("urldescription","");
+                documentReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "onSuccess: user Profile is created for "+ userID);
+
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.toString());
+                        pd.dismiss();
                     }
                 });
+
+
 
 
             }
@@ -482,6 +517,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                     }
                 }).setNegativeButton("no", null).show();
     }
+
 
 
 

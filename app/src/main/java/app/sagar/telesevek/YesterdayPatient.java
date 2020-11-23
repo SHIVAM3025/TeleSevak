@@ -134,7 +134,7 @@ public class YesterdayPatient extends AppCompatActivity {
             }
         });
 
-        oneday = findViewById(R.id.today);
+       /* oneday = findViewById(R.id.today);
         oneday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -152,7 +152,7 @@ public class YesterdayPatient extends AppCompatActivity {
                 Intent chemistinten = new Intent(YesterdayPatient.this, TommarowPatient.class);
                 startActivity(chemistinten);
             }
-        });
+        });*/
 
         SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
         final String phonenumber = prefs.getString("phone", null);
@@ -211,7 +211,7 @@ public class YesterdayPatient extends AppCompatActivity {
         String datetime = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Patient").whereEqualTo("Status","1").whereEqualTo("DateTime2",datetime);
+        Query query = fStore.collection("Patient").whereEqualTo("Status","Requested").whereEqualTo("DateTime2",datetime).whereEqualTo("TypeOfConsultation","Primary");
 
 
 

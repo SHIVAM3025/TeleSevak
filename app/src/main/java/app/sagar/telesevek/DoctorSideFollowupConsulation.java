@@ -107,7 +107,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
 
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Consultation").whereEqualTo("Status","3").whereEqualTo("DoctorId",phonenumber);
+        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfConsultation","Followup").whereEqualTo("DoctorId",phonenumber);
 
         FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
                 .setQuery(query, ConsultResponse.class)
