@@ -41,7 +41,8 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
 
 public class LogindcActivity extends BaseActivity implements SinchService.StartFailedListener {
-    Button mButton,mButton2;
+    Button mButton;
+    TextView mButton2;
     ImageView icondoctor;
     TextView textclick;
     private FirebaseAuth firebaseAuth;
@@ -92,7 +93,7 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
         }*/
 
 
-        icondoctor = findViewById(R.id.iconp);
+       /* icondoctor = findViewById(R.id.iconp);
         icondoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -121,7 +122,7 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
                     openPlaceCallActivity();
                 }
             }
-        });
+        });*/
 
         textclick = findViewById(R.id.text);
         textclick.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +157,7 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
 
 
 
-        mButton2 = findViewById(R.id.doctor);
+        mButton2 = findViewById(R.id.tvIAmDoctor);
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
