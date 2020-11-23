@@ -1,11 +1,15 @@
 package app.sagar.telesevek.Status;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import app.sagar.telesevek.Buycard;
 import app.sagar.telesevek.OurDoctor;
@@ -22,6 +26,37 @@ public class StatusFourActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_four);
+
+
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.consultDoctor);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.pastConsult:
+                        startActivity(new Intent(StatusFourActivity.this,MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.buyCard:
+                        startActivity(new Intent(getApplicationContext(),Buycard.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.ourDoctors:
+                        startActivity(new Intent(getApplicationContext(),OurDoctor.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.consultDoctor:
+                        return true;
+                }
+                return false;
+            }
+        });
+        /*
         past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,5 +95,6 @@ public class StatusFourActivity extends AppCompatActivity {
                         startActivity(chemistinten);
                     }
                 });
+        */
     }
 }

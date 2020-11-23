@@ -1,5 +1,6 @@
 package app.sagar.telesevek;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -81,6 +84,33 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
         friendList.setLayoutManager(linearLayoutManager);
 
 
+        BottomNavigationView bottomNavDoctor=findViewById(R.id.bottomNavFollow);
+        bottomNavDoctor.setSelectedItemId(R.id.followUp_menu);
+
+        bottomNavDoctor.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.viewPast_menu:
+                        startActivity(new Intent(getApplicationContext(),DoctorSidePastConsulation.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.followUp_menu:
+                        return true;
+
+                    case R.id.current_menu:
+                        startActivity(new Intent(getApplicationContext(),DoctorSideNew.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
+        /*
         current = findViewById(R.id.card);
         current.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +129,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
                 startActivity(chemistinten);
             }
         });
+        */
 
 
 

@@ -1,95 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".AddPatiant">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:id="@+id/appbar"
-        android:background="@color/fbutton_color_peter_river"
-        android:layout_height="70dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:text="डॉक्टर का परामर्श"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content">
-
-        </TextView>
-    </RelativeLayout>
-
-
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/pname"
-        android:textAllCaps="false"
-        android:layout_below="@+id/appbar"
-        android:textStyle="bold"
-        android:layout_marginTop="40dp"
-        android:textColor="#c1c1c1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textSize="14dp"
-        android:text="स्वास्थ कार्ड कोड दर्ज करें।"/>
-
-           <EditText
-                android:layout_width="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
-                android:id="@+id/ed_scrach"
-               android:textSize="20dp"
-               android:layout_below="@+id/pname"
-               android:textStyle="bold"
-               android:background="#efefef"
-                android:textColorHint="#acacb1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_height="wrap_content"/>
-
-
-
-
-
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/ed_scrach"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:id="@+id/submit"
-                android:layout_centerVertical="true"
-                android:textSize="14dp"
-                android:background="#0095b6"
-                android:gravity="center"
-                android:textAllCaps="false"
-                android:textColor="#ffffff"
-                android:text="आगे बढ़े" />
-
-
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_below="@+id/submit"
-        android:layout_marginTop="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/ic_records"
-        android:layout_height="200dp"/>
-
-
-
-
 
 
     <!--<Button
@@ -139,7 +55,119 @@
         android:text="View Past Consultations" />
 -->
 
+    <RelativeLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/fbutton_color_peter_river"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
+        <ImageView
+            android:layout_width="155dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/newapplogo"
+            android:tint="@color/white" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/pname"
+        android:layout_width="354dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/appbar"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-light"
+
+        android:paddingStart="10dp"
+        android:text="डॉक्टर से करें परामर्श"
+        android:textAllCaps="false"
+        android:textColor="#807F7F"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.28"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
+    <EditText
+        android:id="@+id/etScratch"
+        android:layout_width="343dp"
+        android:layout_height="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:inputType="number"
+        android:background="@drawable/light_box"
+        android:drawableStart="@drawable/ic_card_scratch_new"
+        android:drawablePadding="15dp"
+        android:drawableTint="@color/colorPrimary"
+        android:hint="कार्ड नंबर भरें"
+        android:paddingStart="21dp"
+        android:textColorHint="#acacb1"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pname"
+        app:layout_constraintVertical_bias="0.023" />
+
+
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="343dp"
+        android:layout_height="36dp"
+
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/border_button"
+        android:gravity="center"
+        android:text="आगे बढ़े"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pname"
+        app:layout_constraintVertical_bias="0.172" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:backgroundTint="@color/fbutton_color_peter_river"
+        android:outlineAmbientShadowColor="@color/fbutton_color_peter_river"
+        android:outlineSpotShadowColor="@color/fbutton_color_peter_river"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/patient_menu" />
+
+<!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
@@ -205,5 +233,6 @@
             android:textSize="12dp"
             android:text="हमारे डॉक्टर"/>
     </LinearLayout>
+    -->
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

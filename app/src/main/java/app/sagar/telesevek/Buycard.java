@@ -1,5 +1,6 @@
 package app.sagar.telesevek;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -43,6 +47,38 @@ public class Buycard extends AppCompatActivity {
         init();
         getFriendList();
 
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.buyCard);
+
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.pastConsult:
+                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.buyCard:
+                        return true;
+
+                    case R.id.ourDoctors:
+                        startActivity(new Intent(getApplicationContext(),OurDoctor.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.consultDoctor:
+                        startActivity(new Intent(getApplicationContext(),ScratchCardNew.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
+        /*
         past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +111,8 @@ public class Buycard extends AppCompatActivity {
                         startActivity(chemistinten);
                     }
                 });
+
+        */
 
     }
     private void init(){
@@ -151,7 +189,7 @@ public class Buycard extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-    @Override
+    /*@Override
     public void onBackPressed() {
         new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
                 .setMessage("Are you sure?")
@@ -166,5 +204,15 @@ public class Buycard extends AppCompatActivity {
                         System.exit(0);
                     }
                 }).setNegativeButton("no", null).show();
+    }*/
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 }

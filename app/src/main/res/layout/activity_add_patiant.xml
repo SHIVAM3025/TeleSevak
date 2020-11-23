@@ -260,6 +260,25 @@
     </RelativeLayout>
     </ScrollView>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:outlineAmbientShadowColor="@color/fbutton_color_peter_river"
+        android:outlineSpotShadowColor="@color/fbutton_color_peter_river"
+        android:backgroundTint="@color/fbutton_color_peter_river"
+        app:labelVisibilityMode="labeled"
+        android:background="#fff"
+        app:menu="@menu/patient_menu"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"/>
+
+    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
@@ -323,5 +342,7 @@
             android:textSize="12dp"
             android:text="हमारे डॉक्टर"/>
     </LinearLayout>
+
+    -->
 
 </RelativeLayout>

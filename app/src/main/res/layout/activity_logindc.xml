@@ -1,110 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:background="#e4f2f3"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:alpha="0.83"
+    android:background="@drawable/gradient"
     tools:context=".LogindcActivity">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:weightSum="3"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_weight="1.2"
+        android:layout_height="match_parent"
+        android:alpha="1"
         android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="319dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="150dp"
+            android:fontFamily="sans-serif-black"
+
+            android:text="प्रसिद्द डॉक्टरों से करें परामर्श"
+            android:textAlignment="center"
+            android:textColor="#044E5D"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.064" />
 
         <ImageView
             android:id="@+id/dp"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_doctors_logo" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_weight="1.2"
-        android:gravity="top"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="45dp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/rel"
-            android:background="@drawable/borderb"
-            android:layout_height="155dp">
-
-
-            <ImageView
-                android:id="@+id/iconp"
-                android:layout_centerHorizontal="true"
-                android:layout_width="100dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/doctoricon" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:id="@+id/text"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:background="@drawable/bottomradies"
-                android:textColor="#ffffff"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/iconp"
-                android:text="डॉक्टर से परामर्श लें"/>
-
-
-
-
-
-
-        </RelativeLayout>
-
-
-
-
-
+            android:layout_width="320dp"
+            android:layout_height="408dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="100dp"
+            android:alpha="1"
+            android:src="@drawable/doctorsdr"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintVertical_bias="0.083" />
 
         <Button
-            android:background="@drawable/border"
-            android:layout_height="40dp"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:textColor="#ffffff"
-            android:textSize="12dp"
-            android:id="@+id/doctor"
-            android:backgroundTint="@color/fbutton_color_peter_river"
-            android:textStyle="bold"
-            android:textAllCaps="false"
-            android:layout_marginBottom="60dp"
-            android:text="मैं डाक्टर हूँ"
-            android:layout_marginRight="45dp"
-            android:layout_marginLeft="45dp"
-            />
+            android:id="@+id/btConsultDoctor"
+            android:layout_width="272dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/border_button"
+            android:text="डॉक्टर से परामर्श लें"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:fontFamily="sans-serif"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dp"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <TextView
+            android:id="@+id/tvIAmDoctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="मै डॉक्टर हूँ"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btConsultDoctor"
+            app:layout_constraintVertical_bias="0.317" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvIAmDoctor"
+            app:layout_constraintVertical_bias="0.0" />
 
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </LinearLayout>
-</LinearLayout>
-
-
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

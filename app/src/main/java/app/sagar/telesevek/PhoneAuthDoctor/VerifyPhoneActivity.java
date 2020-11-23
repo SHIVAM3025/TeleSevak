@@ -86,11 +86,11 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
                             SharedPreferences.Editor prefsEditor = getSharedPreferences("User", MODE_PRIVATE).edit();
                             prefsEditor.putString("phone", phonenumber);
-                            prefsEditor.commit();
+                            prefsEditor.apply();
 
                             SharedPreferences.Editor doctorsave = getSharedPreferences("chemist", MODE_PRIVATE).edit();
                             doctorsave.putString("dadd", "doctorname");
-                            doctorsave.commit();
+                            doctorsave.apply();
 
                             startActivity(intent);
 
