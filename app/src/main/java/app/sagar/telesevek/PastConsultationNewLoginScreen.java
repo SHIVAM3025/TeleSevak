@@ -40,7 +40,9 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
         setContentView(R.layout.activity_past_consultation_new_login_screen);
 
 
-        SharedPreferences prefs = getSharedPreferences("past", MODE_PRIVATE);
+        //disabling the auto detection of user
+
+        /*SharedPreferences prefs = getSharedPreferences("past", MODE_PRIVATE);
         String dname = prefs.getString("passdata", null);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -55,7 +57,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
             }
 
 
-        }
+        }*/
 
         etNumber=findViewById(R.id.etEnterNumber);
         btCard=findViewById(R.id.relCard);
