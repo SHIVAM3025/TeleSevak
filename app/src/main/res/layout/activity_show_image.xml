@@ -157,8 +157,8 @@
 
     <ImageView
         android:id="@+id/downloadImage"
-        android:layout_width="235dp"
-        android:layout_height="185dp"
+        android:layout_width="174dp"
+        android:layout_height="176dp"
 
         android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
@@ -181,13 +181,13 @@
 
     <Button
         android:id="@+id/btDownload"
-        android:layout_width="261dp"
+        android:layout_width="300dp"
         android:layout_height="49dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/border_button"
         android:text="Download Prescription"
-        android:textSize="18sp"
         android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

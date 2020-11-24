@@ -14,9 +14,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
@@ -33,6 +44,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
     private boolean isPhone=true;
     private String phoneNumber;
     private String cardNumber;
+    private FirebaseFirestore fstore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +110,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
             }
         });
 
+        fstore=FirebaseFirestore.getInstance();
 
 
         btContinue.setOnClickListener(new View.OnClickListener() {
@@ -114,9 +127,15 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                     }
                     String phoneNumberNew = "+" + "91" + phoneNumber;
 
-                    Intent intent = new Intent(getApplicationContext(), VerifyPhoneActivity.class);
-                    intent.putExtra("phonenumber", phoneNumberNew);
-                    startActivity(intent);
+
+
+                        Intent intent = new Intent(getApplicationContext(), VerifyPhoneActivity.class);
+                        intent.putExtra("phonenumber", phoneNumberNew);
+                        startActivity(intent);
+
+
+
+
 
                 }
 
@@ -133,6 +152,69 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                     intent.putExtra("cardNumber",cardNumber);
                     intent.putExtra("isScratchCard",true);
                     startActivity(intent);
+
+                    /*fstore.collection("Consultation").whereEqualTo("PatientCard",cardNumber)
+
+
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
+
+
+                                        for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
+
+
+                                            String id= document.getId();
+
+                                            DocumentReference documentReference=fstore.collection("ScratchCard").document(id);
+                                            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    String remainConsult=(String)documentSnapshot.get("RemainingConsultations");
+                                                    String totalConsult=documentSnapshot.getString("TotalConsultations");
+
+                                                    assert remainConsult != null;
+                                                    if(remainConsult.equals(totalConsult)){
+                                                        //means new scratch card
+                                                        Intent intent=new Intent(getApplicationContext(),NoOldParamarsh.class);
+                                                        overridePendingTransition(0,0);
+                                                        startActivity(intent);
+
+                                                    }
+                                                    else{
+                                                        Intent intent=new Intent(getApplicationContext(),PastCounsulation.class);
+                                                        intent.putExtra("cardNumber",cardNumber);
+                                                        intent.putExtra("isScratchCard",true);
+                                                        startActivity(intent);
+                                                    }
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+
+                                                }
+                                            });
+                                        }
+                                    }
+                                    else{
+                                        Toast.makeText(PastConsultationNewLoginScreen.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });*/
+
+
+                            /*if(inConsultation){
+                                Intent intent=new Intent(getApplicationContext(),PastCounsulation.class);
+                                intent.putExtra("cardNumber",cardNumber);
+                                intent.putExtra("isScratchCard",true);
+                                startActivity(intent);
+                            }else {
+                                Intent intent=new Intent(getApplicationContext(),NoOldParamarsh.class);
+                                overridePendingTransition(0,0);
+                                startActivity(intent);
+                            }*/
+
                 }
             }
         });
