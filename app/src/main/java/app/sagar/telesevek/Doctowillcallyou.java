@@ -30,6 +30,18 @@ public class Doctowillcallyou extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctowillcallyou);
 
+
+        buy = findViewById(R.id.submit);
+        buy.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        Intent chemistinten = new Intent(Doctowillcallyou.this, ScratchCardNew.class);
+                        startActivity(chemistinten);
+                    }
+                });
+
         SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
         final String phonenumber = prefs.getString("pimageid", "nodata");
 

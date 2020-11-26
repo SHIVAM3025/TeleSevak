@@ -55,7 +55,7 @@ public class ShowImageActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         Docuidi = bundle.getString("DocuId");
-        download = (Button) findViewById(R.id.downloadBtn);
+        download = (Button) findViewById(R.id.btDownload);
         pd = new ProgressDialog(ShowImageActivity.this);
         pd.setMessage("loading..");
 
@@ -66,7 +66,7 @@ public class ShowImageActivity extends AppCompatActivity {
             }
         });
         try {
-            nameOfImageET = findViewById(R.id.desctext);
+            nameOfImageET = findViewById(R.id.textView15);
             downloadedIV = findViewById(R.id.downloadImage);
 
             objectFirebaseFirestore = FirebaseFirestore.getInstance();

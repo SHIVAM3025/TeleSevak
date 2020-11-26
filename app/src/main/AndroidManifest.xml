@@ -4,21 +4,18 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <uses-feature
         android:name="android.hardware.microphone"
         android:required="false" />
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!--Rishpreet comment-->
-
-
-    <!--sagar-->
 
     <application
         android:allowBackup="true"
@@ -27,110 +24,149 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Status.StatusFourActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"></activity>
-        <activity android:name=".Status.StatusThreeActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/> <!-- <activity android:name=".DoctorCallActivity"></activity> -->
-        <activity android:name=".Status.StatusTwoActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".Doctowillcallyou"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".ScratchCardNew"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".DoctorSideNew"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".DoctorSideFollowupConsulation"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".DoctorSidePastConsulation"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PatientFullImageShow"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".Buycard"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PastCounsulation"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".ScrachCard"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".OurDoctor"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".DoctorCallActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".DoctorCallActivityFollow"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".ActivityCallDoctortoP"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/> <!-- <activity android:name=".AddPatiant" /> -->
+        <activity android:name=".NewActivityDetails"></activity>
+        <activity
+            android:name=".Status.StatusFourActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Status.StatusThreeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" /> <!-- <activity android:name=".DoctorCallActivity"></activity> -->
+        <activity
+            android:name=".Status.StatusTwoActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Doctowillcallyou"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScratchCardNew"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorSideNew"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorSideFollowupConsulation"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorSidePastConsulation"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PatientFullImageShow"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Buycard"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PastCounsulation"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PastConsultationNewLoginScreen"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScrachCard"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OurDoctor"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorCallActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorCallActivityFollow"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActivityCallDoctortoP"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" /> <!-- <activity android:name=".AddPatiant" /> -->
         <!-- <activity android:name=".DoctorSide"></activity> -->
         <!-- <activity android:name=".DoctorConfirm" /> -->
-        <activity android:name=".uploadpkg.ShowImageActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".uploadpkg.UploadImage"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PetientLoading"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".ProfileChemist"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".EditProfile"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".Login"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".AddPatiant"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PhoneAuthDoctor.MainActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PhoneAuthDoctor.VerifyPhoneActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".DoctorSide"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".DoctorConfirm"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PhoneAuthChemist.MainActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PhoneAuthChemist.VerifyPhoneActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PhoneAuthConsulation.MainActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".PhoneAuthConsulation.VerifyPhoneActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".LogindcActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".YesterdayPatient"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
-        <activity android:name=".TommarowPatient"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"/>
+        <activity
+            android:name=".uploadpkg.ShowImageActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".uploadpkg.UploadImage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PetientLoading"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileChemist"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditProfile"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddPatiant"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PhoneAuthDoctor.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PhoneAuthDoctor.VerifyPhoneActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorSide"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorConfirm"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PhoneAuthChemist.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PhoneAuthChemist.VerifyPhoneActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PhoneAuthConsulation.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PhoneAuthConsulation.VerifyPhoneActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LogindcActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".YesterdayPatient"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TommarowPatient"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity android:name=".SplachScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -138,40 +174,44 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivity"/>
-        <activity android:name=".Activity.ChattingActivity"/>
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.ChattingActivity" />
+        <activity android:name=".ReceiveNotificationActivity" />
 
-        <activity android:name=".ReceiveNotificationActivity"></activity>
-
-        <service android:name="app.sagar.telesevek.Services.MyFirebaseInstanceIdService">
+        <service android:name=".Services.MyFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="app.sagar.telesevek.Services.MyFirebaseMessagingService">
+        <service android:name=".Services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".VideoPKG.service.SinchService"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".VideoPKG.activity.PlaceCallActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".VideoPKG.activity.BaseActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".VideoPKG.activity.IncomingCallScreenActivity"
+        <service
+            android:name=".VideoPKG.service.SinchService"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".VideoPKG.activity.PlaceCallActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoPKG.activity.BaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoPKG.activity.IncomingCallScreenActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".VideoPKG.activity.CallScreenActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoPKG.activity.CallScreenActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".Notify.ForegroundService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity android:name=".ProfileDoctor" />
-
 
         <meta-data
             android:name="preloaded_fonts"

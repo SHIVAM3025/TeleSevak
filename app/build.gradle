@@ -3,18 +3,18 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
-        /*release {
+        release {
             storeFile file('C:\\Users\\sagar\\AndroidStudioProjects\\Telesevek\\firebase-authentication-android-master\\app\\play.jks')
             storePassword 'sagar123'
             keyAlias 'key0'
             keyPassword 'sagar123'
-        }*/
-        release {
+        }
+       /* release {
             storeFile file('C:\\Users\\Admin\\Keystores\\KeystoreTelesevak.jks')
             storePassword 'Rish@vi99'
             keyAlias 'key0'
             keyPassword 'Rish@key99'
-        }
+        }*/
     }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"

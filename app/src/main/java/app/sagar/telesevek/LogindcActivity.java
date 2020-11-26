@@ -44,7 +44,7 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
     Button mButton;
     TextView mButton2;
     ImageView icondoctor;
-    TextView textclick;
+    Button textclick;
     private FirebaseAuth firebaseAuth;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private View parentLayout;
@@ -124,7 +124,7 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
             }
         });*/
 
-        textclick = findViewById(R.id.text);
+        textclick = findViewById(R.id.btConsultDoctor);
         textclick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)

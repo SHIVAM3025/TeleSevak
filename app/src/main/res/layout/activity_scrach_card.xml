@@ -89,12 +89,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-light"
-
         android:paddingStart="10dp"
         android:text="डॉक्टर से करें परामर्श"
         android:textAllCaps="false"
-        android:textColor="#807F7F"
-        android:textSize="20sp"
+        android:textColor="#868F91"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.28"
@@ -117,8 +116,8 @@
         android:drawableTint="@color/colorPrimary"
         android:hint="कार्ड नंबर भरें"
         android:paddingStart="21dp"
-        android:textColorHint="#acacb1"
-        android:textSize="20sp"
+        android:textColorHint="#707070"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,8 +129,8 @@
     <Button
         android:id="@+id/submit"
         android:layout_width="343dp"
-        android:layout_height="36dp"
-
+        android:layout_height="39dp"
+        android:layout_marginTop="20dp"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
@@ -167,72 +166,92 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/patient_menu" />
 
-<!--
-    <LinearLayout
+
+    <ImageView
+        android:id="@+id/dp"
+        android:layout_width="380dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="20dp"
+        android:alpha="1"
+        android:src="@drawable/scractbuttom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submit"
+        app:layout_constraintVertical_bias="0.083" />
+
+
+    <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:background="#ffffff"
+            android:id="@+id/bootombutton"
+            android:layout_alignParentBottom="true"
+            android:layout_height="60dp">
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/consult"
+                android:drawableTop="@drawable/ic_doctor"
+                android:layout_weight="1"
+                android:textColor="@color/fbutton_color_peter_river"
+                android:drawableTint="@color/fbutton_color_peter_river"
+                android:paddingTop="10dp"
+             android:background="@drawable/settop"
+                android:textAllCaps="false"
+                android:textSize="12dp"
+                android:text="परामर्श ले"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#000000"
+                android:id="@+id/Past"
+                android:paddingTop="10dp"
+                android:drawableTop="@drawable/ic_document"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:textAllCaps="false"
+                android:textSize="12dp"
+                android:text="पुराने परामर्श"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#000000"
+                android:id="@+id/card"
+                android:paddingTop="10dp"
+                android:drawableTop="@drawable/ic_card"
+                android:textAllCaps="false"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:textSize="12dp"
+                android:text="कार्ड खरीदें"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#000000"
+                android:id="@+id/odoctor"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:background="#ffffff"
+                android:textAllCaps="false"
+                android:drawableTop="@drawable/ic_ourdoctors"
+                android:textSize="12dp"
+                android:text="हमारे डॉक्टर"/>
+        </LinearLayout>
+        -->
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        android:background="#ffffff"
-        android:id="@+id/bootombutton"
-        android:layout_alignParentBottom="true"
-        android:layout_height="60dp">
-
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/consult"
-            android:drawableTop="@drawable/ic_doctor"
-            android:layout_weight="1"
-            android:textColor="@color/fbutton_color_peter_river"
-            android:drawableTint="@color/fbutton_color_peter_river"
-            android:paddingTop="10dp"
-         android:background="@drawable/settop"
-            android:textAllCaps="false"
-            android:textSize="12dp"
-            android:text="परामर्श ले"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000000"
-            android:id="@+id/Past"
-            android:paddingTop="10dp"
-            android:drawableTop="@drawable/ic_document"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:textAllCaps="false"
-            android:textSize="12dp"
-            android:text="पुराने परामर्श"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000000"
-            android:id="@+id/card"
-            android:paddingTop="10dp"
-            android:drawableTop="@drawable/ic_card"
-            android:textAllCaps="false"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:textSize="12dp"
-            android:text="कार्ड खरीदें"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000000"
-            android:id="@+id/odoctor"
-            android:layout_weight="1"
-            android:paddingTop="10dp"
-            android:background="#ffffff"
-            android:textAllCaps="false"
-            android:drawableTop="@drawable/ic_ourdoctors"
-            android:textSize="12dp"
-            android:text="हमारे डॉक्टर"/>
-    </LinearLayout>
-    -->
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

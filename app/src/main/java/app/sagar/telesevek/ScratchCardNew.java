@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -85,14 +87,14 @@ public class ScratchCardNew extends AppCompatActivity{
 
         //
 
-        scrached = findViewById(R.id.ed_scrach);
+        scrached = findViewById(R.id.etScratch);
         submit = findViewById(R.id.submit);
 
 
 
         fStore = FirebaseFirestore.getInstance();
 
-        past = findViewById(R.id.Past);
+       /* past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +122,7 @@ public class ScratchCardNew extends AppCompatActivity{
                         Intent chemistinten = new Intent(ScratchCardNew.this, OurDoctor.class);
                         startActivity(chemistinten);
                     }
-                });
+                });*/
 
 
         //
@@ -226,6 +228,36 @@ public class ScratchCardNew extends AppCompatActivity{
         });
 
 
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.consultDoctor);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.pastConsult:
+                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.buyCard:
+                        startActivity(new Intent(getApplicationContext(),Buycard.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.ourDoctors:
+                        startActivity(new Intent(getApplicationContext(),OurDoctor.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.consultDoctor:
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
     }
 
     /*@Override
@@ -272,11 +304,19 @@ public class ScratchCardNew extends AppCompatActivity{
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if (documentSnapshot.exists()) {
                     Integer oldcardNEW = (Integer) documentSnapshot.getLong("RemainingConsultations").intValue();
+                    String cardprice = documentSnapshot.getString("Value");
+                    String puranecard = documentSnapshot.getString("TotalConsultations");
+                    String validdate = documentSnapshot.getString("ValidTillDate");
                     if(0 < oldcardNEW){
                         Integer carde = oldcardNEW - 1;
-                        Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
+                        Integer carde2 = oldcardNEW;
+                        Intent sendStuff = new Intent(ScratchCardNew.this, NewActivityDetails.class);
                         sendStuff.putExtra("cardpass", cardnumber);
                         sendStuff.putExtra("remainconsult", carde);
+                        sendStuff.putExtra("remainconsultall", oldcardNEW);
+                        sendStuff.putExtra("cardprice", cardprice);
+                        sendStuff.putExtra("puranecard", puranecard);
+                        sendStuff.putExtra("validdate", validdate);
                         startActivity(sendStuff);
                     }
                     else {

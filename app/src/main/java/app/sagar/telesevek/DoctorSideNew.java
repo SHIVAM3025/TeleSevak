@@ -146,7 +146,7 @@ public class DoctorSideNew extends AppCompatActivity{
 
         //up menu
 
-        BottomNavigationView upNav=findViewById(R.id.bottomNavigationView2);
+        /*BottomNavigationView upNav=findViewById(R.id.bottomNavigationView2);
         upNav.setSelectedItemId(R.id.todayUpDoctor_menu);
 
         upNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -169,7 +169,7 @@ public class DoctorSideNew extends AppCompatActivity{
                 }
                 return false;
             }
-        });
+        });*/
 
 
 
@@ -294,6 +294,8 @@ public class DoctorSideNew extends AppCompatActivity{
 
         fStore = FirebaseFirestore.getInstance();
         Query query = fStore.collection("Consultation").whereEqualTo("Status","Requested").whereEqualTo("TypeOfConsultation","Primary").orderBy("Time",Query.Direction.ASCENDING);
+
+
 
 
 

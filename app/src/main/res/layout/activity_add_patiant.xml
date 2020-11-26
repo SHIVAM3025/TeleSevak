@@ -41,9 +41,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/pname"
         android:textAllCaps="false"
-        android:textStyle="bold"
         android:layout_below="@+id/appbar"
-        android:textColor="#c1c1c1"
+        android:textColor="#382727"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="40dp"
         android:textSize="14dp"
@@ -56,7 +55,7 @@
         android:gravity="center"
         android:id="@+id/ed_pname"
         android:inputType="text"
-        android:background="#efefef"
+        android:background="@drawable/edittextr"
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
         android:layout_height="30dp"/>
@@ -65,12 +64,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:textStyle="bold"
-        android:textColor="#c1c1c1"
+        android:textColor="#382727"
         android:id="@+id/p_number"
         android:backgroundTint="#f1f5f8"
         android:layout_below="@+id/ed_pname"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
         android:textSize="14dp"
         android:text="रोगी फोन नंबर दर्ज करें"/>
@@ -84,32 +82,10 @@
         android:id="@+id/ed_pnumber"
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
-        android:background="#efefef"
+        android:background="@drawable/edittextr"
         android:layout_height="30dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:textColor="#c1c1c1"
-        android:id="@+id/p_symptom"
-        android:layout_below="@+id/ed_pnumber"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="40dp"
-        android:textSize="14dp"
-        android:text="रोगी लक्षण दर्ज करें"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_below="@+id/p_symptom"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:inputType="text"
-        android:id="@+id/ed_symptom"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="#efefef"
-        android:layout_height="30dp"/>
+
 
 
         <LinearLayout
@@ -120,18 +96,17 @@
             android:id="@+id/textageandg"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
-            android:layout_below="@+id/ed_symptom"
+            android:layout_below="@+id/ed_pnumber"
             android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
-                android:textStyle="bold"
-                android:textColor="#c1c1c1"
+                android:textColor="#382727"
                 android:id="@+id/age"
                 android:layout_weight="1"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:textSize="14dp"
                 android:text="उम्र"/>
 
@@ -143,7 +118,7 @@
                 android:textColor="#c1c1c1"
                 android:id="@+id/gender"
                 android:layout_weight="1"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="40dp"
                 android:textSize="14dp"
                 android:text="लिंग"/>
@@ -168,7 +143,7 @@
                 android:id="@+id/ed_age"
                 android:inputType="phone"
                 android:layout_marginRight="20dp"
-                android:background="#efefef"
+                android:background="@drawable/edittextr"
                 android:layout_weight="1.4"
                 android:layout_marginTop="5dp"
                 android:textSize="20dp" />
@@ -194,17 +169,41 @@
            </RadioGroup>
         </LinearLayout>
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textColor="#382727"
+            android:id="@+id/p_symptom"
+            android:layout_below="@+id/edagelinear"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:textSize="14dp"
+            android:text="रोगी लक्षण दर्ज करें"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_below="@+id/p_symptom"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:inputType="text"
+            android:id="@+id/ed_symptom"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/edittextr"
+            android:layout_height="100dp"/>
+
         <Button
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/edagelinear"
+            android:layout_height="39dp"
+            android:layout_below="@+id/ed_symptom"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:id="@+id/submit"
-            android:textSize="14dp"
-            android:background="#0095b6"
+            android:textSize="16dp"
+            android:background="@drawable/border_button"
             android:gravity="center"
             android:textAllCaps="false"
             android:textColor="#ffffff"
