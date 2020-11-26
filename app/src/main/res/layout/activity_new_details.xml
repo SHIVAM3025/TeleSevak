@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.sagar.telesevek.NewActivityDetails">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/appbar"
+        android:background="#36A8C1"
+        android:layout_height="70dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="डॉक्टर से परामर्श लें"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:drawableLeft="@drawable/ic_baseline_arrow_back_ios_24"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content">
+
+        </TextView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/lname"
+        android:layout_below="@+id/appbar"
+        android:layout_marginTop="20dp"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="कार्ड क्रमांक:"
+            android:layout_weight="1"
+            android:textSize="14dp"
+            android:textColor="#868F91"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="yyyyyyy"
+            android:layout_weight="1"
+            android:textSize="14dp"
+            android:textColor="#382727"
+            android:id="@+id/carnumber"
+            android:layout_height="wrap_content">
+        </TextView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/price"
+        android:layout_below="@+id/lname"
+        android:layout_marginTop="20dp"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="कार्ड कीमत:"
+            android:layout_weight="1"
+            android:textSize="14dp"
+            android:textColor="#868F91"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="yyyyyyy"
+            android:layout_weight="1"
+            android:textSize="14dp"
+            android:textColor="#868F91"
+            android:id="@+id/pricenumber"
+            android:layout_height="wrap_content">
+        </TextView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_below="@+id/price"
+        android:id="@+id/bootombutton"
+        android:layout_height="wrap_content">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:id="@+id/pp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:background="#8BCEDD"
+            android:textSize="12dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:text="पुराने परामर्श"
+                android:layout_marginTop="20dp"
+                android:textColor="#454646"
+                android:textSize="16dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="0"
+                android:id="@+id/puanecon"
+                android:textColor="#0095B6"
+                android:textSize="14dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:id="@+id/pb"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="#8BCEDD"
+            android:textSize="12dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:text="परामर्श बाकि"
+                android:textColor="#454646"
+                android:textSize="16dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="0"
+                android:id="@+id/rmain"
+                android:textColor="#0095B6"
+                android:textSize="14dp"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:id="@+id/cv"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="#8BCEDD"
+            android:textSize="12dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:text="कार्ड वैधता"
+                android:textColor="#454646"
+                android:textSize="16dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="0"
+                android:id="@+id/validdate"
+                android:textColor="#0095B6"
+                android:textSize="14dp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="308dp"
+        android:layout_height="39dp"
+        android:background="@drawable/border_button"
+        android:gravity="center"
+        android:text="नया परामर्ष शुरू कैरे"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/bootombutton"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+       />
+
+
+    <ImageView
+        android:id="@+id/dp"
+        android:layout_width="280dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/submit"
+        android:src="@drawable/bottomhand"
+        />
+
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:backgroundTint="@color/fbutton_color_peter_river"
+        android:outlineAmbientShadowColor="@color/fbutton_color_peter_river"
+        android:outlineSpotShadowColor="@color/fbutton_color_peter_river"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/patient_menu" />
+</RelativeLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="परामर्श लें"
+        android:icon="@drawable/ic_consult_new_new"
+        android:id="@+id/consultDoctor"/>
+
+    <item
+        android:title="पुराने परामर्श"
+        android:icon="@drawable/ic_documentation_new_new"
+        android:id="@+id/pastConsult"/>
+
+    <item
+        android:title="कार्ड खरीदें"
+        android:icon="@drawable/ic_card_scratch_new"
+        android:id="@+id/buyCard"/>
+
+    <item
+        android:title="हमारे डॉक्टर"
+        android:icon="@drawable/ic_ourdoctors_new"
+        android:id="@+id/ourDoctors"/>
+
+</menu>
