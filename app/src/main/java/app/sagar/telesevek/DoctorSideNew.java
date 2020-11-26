@@ -146,7 +146,7 @@ public class DoctorSideNew extends AppCompatActivity{
 
         //up menu
 
-        BottomNavigationView upNav=findViewById(R.id.bottomNavigationView2);
+        /*BottomNavigationView upNav=findViewById(R.id.bottomNavigationView2);
         upNav.setSelectedItemId(R.id.todayUpDoctor_menu);
 
         upNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -169,7 +169,7 @@ public class DoctorSideNew extends AppCompatActivity{
                 }
                 return false;
             }
-        });
+        });*/
 
 
 
@@ -790,21 +790,10 @@ public class DoctorSideNew extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
-                .setMessage("Are you sure?")
-                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        t.interrupt();
-
-                        Intent intent = new Intent(DoctorSideNew.this,LogindcActivity.class);
-                        startActivity(intent);
-                        finish();
-
-
-                    }
-                }).setNegativeButton("no", null).show();
+        super.onBackPressed();
+        Intent intent=new Intent(getApplicationContext(),LogindcActivity.class);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 
 

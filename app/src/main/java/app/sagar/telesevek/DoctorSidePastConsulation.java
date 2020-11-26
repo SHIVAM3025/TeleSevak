@@ -330,19 +330,10 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
-                .setMessage("Are you sure?")
-                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Intent intent = new Intent(DoctorSidePastConsulation.this,DoctorSideNew.class);
-                        startActivity(intent);
-                        finish();
-
-                        System.exit(0);
-                    }
-                }).setNegativeButton("no", null).show();
+        super.onBackPressed();
+        Intent intent=new Intent(getApplicationContext(),DoctorSideNew.class);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 
 }

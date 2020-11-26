@@ -16,12 +16,16 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="130dp"
+        android:alpha="0.6"
         android:src="@drawable/doctor_will_call"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:layout_constraintVertical_bias="0.008" />
 
     <RelativeLayout
         android:id="@+id/appbar"
@@ -56,15 +60,18 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="110dp"
         android:text="आपका एप्लीकेशन को दर्ज कर दिया गया है"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView9"
@@ -76,7 +83,7 @@
         android:text="दिशा निर्देश -"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/textView8"
         app:layout_constraintHorizontal_bias="0.092"
@@ -89,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:text="डॉक्टर आपसे कुछ समय में संपर्क करेंगे"
         android:textColor="@color/blue_grey_800"
         android:textSize="18sp"
@@ -119,7 +126,7 @@
         android:layout_height="10dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="30dp"
         android:background="@color/blue_grey_800"
         app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintEnd_toStartOf="@+id/textView12"
@@ -134,13 +141,29 @@
         android:layout_height="10dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
         android:background="@color/blue_grey_800"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView11"
         app:layout_constraintHorizontal_bias="0.395"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.182" />
+        app:layout_constraintVertical_bias="0.063" />
+
+    <Button
+        android:id="@+id/btHome"
+        android:layout_width="308dp"
+        android:layout_height="40dp"
+        android:background="@drawable/border_button"
+        android:text="होम स्क्रीन जाये"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:layout_constraintVertical_bias="0.317" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"

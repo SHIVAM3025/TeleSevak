@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -85,49 +87,50 @@ public class ScratchCardNew extends AppCompatActivity{
 
         //
 
-        scrached = findViewById(R.id.ed_scrach);
+        scrached = findViewById(R.id.etScratch);
         submit = findViewById(R.id.submit);
 
 
 
         fStore = FirebaseFirestore.getInstance();
 
-        past = findViewById(R.id.Past);
-        past.setOnClickListener(new View.OnClickListener() {
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        fStore.setFirestoreSettings(settings);
+
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.consultDoctor);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent chemistinten = new Intent(ScratchCardNew.this, MainActivity.class);
-                startActivity(chemistinten);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.pastConsult:
+                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.buyCard:
+                        startActivity(new Intent(getApplicationContext(),Buycard.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.ourDoctors:
+                        startActivity(new Intent(getApplicationContext(),OurDoctor.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.consultDoctor:
+                        return true;
+                }
+                return false;
             }
         });
 
 
-        buy = findViewById(R.id.card);
-        buy.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent chemistinten = new Intent(ScratchCardNew.this, Buycard.class);
-                        startActivity(chemistinten);
-                    }
-                });
-
-        ourdoctor = findViewById(R.id.odoctor);
-        ourdoctor.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent chemistinten = new Intent(ScratchCardNew.this, OurDoctor.class);
-                        startActivity(chemistinten);
-                    }
-                });
-
-
         //
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build();
-                fStore.setFirestoreSettings(settings);
+
 
 
          //videocall

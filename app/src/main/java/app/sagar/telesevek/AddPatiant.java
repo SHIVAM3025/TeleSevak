@@ -292,7 +292,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
         card = getIntent().getStringExtra("cardpass");
         remainconsult = getIntent().getIntExtra("remainconsult",0);
-        Toast.makeText(AddPatiant.this, ""+remainconsult, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AddPatiant.this, "Remaining Consultations: "+remainconsult, Toast.LENGTH_SHORT).show();
        /* phone = getIntent().getStringExtra("phonenumber");*/
 
        /* mPhone.setText(phone);
@@ -409,7 +409,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
                         SharedPreferences.Editor image = getSharedPreferences("Image", MODE_PRIVATE).edit();
                         image.putString("pimageid", phone);
-                        image.commit();
+                        image.apply();
 
 
 
@@ -535,21 +535,12 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
-                .setMessage("Are you sure?")
-                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        super.onBackPressed();
 
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-
-                        System.exit(0);
-                    }
-                }).setNegativeButton("no", null).show();
+        Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 
 

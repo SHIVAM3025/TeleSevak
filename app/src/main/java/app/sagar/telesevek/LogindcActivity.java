@@ -7,8 +7,10 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,12 +34,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.sinch.android.rtc.SinchError;
 
 import org.json.JSONObject;
 
 import java.util.List;
 
+import app.sagar.telesevek.VideoPKG.activity.BaseActivity;
 import app.sagar.telesevek.VideoPKG.activity.LoginActivity;
+import app.sagar.telesevek.VideoPKG.service.SinchService;
 import cz.msebera.android.httpclient.HttpHeaders;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -47,13 +52,16 @@ import static android.Manifest.permission.MODIFY_AUDIO_SETTINGS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
 
-public class LogindcActivity extends AppCompatActivity {
+public class LogindcActivity extends BaseActivity implements SinchService.StartFailedListener {
     Button consultDoctor;
     TextView iAmDoctor;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore fstore;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private View parentLayout;
+
+
+    private ProgressDialog mSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,8 +110,29 @@ public class LogindcActivity extends AppCompatActivity {
        consultDoctor.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Intent chemistinten = new Intent(LogindcActivity.this, app.sagar.telesevek.ScratchCardNew.class);
-               startActivity(chemistinten);
+               SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
+               final String phonenumber = prefs.getString("pimageid", null);
+
+               if(phonenumber != null) {
+                   if (phonenumber.isEmpty()) {
+                       Toast.makeText(LogindcActivity.this, "Please enter a name", Toast.LENGTH_LONG).show();
+                       return;
+                   }
+
+                   if (!phonenumber.equals(getSinchServiceInterface().getUserName())) {
+                       getSinchServiceInterface().stopClient();
+                   }
+
+                   if (!getSinchServiceInterface().isStarted()) {
+                       getSinchServiceInterface().startClient(phonenumber);
+                       showSpinner();
+                   } else {
+                       openPlaceCallActivity();
+                   }
+               }
+               else {
+                   openPlaceCallActivity();
+               }
            }
        });
 
@@ -234,6 +263,43 @@ public class LogindcActivity extends AppCompatActivity {
         overridePendingTransition(0,0);
 
 
+    }
+
+    @Override
+    protected void onServiceConnected() {
+        getSinchServiceInterface().setStartListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        if (mSpinner != null) {
+            mSpinner.dismiss();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onStartFailed(SinchError error) {
+        Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show();
+        if (mSpinner != null) {
+            mSpinner.dismiss();
+        }
+    }
+
+    @Override
+    public void onStarted() {
+    }
+
+    private void openPlaceCallActivity() {
+        Intent Doctowillcallyou = new Intent(LogindcActivity.this, app.sagar.telesevek.ScratchCardNew.class);
+        startActivity(Doctowillcallyou);
+    }
+
+    private void showSpinner() {
+        mSpinner = new ProgressDialog(this);
+        mSpinner.setTitle("Logging in");
+        mSpinner.setMessage("Please wait...");
+        mSpinner.show();
     }
 
    /*public void updateId(){

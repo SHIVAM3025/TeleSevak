@@ -37,6 +37,16 @@ public class Doctowillcallyou extends AppCompatActivity{
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.consultDoctor);
 
+        findViewById(R.id.btHome).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                overridePendingTransition(0,0);
+                startActivity(intent);
+            }
+        });
+
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
