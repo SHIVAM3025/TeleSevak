@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -41,9 +39,10 @@ import app.sagar.telesevek.Status.StatusTwoActivity;
 import app.sagar.telesevek.VideoPKG.activity.BaseActivity;
 import app.sagar.telesevek.VideoPKG.service.SinchService;
 
+import static app.sagar.telesevek.AddPatiant.TAG;
 import static com.google.firebase.firestore.FirebaseFirestoreSettings.*;
 
-public class ScratchCardNew extends BaseActivity implements SinchService.StartFailedListener {
+public class ScratchCardNew extends AppCompatActivity{
 
    Date date1;
    Date date;
@@ -55,7 +54,7 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
     private ProgressDialog mSpinner;
     FirebaseFirestore fStore;
-     private EditText scrached;
+    EditText scrached;
     Button submit;
 
     ProgressDialog pd;
@@ -86,48 +85,13 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
         //
 
-        scrached = findViewById(R.id.etScratch);
+        scrached = findViewById(R.id.ed_scrach);
         submit = findViewById(R.id.submit);
 
 
 
         fStore = FirebaseFirestore.getInstance();
 
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build();
-        fStore.setFirestoreSettings(settings);
-
-        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
-        bottomNav.setSelectedItemId(R.id.consultDoctor);
-
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    case R.id.pastConsult:
-                        startActivity(new Intent(getApplicationContext(),PastConsultationNewLoginScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.buyCard:
-                        startActivity(new Intent(getApplicationContext(),Buycard.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.ourDoctors:
-                        startActivity(new Intent(getApplicationContext(),OurDoctor.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.consultDoctor:
-                        return true;
-                }
-                return false;
-            }
-        });
-
-        /*
         past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,10 +121,17 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
                         startActivity(chemistinten);
                     }
                 });
-        */
 
 
         //
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+                fStore.setFirestoreSettings(settings);
+
+
+         //videocall
+
 
 
 
@@ -187,14 +158,12 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
                         if (documentSnapshot.exists()) {
                             pd.dismiss();
 
-                            oldcard = documentSnapshot.getString("Status");
+                            oldcard = documentSnapshot.getString("ValidityStatus");
                             Toast.makeText(ScratchCardNew.this, ""+oldcard, Toast.LENGTH_SHORT).show();
-                            if("0".equals(oldcard)){
-                                Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
-                                sendStuff.putExtra("cardpass", cardnumber);
-                                startActivity(sendStuff);
+                            if("inactive".equals(oldcard)){
+                                Toast.makeText(ScratchCardNew.this, "your ScratchCard is inactive", Toast.LENGTH_SHORT).show();
                             }
-                            else if ("1".equals(oldcard)){
+                           /* else if ("1".equals(oldcard)){
 
 
                                 SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
@@ -219,19 +188,25 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
                             }
                             else if ("2".equals(oldcard)){
-                               /* Intent two = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusTwoActivity.class);
-                                startActivity(two);*/
+                               *//* Intent two = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusTwoActivity.class);
+                                startActivity(two);*//*
                                 Intent sendStuff = new Intent(ScratchCardNew.this, StatusTwoActivity.class);
                                 sendStuff.putExtra("card", cardnumber);
                                 startActivity(sendStuff);
+                            }*/
+                            else if("active".equals(oldcard)){
+                                /*Intent Doctowillcallyou = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusThreeActivity.class);
+                                startActivity(Doctowillcallyou);*/
+
+                                /*Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
+                                sendStuff.putExtra("cardpass", cardnumber);
+                                startActivity(sendStuff);*/
+
+                                status();
                             }
-                            else if("3".equals(oldcard)){
-                                Intent Doctowillcallyou = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusThreeActivity.class);
-                                startActivity(Doctowillcallyou);
+                            else if("expired".equals(oldcard)){
+                                Toast.makeText(ScratchCardNew.this, "your ScratchCard is expired", Toast.LENGTH_SHORT).show();
                             }
-                            else if("4".equals(oldcard)){
-                                Intent Doctowillcallyou = new Intent(ScratchCardNew.this, app.sagar.telesevek.Status.StatusFourActivity.class);
-                                startActivity(Doctowillcallyou);   }
                             else {
 
                                   }
@@ -253,7 +228,7 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
 
     }
 
-    @Override
+    /*@Override
     protected void onServiceConnected() {
         getSinchServiceInterface().setStartListener(this);
     }
@@ -289,11 +264,30 @@ public class ScratchCardNew extends BaseActivity implements SinchService.StartFa
         mSpinner.setMessage("Please wait...");
         mSpinner.show();
     }
+*/
+    public void status(){
+        DocumentReference get = fStore.collection("ScratchCard").document(cardnumber);
+        get.addSnapshotListener(ScratchCardNew.this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (documentSnapshot.exists()) {
+                    Integer oldcardNEW = (Integer) documentSnapshot.getLong("RemainingConsultations").intValue();
+                    if(0 < oldcardNEW){
+                        Integer carde = oldcardNEW - 1;
+                        Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
+                        sendStuff.putExtra("cardpass", cardnumber);
+                        sendStuff.putExtra("remainconsult", carde);
+                        startActivity(sendStuff);
+                    }
+                    else {
+                        Toast.makeText(ScratchCardNew.this, "your ScratchCard is expired", Toast.LENGTH_SHORT).show();
+                    }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(0,0);
-
+                } else {
+                    Log.d("tag", "onEvent: Document do not exists");
+                    pd.dismiss();
+                }
+            }
+        });
     }
 }
