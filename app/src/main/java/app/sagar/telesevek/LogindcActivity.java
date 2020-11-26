@@ -236,7 +236,7 @@ public class LogindcActivity extends AppCompatActivity {
 
     }
 
-   /* public void updateId(){
+   /*public void updateId(){
         fstore=FirebaseFirestore.getInstance();
 
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -251,24 +251,17 @@ public class LogindcActivity extends AppCompatActivity {
                         List<DocumentSnapshot> snapshotList=queryDocumentSnapshots.getDocuments();
                         for(DocumentSnapshot snapshot:snapshotList) {
                             String id = snapshot.getId();
-                            String validity = (String) snapshot.get("ValidTillDate");
-                            if (validity != null) {
-                                DocumentReference documentReference = fstore.collection("ScratchCard").document(id);
-                                documentReference.update("ValidTillDate", "3/31/2021")
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.i("Update", "Successfull");
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.e("ErrorUpdate", "NotUpdated");
-                                            }
-                                        });
 
-                            }
+
+                                DocumentReference documentReference = fstore.collection("ScratchCard").document(id);
+                                documentReference.update("ValidTillDate", "3/31/2021");
+                                documentReference.update("RemainingConsultations",2);
+                                documentReference.update("TotalConsultations","2");
+                                documentReference.update("ValidityStatus","active");
+
+
+
+
                         }
                     }
                 })

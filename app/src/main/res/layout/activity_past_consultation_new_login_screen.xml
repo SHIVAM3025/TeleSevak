@@ -84,6 +84,17 @@
     </RelativeLayout>-->
 
 
+    <ProgressBar
+        android:id="@+id/pbProgress"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.543" />
+
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
@@ -246,17 +257,17 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnContinue"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/patient_menu"
 
-        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"/>
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/patient_menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

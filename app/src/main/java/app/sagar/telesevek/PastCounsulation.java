@@ -104,7 +104,6 @@ public class PastCounsulation extends AppCompatActivity {
 
         }else {
             Query query = fStore.collection("Consultation").whereEqualTo("PatientCard", scratchCardNumber);
-
              response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
                     .setQuery(query, ConsultResponse.class)
                     .build();
@@ -117,8 +116,11 @@ public class PastCounsulation extends AppCompatActivity {
             public void onBindViewHolder(final PastCounsulation.FriendsHolder holder, int position, final ConsultResponse model) {
                 progressBar.setVisibility(View.GONE);
                 holder.textName.setText(model.getPName());
-                holder.textTitle.setText(model.getDoctorId());
-                holder.textCompany.setText(model.getDateTime());
+                holder.textTitle.setText(model.getDoctorName());
+                String s=model.getDateTime().substring(0,10);
+
+                holder.textCompany.setText(s);
+                holder.tvsamasya.setText(model.getSymtoms());
                 /*Glide.with(getApplicationContext())
                         .load(model.getImage())
                         .into(holder.imageView);*/
@@ -277,6 +279,7 @@ public class PastCounsulation extends AppCompatActivity {
         TextView textName;
         TextView textTitle;
         TextView textCompany;
+        TextView tvsamasya;
 
 
         public FriendsHolder(View itemView) {
@@ -285,6 +288,7 @@ public class PastCounsulation extends AppCompatActivity {
             textName = itemView.findViewById(R.id.name);
             textTitle = itemView.findViewById(R.id.title);
             textCompany = itemView.findViewById(R.id.company);
+            tvsamasya=itemView.findViewById(R.id.tvSamasya);
 
         }
     }

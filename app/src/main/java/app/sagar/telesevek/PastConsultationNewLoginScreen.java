@@ -8,11 +8,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +26,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
+
+import javax.annotation.Nullable;
 
 import app.sagar.telesevek.PhoneAuthConsulation.MainActivity;
 import app.sagar.telesevek.PhoneAuthConsulation.VerifyPhoneActivity;
@@ -45,6 +51,10 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
     private String phoneNumber;
     private String cardNumber;
     private FirebaseFirestore fstore;
+     private String id;
+     boolean newCard;
+     ProgressBar pb;
+    String phoneNumberNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +80,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
 
 
         }*/
-
+        pb=findViewById(R.id.pbProgress);
         etNumber=findViewById(R.id.etEnterNumber);
         btCard=findViewById(R.id.relCard);
         btPhoneNumber=findViewById(R.id.relButtons);
@@ -117,60 +127,168 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(isPhone){
-                     phoneNumber = etNumber.getText().toString().trim();
+                if (isPhone) {
+                    phoneNumber = etNumber.getText().toString().trim();
 
                     if (phoneNumber.isEmpty() || phoneNumber.length() < 10) {
                         etNumber.setError("Valid number is required");
                         etNumber.requestFocus();
                         return;
                     }
-                    String phoneNumberNew = "+" + "91" + phoneNumber;
+                     phoneNumberNew = "+" + "91" + phoneNumber;
+                    pb.setVisibility(View.VISIBLE);
+
+
+                    fstore.collection("Patient").document(phoneNumber)
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    if(documentSnapshot.exists()) {
+                                        Toast.makeText(getApplicationContext(),"Past consultation available",Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), VerifyPhoneActivity.class);
+                                        intent.putExtra("phonenumber", phoneNumberNew);
+                                        startActivity(intent);
+                                    }
+                                    else {
+                                        Toast.makeText(getApplicationContext(),"New Number. No past Consultations",Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
+                                        overridePendingTransition(0, 0);
+                                        startActivity(intent);
+                                    }
+
+                                    pb.setVisibility(View.GONE);
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(),"Could not find number in database",Toast.LENGTH_SHORT).show();
+                            pb.setVisibility(View.GONE);
+                        }
+                    });
 
 
 
-                        Intent intent = new Intent(getApplicationContext(), VerifyPhoneActivity.class);
-                        intent.putExtra("phonenumber", phoneNumberNew);
-                        startActivity(intent);
 
 
 
 
+                } else {
+                    cardNumber = etNumber.getText().toString().trim();
 
-                }
-
-                else {
-                     cardNumber= etNumber.getText().toString().trim();
-
-                    if(cardNumber.isEmpty()|| cardNumber.length()<6 ||cardNumber.length()>8){
+                    if (cardNumber.isEmpty() || cardNumber.length() < 6 || cardNumber.length() > 8) {
                         etNumber.setError("Valid number is required");
                         etNumber.requestFocus();
                         return;
                     }
 
-                    Intent intent=new Intent(getApplicationContext(),PastCounsulation.class);
-                    intent.putExtra("cardNumber",cardNumber);
-                    intent.putExtra("isScratchCard",true);
-                    startActivity(intent);
+                    pb.setVisibility(View.VISIBLE);
+                    fstore.collection("ScratchCard").document(cardNumber)
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    String s=documentSnapshot.getString("TotalConsultations");
+                                    String t=documentSnapshot.get("RemainingConsultations").toString();
+
+                                    if(s.equals(t)) {
+                                        Toast.makeText(getApplicationContext(),"New Card. No past Consultations",Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
+                                        overridePendingTransition(0, 0);
+                                        startActivity(intent);
+                                    }
+                                    else {
+                                        Toast.makeText(getApplicationContext(),"Past consultation available",Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), PastCounsulation.class);
+                                        intent.putExtra("cardNumber", cardNumber);
+                                        intent.putExtra("isScratchCard", true);
+                                        startActivity(intent);
+                                    }
+
+                                    pb.setVisibility(View.GONE);
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Toast.makeText(getApplicationContext(),"Could not get card in database",Toast.LENGTH_SHORT).show();
+                            pb.setVisibility(View.GONE);
+                        }
+                    });
+
 
                     /*fstore.collection("Consultation").whereEqualTo("PatientCard",cardNumber)
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for(DocumentSnapshot docSnap:queryDocumentSnapshots){
+                                if(docSnap.exists()){
+                                    Toast.makeText(getApplicationContext(),"Card is present",Toast.LENGTH_LONG).show();
+                                }else {
+                                    Toast.makeText(getApplicationContext(), "Could not find card in db", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            //Toast.makeText(getApplicationContext(),"Card is present",Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(PastConsultationNewLoginScreen.this, "Could not find card in db", Toast.LENGTH_SHORT).show();
+                        }
+                    });*/
 
 
-                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+
+                  //  if(newCard){
+                    //    Toast.makeText(getApplicationContext(), "Document not in Database", Toast.LENGTH_LONG).show();
+                      //  Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
+                        //overridePendingTransition(0, 0);
+                        //startActivity(intent);}
+                    /*else {
+                        Intent intent = new Intent(getApplicationContext(), PastCounsulation.class);
+                        intent.putExtra("cardNumber", cardNumber);
+                        intent.putExtra("isScratchCard", true);
+                        startActivity(intent);
+                    }*/
+
+
+                    /*fstore.collection("Consultation").whereEqualTo("PatientCard", cardNumber)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if(task.isSuccessful()){
+                                    if (task.isSuccessful()) {
 
 
-                                        for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
+                                        for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                            if (document.exists()) {
+                                                Intent intent = new Intent(getApplicationContext(), PastCounsulation.class);
+                                                intent.putExtra("cardNumber", cardNumber);
+                                                intent.putExtra("isScratchCard", true);
+                                                startActivity(intent);
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "Document not in Database", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
+                                                overridePendingTransition(0, 0);
+                                                startActivity(intent);
+                                            }
+                                        }
 
+                                            id= document.getId();
 
-                                            String id= document.getId();
-
-                                            DocumentReference documentReference=fstore.collection("ScratchCard").document(id);
+                                            DocumentReference documentReference=fstore.collection("Consultation").document(id);
                                             documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    if(documentSnapshot.exists()){
+                                                        Intent intent=new Intent(getApplicationContext(),PastCounsulation.class);
+                                                        intent.putExtra("cardNumber",cardNumber);
+                                                        intent.putExtra("isScratchCard",true);
+                                                        startActivity(intent);
+                                                    }
                                                     String remainConsult=(String)documentSnapshot.get("RemainingConsultations");
                                                     String totalConsult=documentSnapshot.getString("TotalConsultations");
 
@@ -193,14 +311,24 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
 
+                                                    Toast.makeText(getApplicationContext(),"Document not in Database",Toast.LENGTH_LONG).show();
+                                                    Intent intent=new Intent(getApplicationContext(),NoOldParamarsh.class);
+                                                    overridePendingTransition(0,0);
+                                                    startActivity(intent);
                                                 }
                                             });
-                                        }
-                                    }
-                                    else{
+                                    } else {
+
                                         Toast.makeText(PastConsultationNewLoginScreen.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
+                                        overridePendingTransition(0, 0);
+                                        startActivity(intent);
+
+
                                     }
                                 }
+
+
                             });*/
 
 
@@ -266,5 +394,39 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    public void second(){
+        fstore.collection("Consultation").whereEqualTo("PatientCard", cardNumber)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+
+                            for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                if (document.exists()) {
+                                    Intent intent = new Intent(getApplicationContext(), PastCounsulation.class);
+                                    intent.putExtra("cardNumber", cardNumber);
+                                    intent.putExtra("isScratchCard", true);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Document not in Database", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
+                                    overridePendingTransition(0, 0);
+                                    startActivity(intent);
+                                }
+                            }
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Document not in Database", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
+                            overridePendingTransition(0, 0);
+                            startActivity(intent);
+                        }
+                    }
+                }
+                );
     }
 }
