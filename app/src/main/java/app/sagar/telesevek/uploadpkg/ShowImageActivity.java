@@ -3,6 +3,7 @@ package app.sagar.telesevek.uploadpkg;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,16 +21,31 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.awt.font.TextAttribute;
 
+import app.sagar.telesevek.Models.Doctor;
+import app.sagar.telesevek.Models.FirebaseUserModel;
+import app.sagar.telesevek.PastCounsulation;
 import app.sagar.telesevek.R;
 import app.sagar.telesevek.ScratchCardNew;
+import cz.msebera.android.httpclient.HttpHeaders;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
@@ -48,12 +64,88 @@ public class ShowImageActivity extends AppCompatActivity {
     ProgressBar pb;
     String DocID;
     String result="";
+    String pName;
+    String fullName;
     boolean prescriptionUploaded;
+
+    Doctor user = Doctor.getInstance();
+    FirebaseDatabase database;
+    DatabaseReference usersRef;
+
+    private static final String TAG = "AddPatiant";
+    JSONArray registration_ids = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image);
+
+        database = FirebaseDatabase.getInstance();
+        usersRef = database.getReference("Doctor");
+
+        SharedPreferences sharedpreferences = getSharedPreferences(user.appPreferences, Context.MODE_PRIVATE);
+        user.sharedpreferences = sharedpreferences;
+
+        final ProgressDialog Dialog = new ProgressDialog(this);
+        Dialog.setMessage("Please wait..");
+        Dialog.setCancelable(false);
+        Dialog.show();
+
+        usersRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                Dialog.dismiss();
+
+                for (com.google.firebase.database.DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    //Getting the data from snapshot
+                    FirebaseUserModel firebaseUserModel = userSnapshot.getValue(FirebaseUserModel.class);
+
+
+                    firebaseUserModel.setDeviceToken(FirebaseInstanceId.getInstance().getToken());
+                    user.login(firebaseUserModel);
+                    user.saveFirebaseKey(userSnapshot.getKey());
+
+
+                    final com.google.firebase.database.ValueEventListener userValueEventListener = new com.google.firebase.database.ValueEventListener() {
+                        @Override
+                        public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                            registration_ids = new JSONArray();
+
+                            for (com.google.firebase.database.DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                System.out.println("Child: " + postSnapshot);
+                                //Getting the data from snapshot
+                                FirebaseUserModel firebaseUserModel = postSnapshot.getValue(FirebaseUserModel.class);
+                                if (!firebaseUserModel.getDeviceToken().isEmpty()) {
+                                    registration_ids.put(firebaseUserModel.getDeviceToken());
+                                }
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                            registration_ids = new JSONArray();
+
+
+                            System.out.println("The read failed: " + databaseError.getMessage());
+                        }
+                    };
+
+                    usersRef.addValueEventListener(userValueEventListener);
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Dialog.dismiss();
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         DocID = bundle.getString("DocuId");
@@ -77,7 +169,7 @@ public class ShowImageActivity extends AppCompatActivity {
                 objectDocumentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        String pName= (String) documentSnapshot.get("PName");
+                         pName= (String) documentSnapshot.get("PName");
                         String dName=(String)documentSnapshot.get("DoctorName");
                         String date=(String) documentSnapshot.get("Time");
                         String Symptoms= (String) documentSnapshot.get("Symtoms");
@@ -140,6 +232,33 @@ public class ShowImageActivity extends AppCompatActivity {
                 }
             });
 
+            findViewById(R.id.btFollowUp).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DocumentReference consultitem = fStore.collection("Consultation").document(DocID);
+                    consultitem.update("TypeOfConsultation", "Followup")
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    pd.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Follow up Successfully", Toast.LENGTH_SHORT).show();
+
+                                    fullName = pName;
+
+                                    notification();
+
+                                }
+
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Plase Check after some time", Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
+                        }
+                    });
+                }
+            });
+
 
     }
 
@@ -190,6 +309,51 @@ public class ShowImageActivity extends AppCompatActivity {
         int l= url.indexOf(".jpg");
         s=url.substring(l-20,l);
         return s;
+    }
+
+
+    public void notification(){
+        if (registration_ids.length() > 0) {
+
+            String url = "https://fcm.googleapis.com/fcm/send";
+            AsyncHttpClient client = new AsyncHttpClient();
+
+            client.addHeader(HttpHeaders.AUTHORIZATION, "key=AAAAIz3KQd8:APA91bFJiG-094nuzkfO0xhkCoeCx6GQQv6nOoKrOc52za0afjY66dENqplOcke5zdJE7yrMBkKR_byfMWlcf3M4-GaSS2BlFv2HCvcT-ON8YIDdEQ6dC_rAOVjCyhi8T9Qo2WG2GVIo");
+            client.addHeader(HttpHeaders.CONTENT_TYPE, RequestParams.APPLICATION_JSON);
+
+            try {
+                JSONObject params = new JSONObject();
+
+                params.put("registration_ids", registration_ids);
+
+                JSONObject notificationObject = new JSONObject();
+                notificationObject.put("body", "Followup Name is"+fullName);
+                notificationObject.put("title", "New Followup");
+
+                params.put("notification", notificationObject);
+
+                StringEntity entity = new StringEntity(params.toString());
+
+                client.post(getApplicationContext(), url, entity, RequestParams.APPLICATION_JSON, new TextHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString, Throwable throwable) {
+                        Log.i(TAG, responseString);
+                        Toast.makeText(getApplicationContext(), "failed Notification", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString) {
+                        Log.i(TAG, responseString);
+                        Toast.makeText(getApplicationContext(), "Send Notification", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } catch (Exception e) {
+
+            }
+
+
+        }
     }
 
     /*public void downloadImage(View view) {
