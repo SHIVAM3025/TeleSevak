@@ -3,6 +3,7 @@ package app.sagar.telesevek.uploadpkg;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import org.json.JSONObject;
 
 import java.awt.font.TextAttribute;
 
+import app.sagar.telesevek.Doctowillcallyou;
 import app.sagar.telesevek.Models.Doctor;
 import app.sagar.telesevek.Models.FirebaseUserModel;
 import app.sagar.telesevek.PastCounsulation;
@@ -235,6 +237,7 @@ public class ShowImageActivity extends AppCompatActivity {
             findViewById(R.id.btFollowUp).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     DocumentReference consultitem = fStore.collection("Consultation").document(DocID);
                     consultitem.update("TypeOfConsultation", "Followup")
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -246,6 +249,7 @@ public class ShowImageActivity extends AppCompatActivity {
                                     fullName = pName;
 
                                     notification();
+                                    startActivity(new Intent(getApplicationContext(), Doctowillcallyou.class));
 
                                 }
 

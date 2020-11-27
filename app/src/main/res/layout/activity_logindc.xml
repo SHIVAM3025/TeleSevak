@@ -44,8 +44,8 @@
 
         <ImageView
             android:id="@+id/dp"
-            android:layout_width="320dp"
-            android:layout_height="408dp"
+            android:layout_width="300dp"
+            android:layout_height="395dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="30dp"
@@ -63,7 +63,7 @@
             android:id="@+id/btConsultDoctor"
             android:layout_width="272dp"
             android:layout_height="45dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/border_button"
             android:fontFamily="sans-serif"
             android:text="डॉक्टर से परामर्श लें"
@@ -80,6 +80,8 @@
             android:id="@+id/tvIAmDoctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:text="मै डॉक्टर हूँ"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
