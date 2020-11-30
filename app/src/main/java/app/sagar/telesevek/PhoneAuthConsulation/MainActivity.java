@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 import app.sagar.telesevek.Buycard;
-import app.sagar.telesevek.DoctorSide;
 import app.sagar.telesevek.OurDoctor;
 import app.sagar.telesevek.PastCounsulation;
 import app.sagar.telesevek.R;

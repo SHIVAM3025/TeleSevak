@@ -38,6 +38,14 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".PastConsultationNewLoginScreen"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PastCounsulation"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Doctowillcallyou"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
@@ -63,14 +71,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Buycard"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PastCounsulation"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PastConsultationNewLoginScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity

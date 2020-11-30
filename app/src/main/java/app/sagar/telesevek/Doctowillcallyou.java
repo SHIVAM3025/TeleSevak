@@ -30,24 +30,22 @@ public class Doctowillcallyou extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctowillcallyou);
 
-
-        buy = findViewById(R.id.submit);
-        buy.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        Intent chemistinten = new Intent(Doctowillcallyou.this, ScratchCardNew.class);
-                        startActivity(chemistinten);
-                    }
-                });
-
         SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
         final String phonenumber = prefs.getString("pimageid", "nodata");
 
 
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.consultDoctor);
+
+        findViewById(R.id.btHome).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                overridePendingTransition(0,0);
+                startActivity(intent);
+            }
+        });
 
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

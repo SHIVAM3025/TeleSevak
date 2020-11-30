@@ -22,7 +22,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-import app.sagar.telesevek.DoctorSide;
 import app.sagar.telesevek.PastCounsulation;
 import app.sagar.telesevek.R;
 

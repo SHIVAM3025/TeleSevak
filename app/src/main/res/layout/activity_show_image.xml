@@ -144,23 +144,23 @@
 
     <TextView
         android:id="@+id/tvSymptoms"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_width="181dp"
+        android:layout_height="57dp"
         android:layout_marginTop="28dp"
-        android:textStyle="bold"
-        android:textSize="18sp"
         android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.628"
+        app:layout_constraintHorizontal_bias="0.785"
         app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <ImageView
         android:id="@+id/downloadImage"
-        android:layout_width="235dp"
-        android:layout_height="185dp"
+        android:layout_width="107dp"
+        android:layout_height="112dp"
 
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -179,17 +179,29 @@
         app:layout_constraintTop_toTopOf="@+id/downloadImage"
         app:layout_constraintVertical_bias="0.496" />
 
-    <Button
+    <ImageView
         android:id="@+id/btDownload"
-        android:layout_width="261dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="32dp"
+
+        android:src="@drawable/ic_cloud_download"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/downloadImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.404"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btFollowUp"
+        android:layout_width="300dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="40dp"
         android:background="@drawable/border_button"
-        android:text="Download Prescription"
-        android:textSize="18sp"
+        android:text="Follow Up"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/downloadImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

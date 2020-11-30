@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,22 +42,14 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import app.sagar.telesevek.ActivityCallDoctortoP;
-import app.sagar.telesevek.AddPatiant;
 import app.sagar.telesevek.Buycard;
-import app.sagar.telesevek.DoctorCallActivity;
-import app.sagar.telesevek.DoctorSideNew;
-import app.sagar.telesevek.Doctowillcallyou;
 import app.sagar.telesevek.Models.Doctor;
 import app.sagar.telesevek.Models.FirebaseUserModel;
 import app.sagar.telesevek.OurDoctor;
-import app.sagar.telesevek.PastCounsulation;
 import app.sagar.telesevek.PhoneAuthConsulation.MainActivity;
 import app.sagar.telesevek.R;
 import app.sagar.telesevek.ScratchCardNew;
