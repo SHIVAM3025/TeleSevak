@@ -6,9 +6,9 @@
     <corners
         android:radius="7dp"/>
     <solid
-        android:color="#03A9CD"/>
+        android:color="@color/fbutton_color_peter_river"/>
     <gradient
-        android:startColor="#2DC4E5"
-        android:endColor="#248DA5"
+        android:startColor="@color/fbutton_color_peter_river"
+        android:endColor="@color/fbutton_color_peter_river"
         android:angle="270" />
 </shape>

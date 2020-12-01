@@ -132,7 +132,10 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
                 SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
                 final String phonenumber = prefs.getString("pimageid", null);
 
-                if(phonenumber != null) {
+                Intent Doctowillcallyou = new Intent(LogindcActivity.this, app.sagar.telesevek.ScratchCardNew.class);
+                startActivity(Doctowillcallyou);
+
+               /* if(phonenumber != null) {
                     if (phonenumber.isEmpty()) {
                         Toast.makeText(LogindcActivity.this, "Please enter a name", Toast.LENGTH_LONG).show();
                         return;
@@ -151,7 +154,7 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
                 }
                 else {
                     openPlaceCallActivity();
-                }
+                }*/
             }
         });
 

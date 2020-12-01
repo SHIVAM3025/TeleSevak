@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -75,7 +76,7 @@ public class ShowImageActivity extends AppCompatActivity {
     Doctor user = Doctor.getInstance();
     FirebaseDatabase database;
     DatabaseReference usersRef;
-
+    Button followup;
     private static final String TAG = "AddPatiant";
     JSONArray registration_ids = new JSONArray();
 
@@ -83,6 +84,8 @@ public class ShowImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image);
+
+        followup = findViewById(R.id.btFollowUp);
 
         database = FirebaseDatabase.getInstance();
         usersRef = database.getReference("Doctor");
@@ -155,6 +158,10 @@ public class ShowImageActivity extends AppCompatActivity {
         DocID = bundle.getString("DocuId");
         remain = bundle.getInt("remainconsult",0);
         CARD = bundle.getString("cardpass");
+
+        if (0 == remain){
+            followup.setVisibility(View.GONE);
+        }
 
         pd = new ProgressDialog(ShowImageActivity.this);
         pd.setMessage("loading..");
@@ -238,7 +245,7 @@ public class ShowImageActivity extends AppCompatActivity {
                 }
             });
 
-            findViewById(R.id.btFollowUp).setOnClickListener(new View.OnClickListener() {
+        followup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
