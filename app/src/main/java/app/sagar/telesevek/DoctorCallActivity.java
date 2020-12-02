@@ -90,6 +90,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
     private ProgressDialog mSpinner;
     boolean isVideo;
     String DoctorName;
+    String DoctorNum;
 
     List<String> ls=new ArrayList<>();
 
@@ -125,7 +126,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         gender = bundle.getString("pgender");
         age = bundle.getString("page");
         DoctorName=bundle.getString("DoctorName");
-
+        DoctorNum=bundle.getString("DoctorNum");
 
 
         pname.setText(Pname);
@@ -408,7 +409,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         Toast.makeText(this, "SMS sent!", Toast.LENGTH_SHORT).show();
         for(int j=0;j<ls.size();j++){
 
-            String body = "Patient- "+ PatientName+ "just had a "+via+" with "+dName;
+            String body = "Patient- "+ PatientName+ " "+ PatientPassId + " just had a "+via+" with "+dName+" "+DoctorNum ;
             String from = "+15302703337";
             String to = ls.get(j);
 
@@ -420,6 +421,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
             data.put("From", from);
             data.put("To", to);
             data.put("Body", body);
+            data.put("locale","hi");
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://api.twilio.com/2010-04-01/")

@@ -448,6 +448,7 @@ public class ShowImageActivity extends AppCompatActivity {
             data.put("From", from);
             data.put("To", to);
             data.put("Body", body);
+            data.put("locale","hi");
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://api.twilio.com/2010-04-01/")
