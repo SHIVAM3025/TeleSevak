@@ -118,7 +118,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
      List<String> ls=new ArrayList<>();
 
     public static final String ACCOUNT_SID = "AC66e278f9ace1337d16015042170f4535";
-    public static final String AUTH_TOKEN = "f2f459969f56c48fd67e59eede81530e";
+    public static final String AUTH_TOKEN = "54437b470a3343b198f6a48f26d2deb3";
 
 
 

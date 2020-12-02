@@ -430,7 +430,10 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) Log.d("TAG", "onResponse->success");
-                    else Log.d("TAG", "onResponse->failure");
+                    else {
+                        Log.d("TAG", "onResponse->failure");
+                        Log.i("RESPONSE",response.toString());
+                    }
                 }
 
                 @Override
