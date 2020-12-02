@@ -14,6 +14,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,17 +31,29 @@ import com.google.firebase.storage.StorageReference;
 import com.sinch.android.rtc.SinchError;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import app.sagar.telesevek.VideoPKG.activity.BaseActivity;
 import app.sagar.telesevek.VideoPKG.activity.LoginActivity;
 import app.sagar.telesevek.VideoPKG.activity.PlaceCallActivity;
 import app.sagar.telesevek.VideoPKG.service.SinchService;
 import app.sagar.telesevek.uploadpkg.UploadImage;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.MODIFY_AUDIO_SETTINGS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
+import static app.sagar.telesevek.AddPatiant.ACCOUNT_SID;
+import static app.sagar.telesevek.AddPatiant.AUTH_TOKEN;
 
 
 public class DoctorCallActivity extends BaseActivity implements SinchService.StartFailedListener{
@@ -74,11 +88,19 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
     StorageReference objectStorageReference;
     FirebaseFirestore objectFirebaseFirestore;
     private ProgressDialog mSpinner;
+    boolean isVideo;
+    String DoctorName;
+
+    List<String> ls=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_call);
+
+        ls.add("+917054466515");
+        ls.add("+918840974859");
+        ls.add("+919599225823");
 
         pname = findViewById(R.id.textpname);
         PSymtoms = findViewById(R.id.textpsymtoms);
@@ -102,6 +124,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         consultitemid = bundle.getString("consultitemid");
         gender = bundle.getString("pgender");
         age = bundle.getString("page");
+        DoctorName=bundle.getString("DoctorName");
 
 
 
@@ -153,6 +176,8 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                 intent.setData(Uri.parse("tel:"+ PatientPassId));
                 startActivity(intent);
 
+                isVideo=false;
+
                 DocumentReference ststusup = fStore.collection("ScratchCard").document(Patientcard);
                /* ststusup.update("Status","2");*/
                 ststusup.update("ConsultationID",consultitemid)
@@ -160,6 +185,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(DoctorCallActivity.this, "changed status", Toast.LENGTH_SHORT).show();
+                                sendSMS(DoctorName,Pname);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -174,6 +200,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -318,6 +345,8 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         sendStuff.putExtra("PatientPassId",PatientPassId );
         startActivity(sendStuff);
 
+        isVideo=true;
+
 
         DocumentReference ststusup = fStore.collection("ScratchCard").document(Patientcard);
        /* ststusup.update("Status","Completed");*/
@@ -326,6 +355,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(DoctorCallActivity.this, "changed status", Toast.LENGTH_SHORT).show();
+                        sendSMS(DoctorName,Pname);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -340,6 +370,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -362,6 +393,55 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
             }
         });
 
+
+    }
+
+
+    public void sendSMS(String dName,String PatientName){
+
+        String via;
+        if(isVideo){via="Video Call";}
+        else {
+            via="Phone Call";
+        }
+
+        Toast.makeText(this, "SMS sent!", Toast.LENGTH_SHORT).show();
+        for(int j=0;j<ls.size();j++){
+
+            String body = "Patient- "+ PatientName+ "just had a "+via+" with "+dName;
+            String from = "+15302703337";
+            String to = ls.get(j);
+
+            String base64EncodedCredentials = "Basic " + Base64.encodeToString(
+                    (ACCOUNT_SID + ":" + AUTH_TOKEN).getBytes(), Base64.NO_WRAP
+            );
+
+            Map<String, String> data = new HashMap<>();
+            data.put("From", from);
+            data.put("To", to);
+            data.put("Body", body);
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.twilio.com/2010-04-01/")
+                    .build();
+            AddPatiant.TwilioApi api = retrofit.create(AddPatiant.TwilioApi.class);
+
+            api.sendMessage(ACCOUNT_SID, base64EncodedCredentials, data).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) Log.d("TAG", "onResponse->success");
+                    else Log.d("TAG", "onResponse->failure");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.d("TAG", "onFailure");
+                }
+            });
+
+
+
+        }
 
     }
 

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.format.Time;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.AsyncHttpClient;
@@ -49,8 +51,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -64,6 +69,16 @@ import app.sagar.telesevek.VideoPKG.activity.PlaceCallActivity;
 import app.sagar.telesevek.VideoPKG.service.SinchService;
 import cz.msebera.android.httpclient.HttpHeaders;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public class AddPatiant extends BaseActivity implements SinchService.StartFailedListener {
     public static final String TAG = "TAG";
@@ -100,12 +115,28 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
     Doctor user = Doctor.getInstance();
     JSONArray registration_ids = new JSONArray();
 
+     List<String> ls=new ArrayList<>();
+
+    public static final String ACCOUNT_SID = "AC66e278f9ace1337d16015042170f4535";
+    public static final String AUTH_TOKEN = "f2f459969f56c48fd67e59eede81530e";
+
+
+
+    /*{
+        ls = Arrays.asList("+917054466515", "+918840974859","+919599225823");
+    }*/
+
     FirebaseDatabase database;
     DatabaseReference usersRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patiant);
+
+        ls.add("+917054466515");
+        ls.add("+918840974859");
+        ls.add("+919599225823");
+
 
 
         SharedPreferences sharedpreferences = getSharedPreferences(user.appPreferences, Context.MODE_PRIVATE);
@@ -120,6 +151,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         Dialog.setMessage("Please wait..");
         Dialog.setCancelable(false);
         Dialog.show();
+
 
         usersRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
             @Override
@@ -204,6 +236,9 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
+
+        //merging admin and doctors
+        mergeAdminDoctors();
 
 
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
@@ -411,6 +446,8 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                         image.putString("pimageid", phone);
                         image.commit();
 
+                        //sending sms to all present in ls
+                        sendSMS(fullName,phone);
 
 
                         if (registration_ids.length() > 0) {
@@ -533,23 +570,91 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
     }
 
+    public void mergeAdminDoctors(){
+
+        fStore.collection("Doctor").whereEqualTo("IsActive","true")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> snapshots=queryDocumentSnapshots.getDocuments();
+                        for ( DocumentSnapshot documents : snapshots){
+                            String id=documents.getId();
+                            ls.add(id);
+                        }
+                        /*for(int i=0;i<7;i++){
+                            Log.i("Merge",ls.get(i));
+                        }*/
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("fail","Could not get documents");
+            }
+        });
+    }
+
+    public void sendSMS(String Name,String Phone){
+        for(int j=0;j<ls.size();j++){
+
+            String body = "New Patient Request: " +
+                    " Patient Name: "+Name+" Patient Number: "+Phone;
+            String from = "+15302703337";
+            String to = ls.get(j);
+
+            String base64EncodedCredentials = "Basic " + Base64.encodeToString(
+                    (ACCOUNT_SID + ":" + AUTH_TOKEN).getBytes(), Base64.NO_WRAP
+            );
+
+            Map<String, String> data = new HashMap<>();
+            data.put("From", from);
+            data.put("To", to);
+            data.put("Body", body);
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.twilio.com/2010-04-01/")
+                    .build();
+            TwilioApi api = retrofit.create(TwilioApi.class);
+
+            api.sendMessage(ACCOUNT_SID, base64EncodedCredentials, data).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) Log.d("TAG", "onResponse->success");
+                    else Log.d("TAG", "onResponse->failure");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.d("TAG", "onFailure");
+                }
+            });
+
+
+
+        }
+
+    }
+
+   public interface TwilioApi {
+        @FormUrlEncoded
+        @POST("Accounts/{ACCOUNT_SID}/Messages")
+        Call<ResponseBody> sendMessage(
+                @Path("ACCOUNT_SID") String accountSId,
+                @Header("Authorization") String signature,
+                @FieldMap Map<String, String> metadata
+        );
+    }
+
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
-                .setMessage("Are you sure?")
-                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        super.onBackPressed();
 
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-
-                        System.exit(0);
-                    }
-                }).setNegativeButton("no", null).show();
+        Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 
 

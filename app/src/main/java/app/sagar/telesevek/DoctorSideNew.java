@@ -406,6 +406,7 @@ public class DoctorSideNew extends AppCompatActivity{
                                         sendStuff.putExtra("page", model.getAge());
                                         sendStuff.putExtra("pgender", model.getGender());
                                         sendStuff.putExtra("consultitemid", model.getConsultationId());
+                                        sendStuff.putExtra("DoctorName",model.getDoctorName());
                                         startActivity(sendStuff);
 
                                         pd.dismiss();

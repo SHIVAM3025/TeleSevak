@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,7 +42,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.font.TextAttribute;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import app.sagar.telesevek.AddPatiant;
 import app.sagar.telesevek.Doctowillcallyou;
 import app.sagar.telesevek.Models.Doctor;
 import app.sagar.telesevek.Models.FirebaseUserModel;
@@ -49,8 +56,21 @@ import app.sagar.telesevek.R;
 import app.sagar.telesevek.ScratchCardNew;
 import cz.msebera.android.httpclient.HttpHeaders;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
+import static app.sagar.telesevek.AddPatiant.ACCOUNT_SID;
+import static app.sagar.telesevek.AddPatiant.AUTH_TOKEN;
+
 
 public class ShowImageActivity extends AppCompatActivity {
 
@@ -71,6 +91,9 @@ public class ShowImageActivity extends AppCompatActivity {
     String result="";
     String pName;
     String fullName;
+    String DoctorPhone;
+    String dName;
+    String patientPhone;
     boolean prescriptionUploaded;
 
     Doctor user = Doctor.getInstance();
@@ -80,10 +103,16 @@ public class ShowImageActivity extends AppCompatActivity {
     private static final String TAG = "AddPatiant";
     JSONArray registration_ids = new JSONArray();
 
+    List<String> ls=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image);
+
+        ls.add("+917054466515");
+        ls.add("+918840974859");
+        ls.add("+919599225823");
 
         followup = findViewById(R.id.btFollowUp);
 
@@ -183,9 +212,12 @@ public class ShowImageActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                          pName= (String) documentSnapshot.get("PName");
-                        String dName=(String)documentSnapshot.get("DoctorName");
+                         dName=(String)documentSnapshot.get("DoctorName");
                         String date=(String) documentSnapshot.get("Time");
                         String Symptoms= (String) documentSnapshot.get("Symtoms");
+                        patientPhone=documentSnapshot.getString("PatientPhone");
+                        DoctorPhone=documentSnapshot.getString("DoctorId");
+                        ls.add(DoctorPhone);
 
                         if(pName!=null){
                             tvPatient.setText(pName);
@@ -245,6 +277,13 @@ public class ShowImageActivity extends AppCompatActivity {
                 }
             });
 
+            findViewById(R.id.btDownloadImage).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    download();
+                }
+            });
+
         followup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -274,7 +313,9 @@ public class ShowImageActivity extends AppCompatActivity {
 
                                     fullName = pName;
 
+
                                     notification();
+                                    sendSMS(pName,patientPhone);
                                     startActivity(new Intent(getApplicationContext(), Doctowillcallyou.class));
 
                                 }
@@ -360,6 +401,7 @@ public class ShowImageActivity extends AppCompatActivity {
                 notificationObject.put("body", "Followup Name is"+fullName);
                 notificationObject.put("title", "New Followup");
 
+
                 params.put("notification", notificationObject);
 
                 StringEntity entity = new StringEntity(params.toString());
@@ -374,7 +416,7 @@ public class ShowImageActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString) {
                         Log.i(TAG, responseString);
-                        Toast.makeText(getApplicationContext(), "Send Notification", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Notification sent!", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -384,6 +426,61 @@ public class ShowImageActivity extends AppCompatActivity {
 
 
         }
+    }
+
+
+
+    public void sendSMS(String Name,String Phone){
+
+        Toast.makeText(this, "SMS sent!", Toast.LENGTH_SHORT).show();
+        for(int j=0;j<ls.size();j++){
+
+            String body = "Follow Up Request to "+dName +
+                    ":  Patient Name: "+Name+" Patient Number: "+Phone;
+            String from = "+15302703337";
+            String to = ls.get(j);
+
+            String base64EncodedCredentials = "Basic " + Base64.encodeToString(
+                    (ACCOUNT_SID + ":" + AUTH_TOKEN).getBytes(), Base64.NO_WRAP
+            );
+
+            Map<String, String> data = new HashMap<>();
+            data.put("From", from);
+            data.put("To", to);
+            data.put("Body", body);
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.twilio.com/2010-04-01/")
+                    .build();
+            AddPatiant.TwilioApi api = retrofit.create(AddPatiant.TwilioApi.class);
+
+            api.sendMessage(ACCOUNT_SID, base64EncodedCredentials, data).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) Log.d("TAG", "onResponse->success");
+                    else Log.d("TAG", "onResponse->failure");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.d("TAG", "onFailure");
+                }
+            });
+
+
+
+        }
+
+    }
+
+    interface TwilioApi {
+        @FormUrlEncoded
+        @POST("Accounts/{ACCOUNT_SID}/Messages")
+        Call<ResponseBody> sendMessage(
+                @Path("ACCOUNT_SID") String accountSId,
+                @Header("Authorization") String signature,
+                @FieldMap Map<String, String> metadata
+        );
     }
 
     /*public void downloadImage(View view) {

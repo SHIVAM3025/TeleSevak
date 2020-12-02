@@ -80,7 +80,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
 
 
         }*/
-        pb=findViewById(R.id.progressbar);
+        pb=findViewById(R.id.pbProgress);
         etNumber=findViewById(R.id.etEnterNumber);
         btCard=findViewById(R.id.relCard);
         btPhoneNumber=findViewById(R.id.relButtons);
