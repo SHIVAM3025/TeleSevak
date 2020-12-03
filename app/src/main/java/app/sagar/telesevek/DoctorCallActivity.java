@@ -344,6 +344,9 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
     private void openPlaceCallActivity() {
         Intent sendStuff = new Intent(DoctorCallActivity.this, PlaceCallActivity.class);
         sendStuff.putExtra("PatientPassId",PatientPassId );
+        sendStuff.putExtra("PatientName",Pname);
+        sendStuff.putExtra("DoctorName",DoctorName);
+        sendStuff.putExtra("DoctorNum",DoctorNum);
         startActivity(sendStuff);
 
         isVideo=true;
@@ -356,7 +359,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(DoctorCallActivity.this, "changed status", Toast.LENGTH_SHORT).show();
-                        sendSMS(DoctorName,Pname);
+                        //sendSMS(DoctorName,Pname);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override

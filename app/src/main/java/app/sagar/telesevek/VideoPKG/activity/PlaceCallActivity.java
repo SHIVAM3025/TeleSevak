@@ -19,6 +19,9 @@ public class PlaceCallActivity extends BaseActivity {
     private Button mCallButton;
     private TextView mCallName;
     String PatientPassId;
+    String DoctorName;
+    String DoctorNum;
+    String patientName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class PlaceCallActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         PatientPassId = bundle.getString("PatientPassId");
+        patientName=bundle.getString("PatientName");
+        DoctorName=bundle.getString("DoctorName");
+        DoctorNum=bundle.getString("DoctorNum");
     }
 
     @Override
@@ -64,6 +70,10 @@ public class PlaceCallActivity extends BaseActivity {
 
         Intent callScreen = new Intent(this, CallScreenActivity.class);
         callScreen.putExtra(SinchService.CALL_ID, callId);
+        callScreen.putExtra("dName",DoctorName);
+        callScreen.putExtra("dNum",DoctorNum);
+        callScreen.putExtra("pName",patientName);
+        callScreen.putExtra("pNum",PatientPassId);
         startActivity(callScreen);
     }
 

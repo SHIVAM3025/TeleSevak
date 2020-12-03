@@ -2,6 +2,7 @@ package app.sagar.telesevek.VideoPKG.activity;
 
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,14 +21,26 @@ import com.sinch.android.rtc.video.VideoCallListener;
 import com.sinch.android.rtc.video.VideoController;
 
 
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import app.sagar.telesevek.AddPatiant;
 import app.sagar.telesevek.R;
 import app.sagar.telesevek.VideoPKG.service.SinchService;
 import app.sagar.telesevek.VideoPKG.util.AudioPlayer;
+import okhttp3.ResponseBody;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import static app.sagar.telesevek.AddPatiant.ACCOUNT_SID;
+import static app.sagar.telesevek.AddPatiant.AUTH_TOKEN;
 
 public class CallScreenActivity extends BaseActivity {
 
@@ -46,6 +59,12 @@ public class CallScreenActivity extends BaseActivity {
     private TextView mCallDuration;
     private TextView mCallState;
     private TextView mCallerName;
+
+    String PatientPassId;
+    String DoctorName;
+    String DoctorNum;
+    String patientName;
+    List<String> ls=new ArrayList<>();
 
     private class UpdateCallDurationTask extends TimerTask {
 
@@ -80,6 +99,16 @@ public class CallScreenActivity extends BaseActivity {
         mCallerName = (TextView) findViewById(R.id.remoteUser);
         mCallState = (TextView) findViewById(R.id.callState);
         Button endCallButton = (Button) findViewById(R.id.hangupButton);
+
+        ls.add("+917054466515");
+        ls.add("+918840974859");
+        ls.add("+919599225823");
+
+        Bundle bundle=getIntent().getExtras();
+        DoctorName=bundle.getString("dName");
+        patientName=bundle.getString("pName");
+        DoctorNum=bundle.getString("dNum");
+        PatientPassId=bundle.getString("pNum");
 
         endCallButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -121,7 +150,11 @@ public class CallScreenActivity extends BaseActivity {
                 if (call.getState() == CallState.ESTABLISHED) {
                     addRemoteView();
                 }
+
+                sendSMS(DoctorName,patientName);
             }
+
+
         }
     }
 
@@ -195,6 +228,7 @@ public class CallScreenActivity extends BaseActivity {
             LinearLayout view = (LinearLayout) findViewById(R.id.remoteVideo);
             view.addView(vc.getRemoteView());
             mRemoteVideoViewAdded = true;
+
         }
     }
 
@@ -214,6 +248,56 @@ public class CallScreenActivity extends BaseActivity {
             mLocalVideoViewAdded = false;
             mRemoteVideoViewAdded = false;
         }
+    }
+
+    public void sendSMS(String dName,String PatientName){
+
+        String via;
+        via="Video Call";
+
+
+        Toast.makeText(this, "SMS sent!", Toast.LENGTH_SHORT).show();
+        for(int j=0;j<ls.size();j++){
+
+            String body = "Patient- "+ PatientName+ " "+ PatientPassId + " just had a "+via+" with "+dName+" "+DoctorNum ;
+            String from = "+15302703337";
+            String to = ls.get(j);
+
+            String base64EncodedCredentials = "Basic " + Base64.encodeToString(
+                    (ACCOUNT_SID + ":" + AUTH_TOKEN).getBytes(), Base64.NO_WRAP
+            );
+
+            Map<String, String> data = new HashMap<>();
+            data.put("From", from);
+            data.put("To", to);
+            data.put("Body", body);
+            data.put("locale","hi");
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.twilio.com/2010-04-01/")
+                    .build();
+            AddPatiant.TwilioApi api = retrofit.create(AddPatiant.TwilioApi.class);
+
+            api.sendMessage(ACCOUNT_SID, base64EncodedCredentials, data).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) Log.d("TAG", "onResponse->success");
+                    else {
+                        Log.d("TAG", "onResponse->failure");
+                        Log.i("RESPONSE",response.toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+                    Log.d("TAG", "onFailure");
+                }
+            });
+
+
+
+        }
+
     }
 
     private class SinchCallListener implements VideoCallListener {
