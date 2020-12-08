@@ -61,6 +61,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
     Thread t;
 
     String notificationtrue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,25 +85,25 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
         friendList.setLayoutManager(linearLayoutManager);
 
 
-        BottomNavigationView bottomNavDoctor=findViewById(R.id.bottomNavFollow);
+        BottomNavigationView bottomNavDoctor = findViewById(R.id.bottomNavFollow);
         bottomNavDoctor.setSelectedItemId(R.id.followUp_menu);
 
         bottomNavDoctor.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.viewPast_menu:
-                        startActivity(new Intent(getApplicationContext(),DoctorSidePastConsulation.class));
-                        overridePendingTransition(0,0);
+                        startActivity(new Intent(getApplicationContext(), DoctorSidePastConsulation.class));
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.followUp_menu:
                         return true;
 
                     case R.id.current_menu:
-                        startActivity(new Intent(getApplicationContext(),DoctorSideNew.class));
-                        overridePendingTransition(0,0);
+                        startActivity(new Intent(getApplicationContext(), DoctorSideNew.class));
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
@@ -132,13 +133,12 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
         */
 
 
-
         SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
         String phonenumber = prefs.getString("phone", null);
 
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfConsultation","Followup").whereEqualTo("DoctorId",phonenumber);
+        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfConsultation", "Followup").whereEqualTo("DoctorId", phonenumber);
 
         FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
                 .setQuery(query, ConsultResponse.class)
@@ -153,37 +153,31 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
                 holder.textCompany.setText(model.getDateTime());
 
 
-
                 holder.reject.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view)
-                    {
+                    public void onClick(View view) {
                         holder.itemView.setVisibility(View.INVISIBLE);
                     }
                 });
 
 
-
-
-
                 holder.call.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                                Intent sendStuff = new Intent(DoctorSideFollowupConsulation.this, DoctorCallActivityFollow.class);
-                                sendStuff.putExtra("PatientPassId", model.getPatientPhone());
-                                sendStuff.putExtra("PatientCard", model.getPatientCard());
-                                sendStuff.putExtra("Pname", model.getPName());
-                                sendStuff.putExtra("Symtoms", model.getSymtoms());
-                                sendStuff.putExtra("page", model.getAge());
-                                sendStuff.putExtra("pgender", model.getGender());
-                                sendStuff.putExtra("itemid", model.getItemId());
-                                sendStuff.putExtra("consultitemid", model.getConsultationId());
-                                startActivity(sendStuff);
+                        Intent sendStuff = new Intent(DoctorSideFollowupConsulation.this, DoctorCallActivityFollow.class);
+                        sendStuff.putExtra("PatientPassId", model.getPatientPhone());
+                        sendStuff.putExtra("PatientCard", model.getPatientCard());
+                        sendStuff.putExtra("Pname", model.getPName());
+                        sendStuff.putExtra("Symtoms", model.getSymtoms());
+                        sendStuff.putExtra("page", model.getAge());
+                        sendStuff.putExtra("pgender", model.getGender());
+                        sendStuff.putExtra("itemid", model.getItemId());
+                        sendStuff.putExtra("consultitemid", model.getConsultationId());
+                        startActivity(sendStuff);
 
 
                     }
                 });
-
 
 
             }
@@ -299,20 +293,20 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
         adapter.stopListening();
     }
 
-    private void check(){
+    private void check() {
         DocumentReference usernotify = fStore.collection("FollowUPNotification").document("PatientRequestNotification");
         usernotify.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if(documentSnapshot.exists()){
+                if (documentSnapshot.exists()) {
                     notificationtrue = documentSnapshot.getString("Notification");
-                    if ("True".equals(notificationtrue)){
+                    if ("True".equals(notificationtrue)) {
                         addNotification();
                         DocumentReference push = fStore.collection("FollowUPNotification").document("PatientRequestNotification");
                         push.delete();
                     }
 
-                }else {
+                } else {
                     Log.d("tag", "onEvent: Document do not exists");
                 }
             }
@@ -325,7 +319,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher) //set icon for notification
                         .setContentTitle("New Followup") //set title of notification
-                        .setContentText("New Followup name is"+Strfollowname)//this is notification message
+                        .setContentText("New Followup name is" + Strfollowname)//this is notification message
                         .setAutoCancel(true) // makes auto cancel of notification
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT); //set priority of notification
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -334,19 +328,11 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
-                .setMessage("Are you sure?")
-                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        super.onBackPressed();
 
-                        Intent intent = new Intent(DoctorSideFollowupConsulation.this,DoctorSideNew.class);
-                        startActivity(intent);
-                        finish();
-
-                        System.exit(0);
-                    }
-                }).setNegativeButton("no", null).show();
+        Intent intent = new Intent(getApplicationContext(), DoctorSideNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
-
 }

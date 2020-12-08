@@ -1,38 +1,42 @@
 package app.sagar.telesevek;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.sinch.android.rtc.SinchError;
 
-import org.json.JSONObject;
+import java.util.List;
 
+import app.sagar.telesevek.RemoteConfig.UpdateHelper;
 import app.sagar.telesevek.VideoPKG.activity.BaseActivity;
-import app.sagar.telesevek.VideoPKG.activity.LoginActivity;
 import app.sagar.telesevek.VideoPKG.service.SinchService;
-import cz.msebera.android.httpclient.HttpHeaders;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.CAMERA;
@@ -40,7 +44,7 @@ import static android.Manifest.permission.MODIFY_AUDIO_SETTINGS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
 
-public class LogindcActivity extends BaseActivity implements SinchService.StartFailedListener {
+public class LogindcActivity extends BaseActivity implements SinchService.StartFailedListener, UpdateHelper.OnUpdateCheckListener {
     Button mButton;
     TextView mButton2;
     ImageView icondoctor;
@@ -49,6 +53,11 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
     private static final int PERMISSION_REQUEST_CODE = 200;
     private View parentLayout;
     private ProgressDialog mSpinner;
+    int c=0;
+
+   /* public static String ACCOUNT_SID="account_sid";
+    public static String AUTH_TOKEN="auth_token";*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +66,25 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
         if (!checkPermission()) {
             requestPermission();
         }
+
+        //updateHelper
+        UpdateHelper.with(this)
+                .OnUpdateCheck(this)
+                .check();
+
+       /* final FirebaseRemoteConfig remoteConfig=FirebaseRemoteConfig.getInstance();
+        final String idOf=remoteConfig.getString(ACCOUNT_SID);
+        Toast.makeText(LogindcActivity.this, idOf, Toast.LENGTH_SHORT).show();*/
+        /*remoteConfig.fetch(5)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            remoteConfig.fetchAndActivate();
+                            Toast.makeText(LogindcActivity.this, idOf, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });*/
 
        /* String url = "https://fcm.googleapis.com/fcm/send";
         AsyncHttpClient client = new AsyncHttpClient();
@@ -273,4 +301,51 @@ public class LogindcActivity extends BaseActivity implements SinchService.StartF
         mSpinner.show();
     }
 
+    @Override
+    public void onUpdateCheckListener(final String urlApp) {
+
+        AlertDialog alertDialog=new AlertDialog.Builder(this).
+                setTitle("New Update Available")
+                .setMessage("Please update to the latest version to use all our features")
+                .setPositiveButton("UPDATE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        try{
+                            Toast.makeText(getApplicationContext(),"Opening app in PlayStore",Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlApp)));
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).create();
+        alertDialog.show();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
+
+    }
+
+    public void update(){
+
+        FirebaseFirestore fstore=FirebaseFirestore.getInstance();
+        fstore.collection("ScratchCardNew").whereEqualTo("Value","299")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> snapshots=queryDocumentSnapshots.getDocuments();
+                        for (DocumentSnapshot snapshot:snapshots){
+                            c++;
+                        }
+                        Toast.makeText(getApplicationContext(),String.valueOf(c),Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("ERROR","error");
+                    }
+                });
+    }
 }

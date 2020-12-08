@@ -53,6 +53,7 @@ import static android.Manifest.permission.MODIFY_AUDIO_SETTINGS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static app.sagar.telesevek.AddPatiant.ACCOUNT_SID;
+
 import static app.sagar.telesevek.AddPatiant.AUTH_TOKEN;
 
 
@@ -298,19 +299,12 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
     }
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
-                .setMessage("Are you sure?")
-                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        super.onBackPressed();
 
-                        Intent intent = new Intent(DoctorCallActivity.this,DoctorSideNew.class);
-                        startActivity(intent);
-                        finish();
-
-                        System.exit(0);
-                    }
-                }).setNegativeButton("no", null).show();
+        Intent intent=new Intent(getApplicationContext(),DoctorSideNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 
 
@@ -413,11 +407,11 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         for(int j=0;j<ls.size();j++){
 
             String body = "Patient- "+ PatientName+ " "+ PatientPassId + " just had a "+via+" with "+dName+" "+DoctorNum ;
-            String from = "+15302703337";
+            String from = "+17633258036";
             String to = ls.get(j);
 
             String base64EncodedCredentials = "Basic " + Base64.encodeToString(
-                    (ACCOUNT_SID + ":" + AUTH_TOKEN).getBytes(), Base64.NO_WRAP
+                    ( ACCOUNT_SID+":"+ AUTH_TOKEN).getBytes(), Base64.NO_WRAP
             );
 
             Map<String, String> data = new HashMap<>();

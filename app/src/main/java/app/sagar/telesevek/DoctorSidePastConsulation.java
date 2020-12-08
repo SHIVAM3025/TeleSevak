@@ -319,7 +319,7 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
     private void addNotification() {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher) //set icon for notification
+                        .setSmallIcon(R.mipmap.ic_launcher_new) //set icon for notification
                         .setContentTitle("New Followup") //set title of notification
                         .setContentText("New Followup name is"+Strfollowname)//this is notification message
                         .setAutoCancel(true) // makes auto cancel of notification
@@ -330,19 +330,12 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
-                .setMessage("Are you sure?")
-                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        super.onBackPressed();
 
-                        Intent intent = new Intent(DoctorSidePastConsulation.this,DoctorSideNew.class);
-                        startActivity(intent);
-                        finish();
-
-                        System.exit(0);
-                    }
-                }).setNegativeButton("no", null).show();
+        Intent intent=new Intent(getApplicationContext(),DoctorSideNew.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 
 }

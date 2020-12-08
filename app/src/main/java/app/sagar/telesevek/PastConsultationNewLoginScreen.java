@@ -130,7 +130,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                 if (isPhone) {
                     phoneNumber = etNumber.getText().toString().trim();
 
-                    if (phoneNumber.isEmpty() || phoneNumber.length() < 10) {
+                    if (phoneNumber.isEmpty() || phoneNumber.length() != 10) {
                         etNumber.setError("Valid number is required");
                         etNumber.requestFocus();
                         return;
@@ -177,7 +177,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                 } else {
                     cardNumber = etNumber.getText().toString().trim();
 
-                    if (cardNumber.isEmpty() || cardNumber.length() < 6 || cardNumber.length() > 8) {
+                    if (cardNumber.isEmpty() || cardNumber.length() < 4 ) {
                         etNumber.setError("Valid number is required");
                         etNumber.requestFocus();
                         return;
@@ -189,24 +189,30 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    String s=documentSnapshot.getString("TotalConsultations");
-                                    String t=documentSnapshot.get("RemainingConsultations").toString();
 
-                                    if(s.equals(t)) {
-                                        Toast.makeText(getApplicationContext(),"New Card. No past Consultations",Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
-                                        overridePendingTransition(0, 0);
-                                        startActivity(intent);
-                                    }
-                                    else {
-                                        Toast.makeText(getApplicationContext(),"Past consultation available",Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), PastCounsulation.class);
-                                        intent.putExtra("cardNumber", cardNumber);
-                                        intent.putExtra("isScratchCard", true);
-                                        startActivity(intent);
-                                    }
+                                    if(documentSnapshot.exists()) {
+                                        String s = documentSnapshot.getString("TotalConsultations");
+                                        String t = documentSnapshot.get("RemainingConsultations").toString();
 
-                                    pb.setVisibility(View.GONE);
+                                        if (s.equals(t)) {
+                                            Toast.makeText(getApplicationContext(), "New Card. No past Consultations", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getApplicationContext(), NoOldParamarsh.class);
+                                            overridePendingTransition(0, 0);
+                                            startActivity(intent);
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Past consultation available", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getApplicationContext(), PastCounsulation.class);
+                                            intent.putExtra("cardNumber", cardNumber);
+                                            intent.putExtra("isScratchCard", true);
+                                            startActivity(intent);
+                                        }
+
+                                        pb.setVisibility(View.GONE);
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(),"Could not get card in database",Toast.LENGTH_SHORT).show();
+                                        pb.setVisibility(View.GONE);
+                                    }
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

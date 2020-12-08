@@ -117,14 +117,16 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
      List<String> ls=new ArrayList<>();
 
-    public static final String ACCOUNT_SID = "AC66e278f9ace1337d16015042170f4535";
-    public static final String AUTH_TOKEN = "54437b470a3343b198f6a48f26d2deb3";
 
 
 
-    /*{
-        ls = Arrays.asList("+917054466515", "+918840974859","+919599225823");
-    }*/
+/*  DONT PUSH THIS TO GITHUB
+    */
+
+    public static final String ACCOUNT_SID = "";
+    public static final String AUTH_TOKEN = "";
+
+
 
     FirebaseDatabase database;
     DatabaseReference usersRef;
@@ -136,6 +138,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         ls.add("+917054466515");
         ls.add("+918840974859");
         ls.add("+919599225823");
+
 
 
 
@@ -600,13 +603,16 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         for(int j=0;j<ls.size();j++){
 
             String body = "New Patient Request: " +
-                    " Patient Name: "+Name+" Patient Number: "+Phone;
-            String from = "+15302703337";
+                         " Patient Name: "+Name+
+                         " Patient Number: "+Phone;
+
+            String from = "+17633258036";
             String to = ls.get(j);
 
             String base64EncodedCredentials = "Basic " + Base64.encodeToString(
-                    (ACCOUNT_SID + ":" + AUTH_TOKEN).getBytes(), Base64.NO_WRAP
+                    ( ACCOUNT_SID +":"+ AUTH_TOKEN).getBytes(), Base64.NO_WRAP
             );
+            Log.i("CRED",base64EncodedCredentials);
 
             Map<String, String> data = new HashMap<>();
             data.put("From", from);

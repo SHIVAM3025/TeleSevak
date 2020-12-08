@@ -9,7 +9,7 @@ android {
             keyAlias 'key0'
             keyPassword 'sagar123'
         }
-       /* release {
+        /* release {
             storeFile file('C:\\Users\\Admin\\Keystores\\KeystoreTelesevak.jks')
             storePassword 'Rish@vi99'
             keyAlias 'key0'
@@ -63,6 +63,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.firebase:firebase-config:20.0.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -80,7 +81,7 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.firebase:firebase-client-android:2.4.0'
     implementation 'com.android.volley:volley:1.1.0'
-    implementation(name:'sinch-android-rtc', version:'+', ext:'aar')
+    implementation(name: 'sinch-android-rtc', version: '+', ext: 'aar')
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'

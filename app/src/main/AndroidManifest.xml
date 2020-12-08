@@ -18,13 +18,19 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
+        android:name=".RemoteConfig.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_new"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewActivityDetails"></activity>
+        <activity
+            android:name=".DoctorNotAvailable"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".NewActivityDetails" />
         <activity
             android:name=".Status.StatusFourActivity"
             android:configChanges="orientation"
@@ -167,6 +173,11 @@
             android:name=".TommarowPatient"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".NoOldParamarsh"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".SplachScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

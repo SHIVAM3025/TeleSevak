@@ -32,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.loopj.android.http.AsyncHttpClient;
@@ -49,6 +50,7 @@ import java.util.Map;
 
 import app.sagar.telesevek.AddPatiant;
 import app.sagar.telesevek.Doctowillcallyou;
+import app.sagar.telesevek.LogindcActivity;
 import app.sagar.telesevek.Models.Doctor;
 import app.sagar.telesevek.Models.FirebaseUserModel;
 import app.sagar.telesevek.PastCounsulation;
@@ -69,6 +71,7 @@ import retrofit2.http.Path;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 import static app.sagar.telesevek.AddPatiant.ACCOUNT_SID;
+
 import static app.sagar.telesevek.AddPatiant.AUTH_TOKEN;
 
 
@@ -126,6 +129,11 @@ public class ShowImageActivity extends AppCompatActivity {
         Dialog.setMessage("Please wait..");
         Dialog.setCancelable(false);
         Dialog.show();
+
+        /*final FirebaseRemoteConfig remoteConfig=FirebaseRemoteConfig.getInstance();
+        final String idOf=remoteConfig.getString(ACCOUNT_SID);
+        String token=remoteConfig.getString(AUTH_TOKEN);
+        Toast.makeText(getApplicationContext(), idOf+":-"+token, Toast.LENGTH_SHORT).show();*/
 
         usersRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
             @Override
@@ -185,7 +193,7 @@ public class ShowImageActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         DocID = bundle.getString("DocuId");
-        remain = bundle.getInt("remainconsult",0);
+        remain = bundle.getInt("remainconsult");
         CARD = bundle.getString("cardpass");
 
         if (0 == remain){
@@ -437,11 +445,11 @@ public class ShowImageActivity extends AppCompatActivity {
 
             String body = "Follow Up Request to "+dName +
                     ":  Patient Name: "+Name+" Patient Number: "+Phone;
-            String from = "+15302703337";
+            String from = "+17633258036";
             String to = ls.get(j);
 
             String base64EncodedCredentials = "Basic " + Base64.encodeToString(
-                    (ACCOUNT_SID + ":" + AUTH_TOKEN).getBytes(), Base64.NO_WRAP
+                    ( ACCOUNT_SID +":"+ AUTH_TOKEN).getBytes(), Base64.NO_WRAP
             );
 
             Map<String, String> data = new HashMap<>();
@@ -459,7 +467,8 @@ public class ShowImageActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) Log.d("TAG", "onResponse->success");
-                    else Log.d("TAG", "onResponse->failure");
+                    else {Log.d("TAG", "onResponse->failure");
+                    Log.e("TAG",response.toString());}
                 }
 
                 @Override

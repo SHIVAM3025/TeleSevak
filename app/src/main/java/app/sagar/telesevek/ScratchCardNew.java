@@ -29,10 +29,12 @@ import com.sinch.android.rtc.SinchError;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.annotation.Nullable;
 
@@ -203,8 +205,30 @@ public class ScratchCardNew extends AppCompatActivity{
                                 /*Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
                                 sendStuff.putExtra("cardpass", cardnumber);
                                 startActivity(sendStuff);*/
+                                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
+                                Date date = calendar.getTime();
 
-                                status();
+                                int hr=calendar.get(Calendar.HOUR_OF_DAY);
+                                // 3 letter name form of the day
+                                String Day=new SimpleDateFormat("EE", Locale.ENGLISH).format(date.getTime());
+                                Log.i("DAY",Day+" "+hr);
+                                if(Day.equals("Sun")){
+                                    Log.i("DAY","Sat or Sun");
+                                    startActivity(new Intent(getApplicationContext(),DoctorNotAvailable.class));
+
+                                }else
+                                {
+                                    if (hr>=9&&hr<18){
+                                        Log.i("HOUR",String.valueOf(hr));
+                                        status();
+                                    }else {
+
+                                        startActivity(new Intent(getApplicationContext(),DoctorNotAvailable.class));
+                                    }
+                                }
+
+
+                                //status();
                             }
                             else if("expired".equals(oldcard)){
                                 Toast.makeText(ScratchCardNew.this, "your ScratchCard is expired", Toast.LENGTH_SHORT).show();
