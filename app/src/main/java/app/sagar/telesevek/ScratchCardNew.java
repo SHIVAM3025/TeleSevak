@@ -205,7 +205,7 @@ public class ScratchCardNew extends AppCompatActivity{
                                 /*Intent sendStuff = new Intent(ScratchCardNew.this, AddPatiant.class);
                                 sendStuff.putExtra("cardpass", cardnumber);
                                 startActivity(sendStuff);*/
-                                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
+                                /*Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
                                 Date date = calendar.getTime();
 
                                 int hr=calendar.get(Calendar.HOUR_OF_DAY);
@@ -225,10 +225,10 @@ public class ScratchCardNew extends AppCompatActivity{
 
                                         startActivity(new Intent(getApplicationContext(),DoctorNotAvailable.class));
                                     }
-                                }
+                                }*/
 
 
-                                //status();
+                                status();
                             }
                             else if("expired".equals(oldcard)){
                                 Toast.makeText(ScratchCardNew.this, "your ScratchCard is expired", Toast.LENGTH_SHORT).show();
