@@ -59,8 +59,8 @@ public class UploadImage extends AppCompatActivity {
     String Docuidi;
     String Patientphone;
     String id;
-    public static final String ACCOUNT_SID = "ACe455dc68b19d343b393e142de03bd02c";
-    public static final String AUTH_TOKEN = "599ab28152b5e92e4f76c7720e6d87a5";
+    public static final String ACCOUNT_SID = "";
+    public static final String AUTH_TOKEN = "";
     List<String> ls=new ArrayList<>();
     Button Nophone;
     @Override
