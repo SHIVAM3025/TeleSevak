@@ -29,8 +29,8 @@ public class SendSMSnoPhone extends AppCompatActivity {
     Button submit;
     EditText ed;
     List<String> ls=new ArrayList<>();
-    public static final String ACCOUNT_SID = "ACe455dc68b19d343b393e142de03bd02c";
-    public static final String AUTH_TOKEN = "599ab28152b5e92e4f76c7720e6d87a5";
+    public static final String ACCOUNT_SID = "";
+    public static final String AUTH_TOKEN = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
