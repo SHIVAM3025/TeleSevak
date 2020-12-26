@@ -73,9 +73,10 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="कृपया इस समय के दौरान ही स्क्रैच कार्ड डालें"
+        android:text="डॉक्टर आपको इस दौरान जल्द ही फोन करेंगे"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
@@ -85,6 +86,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="कृपया प्रतीक्षा करें"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
+        app:layout_constraintVertical_bias="0.195" />
 
     <Button
         android:id="@+id/btnHome"

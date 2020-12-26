@@ -13,7 +13,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#ffffff"
         android:backgroundTint="@color/white"
         android:orientation="vertical">
@@ -186,6 +186,7 @@
             android:layout_width="match_parent"
             android:layout_below="@+id/p_symptom"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="100dp"
             android:gravity="center"
             android:inputType="text"
             android:id="@+id/ed_symptom"
@@ -194,21 +195,7 @@
             android:background="@drawable/edittextr"
             android:layout_height="100dp"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:layout_below="@+id/ed_symptom"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:id="@+id/submit"
-            android:textSize="16dp"
-            android:background="@drawable/border_button"
-            android:gravity="center"
-            android:textAllCaps="false"
-            android:textColor="#ffffff"
-            android:text="आगे बड़े" />
+
 
 
     <!--<Button
@@ -260,6 +247,21 @@
     </RelativeLayout>
     </ScrollView>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="65dp"
+        android:layout_marginRight="40dp"
+        android:id="@+id/submit"
+        android:textSize="16dp"
+        android:background="@drawable/border_button"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:text="आगे बड़े" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"

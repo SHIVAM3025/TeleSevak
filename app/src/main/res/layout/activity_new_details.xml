@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.sagar.telesevek.NewActivityDetails">
+    tools:context="app.telesevek.NewActivityDetails">
 
 
     <RelativeLayout
@@ -109,8 +109,7 @@
             android:layout_weight="1"
             android:layout_marginRight="10dp"
             android:background="#8BCEDD"
-            android:textSize="12dp"
-            >
+            android:textSize="12dp">
             <TextView
                 android:layout_width="match_parent"
                 android:text="पुराने परामर्श"
@@ -143,8 +142,7 @@
             android:orientation="vertical"
             android:layout_weight="1"
             android:background="#8BCEDD"
-            android:textSize="12dp"
-            >
+            android:textSize="12dp">
             <TextView
                 android:layout_width="match_parent"
                 android:text="परामर्श बाकि"
@@ -177,8 +175,7 @@
             android:orientation="vertical"
             android:layout_weight="1"
             android:background="#8BCEDD"
-            android:textSize="12dp"
-            >
+            android:textSize="12dp">
             <TextView
                 android:layout_width="match_parent"
                 android:text="कार्ड वैधता"
@@ -216,8 +213,7 @@
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:textColor="#ffffff"
-        android:textSize="16sp"
-       />
+        android:textSize="16sp" />
 
 
     <ImageView

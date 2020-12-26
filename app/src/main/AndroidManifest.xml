@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.sagar.telesevek">
+    package="app.telesevek">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -25,11 +25,12 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SendSMSnoPhone"></activity>
+
         <activity
             android:name=".DoctorNotAvailable"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity android:name=".NewActivityDetails" />
         <activity
             android:name=".Status.StatusFourActivity"
@@ -53,10 +54,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Doctowillcallyou"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ScratchCardNew"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
@@ -102,15 +99,15 @@
         <!-- <activity android:name=".DoctorSide"></activity> -->
         <!-- <activity android:name=".DoctorConfirm" /> -->
         <activity
-            android:name=".uploadpkg.ShowImageActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".uploadpkg.UploadImage"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".PetientLoading"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScratchCardNew"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
@@ -123,10 +120,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Login"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AddPatiant"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
@@ -173,11 +166,10 @@
             android:name=".TommarowPatient"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".NoOldParamarsh"
+        <activity
+            android:name=".NoOldParamarsh"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity android:name=".SplachScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -185,6 +177,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddPatiant"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".uploadpkg.ShowImageActivity"/>
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.ChattingActivity" />
         <activity android:name=".ReceiveNotificationActivity" />
@@ -199,23 +194,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name=".VideoPKG.service.SinchService"
-            android:screenOrientation="portrait" />
+        <activity android:name="app.sinch.IncomingCallActivity" />
+        <activity android:name="app.sinch.PlaceCallActivity" />
 
-        <activity
-            android:name=".VideoPKG.activity.PlaceCallActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".VideoPKG.activity.BaseActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".VideoPKG.activity.IncomingCallScreenActivity"
-            android:noHistory="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".VideoPKG.activity.CallScreenActivity"
-            android:screenOrientation="portrait" />
+
+        <service android:name="app.sinch.SinchService" />
 
         <service
             android:name=".Notify.ForegroundService"
@@ -223,6 +206,7 @@
             android:exported="true" />
 
         <activity android:name=".ProfileDoctor" />
+        <activity android:name="app.sinch.CallScreenActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="0.83"
-    android:background="@drawable/gradient"
+    android:background="#f9fafc"
     tools:context=".LogindcActivity">
 
 
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <TextView
+     <!--   <TextView
             android:id="@+id/textView6"
             android:layout_width="319dp"
             android:layout_height="39dp"
@@ -41,29 +41,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.064" />
-
+-->
         <ImageView
             android:id="@+id/dp"
-            android:layout_width="300dp"
-            android:layout_height="395dp"
-            android:layout_marginStart="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="160dp"
             android:alpha="1"
-            android:src="@drawable/doctorsdr"
+            android:src="@drawable/olddr"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"
             app:layout_constraintVertical_bias="0.083" />
 
         <Button
             android:id="@+id/btConsultDoctor"
             android:layout_width="272dp"
             android:layout_height="45dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/border_button"
             android:fontFamily="sans-serif"
             android:text="डॉक्टर से परामर्श लें"
