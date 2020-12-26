@@ -13,4 +13,5 @@
 .externalNativeBuild
 .cxx
 apikey.txt
+app/src/main/res/values/strings.xml
 
