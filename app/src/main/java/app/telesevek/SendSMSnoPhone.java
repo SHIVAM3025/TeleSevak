@@ -1,6 +1,5 @@
 package app.telesevek;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,10 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,22 +29,12 @@ public class SendSMSnoPhone extends AppCompatActivity {
     Button submit;
     EditText ed;
     List<String> ls=new ArrayList<>();
-    public static String account_sid = "account_sid";
-    public static String auth_token = "auth_token";
-    public static String fromNumber="from";
-
-    public static String ACCOUNT_SID ;
-    public static String AUTH_TOKEN ;
-    public static String from;
-
-
-
+    public static final String ACCOUNT_SID = "ACe455dc68b19d343b393e142de03bd02c";
+    public static final String AUTH_TOKEN = "599ab28152b5e92e4f76c7720e6d87a5";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_s_m_sno_phone);
-
-        receiveCredentials();
 
         Bundle bundle = getIntent().getExtras();
         Docuidi = bundle.getString("DocuId");
@@ -113,27 +98,6 @@ public class SendSMSnoPhone extends AppCompatActivity {
 
         }
 
-    }
-
-    public static void receiveCredentials(){
-
-        final FirebaseRemoteConfig remoteConfig= FirebaseRemoteConfig.getInstance();
-        ACCOUNT_SID=remoteConfig.getString(account_sid);
-        AUTH_TOKEN=remoteConfig.getString(auth_token);
-        from=remoteConfig.getString(fromNumber);
-        Log.i("remote",ACCOUNT_SID+"="+AUTH_TOKEN+"from"+from);
-        //Toast.makeText(this, idOf, Toast.LENGTH_SHORT).show();
-        remoteConfig.fetch(120)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            remoteConfig.fetchAndActivate();
-
-                            //Toast.makeText(LogindcActivity.this, idOf, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
 }
