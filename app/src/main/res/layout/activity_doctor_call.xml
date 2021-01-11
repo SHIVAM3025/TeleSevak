@@ -217,6 +217,23 @@
         android:text="Send Scan to Patient" />
 
 
+    <Button
+        android:id="@+id/SHOWIMAGE"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:visibility="gone"
+        android:layout_marginEnd="20dp"
+        android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+        android:gravity="center"
+        android:text="show image from patient"
+        android:background="#f0ed93"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:layout_below="@+id/send"/>
+
+
 
       <LinearLayout
         android:layout_width="match_parent"

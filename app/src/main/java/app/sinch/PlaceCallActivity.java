@@ -2,6 +2,7 @@ package app.sinch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -9,7 +10,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.sinch.android.rtc.calling.Call;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import app.telesevek.R;
 
@@ -18,6 +36,7 @@ public class PlaceCallActivity extends BaseActivity {
     private Button mCallButton;
     private EditText mCallName;
     String dr_id;
+    String id_con;
     String PatientPassId;
 
     @Override
@@ -37,7 +56,10 @@ public class PlaceCallActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         PatientPassId = bundle.getString("PatientName");
         dr_id = bundle.getString("DoctorName");
+        id_con = bundle.getString("Conid");
         mCallName.setText(PatientPassId);
+
+
     }
 
     // invoked when the connection with SinchServer is established
@@ -78,7 +100,11 @@ public class PlaceCallActivity extends BaseActivity {
         Intent callScreen = new Intent(this, CallScreenActivity.class);
         callScreen.putExtra(SinchService.CALL_ID, callId);
         startActivity(callScreen);
+
+
+
     }
+
 
 
     private OnClickListener buttonClickListener = new OnClickListener() {

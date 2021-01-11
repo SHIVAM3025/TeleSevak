@@ -35,6 +35,25 @@
             android:textSize="22sp" />
 
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:visibility="gone"
+            android:id="@+id/sendtodoctor"
+            android:background="#f0ed93"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="16dp"
+            android:text="डॉक्टर के पास छवि भेजें"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+
     </RelativeLayout>
 
     <TextView
@@ -42,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Patient's Name"
+        android:text="मरीज का नाम"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Doctor's Name"
+        android:text="डॉक्टर का नाम"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Date"
+        android:text="दिनांक"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Prescription given by Doctor"
+        android:text="डॉक्टर द्वारा दी गई प्रिस्क्रिप्शन"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -197,7 +216,7 @@
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:background="@drawable/border_button"
-        android:text="Download"
+        android:text="डाउनलोड"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

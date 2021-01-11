@@ -6,30 +6,49 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sinch.android.rtc.SinchError;
 
 import app.sinch.BaseActivity;
+import app.sinch.SinchService;
 
 
-public class Doctowillcallyou extends BaseActivity {
+public class Doctowillcallyou extends BaseActivity implements SinchService.StartFailedListener {
     Button past;
     Button buy;
     Button our;
     Button consult;
     private ProgressDialog mSpinner;
+    String CallID;
+    String username;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctowillcallyou);
 
+
+
+        Bundle bundle = getIntent().getExtras();
+        CallID = bundle.getString("CALL_ID");
+        username=bundle.getString("username");
+
         SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
         final String phonenumber = prefs.getString("pimageid", "nodata");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                log();
+                Toast.makeText(Doctowillcallyou.this, "show", Toast.LENGTH_SHORT).show();
 
+            }
+        }, 100);
 
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.consultDoctor);
@@ -69,6 +88,9 @@ public class Doctowillcallyou extends BaseActivity {
                 return false;
             }
         });
+
+
+
 
         /*
         past = findViewById(R.id.Past);
@@ -149,11 +171,64 @@ public class Doctowillcallyou extends BaseActivity {
 
     @Override
     protected void onServiceConnected() {
-        Toast.makeText(this, ""+getSinchServiceInterface().getUserName(), Toast.LENGTH_SHORT).show();
-
+        getSinchServiceInterface().setStartListener(this);
     }
 
+
     private void stopButtonClicked() {
+    }
+
+
+
+
+    @Override
+    protected void onPause() {
+        if (mSpinner != null) {
+            mSpinner.dismiss();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onStartFailed(SinchError error) {
+        Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show();
+        if (mSpinner != null) {
+            mSpinner.dismiss();
+        }
+    }
+
+
+
+    @Override
+    public void onStarted() {
+        mSpinner.dismiss();
+       }
+
+    private void showSpinner() {
+        mSpinner = new ProgressDialog(this);
+        mSpinner.setTitle("Prepering video call from doctor ");
+        mSpinner.setMessage("Please wait...");
+        mSpinner.show();
+    }
+    public void log(){
+        if (username.isEmpty()) {
+            Toast.makeText(Doctowillcallyou.this, "Please enter a name", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (!username.equals(getSinchServiceInterface().getUserName())) {
+            getSinchServiceInterface().stopClient();
+        }
+
+        if (!getSinchServiceInterface().isStarted()) {
+            getSinchServiceInterface().startClient(username);
+            showSpinner();
+        }
+        else {
+            Intent intent = new Intent(Doctowillcallyou.this,Doctowillcallyou.class);
+            startActivity(intent);
+        }
+
     }
 
 

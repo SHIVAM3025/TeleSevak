@@ -21,8 +21,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.loopj.android.http.AsyncHttpClient;
@@ -48,11 +51,13 @@ import java.util.List;
 import java.util.Map;
 
 import app.telesevek.AddPatiant;
+import app.telesevek.DoctorCallActivity;
 import app.telesevek.Doctowillcallyou;
 import app.telesevek.EmailSender;
 import app.telesevek.Models.Doctor;
 import app.telesevek.Models.FirebaseUserModel;
 
+import app.telesevek.PastCounsulation;
 import app.telesevek.PatientFullImageShow;
 import app.telesevek.R;
 import cz.msebera.android.httpclient.HttpHeaders;
@@ -88,6 +93,7 @@ public class ShowImageActivity extends AppCompatActivity {
     ProgressDialog pd;
     ProgressBar pb;
     String DocID;
+    String Docuphone;
     int remain;
     String CARD;
     String result="";
@@ -110,6 +116,15 @@ public class ShowImageActivity extends AppCompatActivity {
     List<String> ls=new ArrayList<>();
     String allEmails="";
 
+    public static String account_sid = "account_sid";
+    public static String auth_token = "auth_token";
+    public static String fromNumber="from";
+
+    public static String ACCOUNT_SID ;
+    public static String AUTH_TOKEN ;
+    public static String from;
+
+   Button imagepbutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +134,12 @@ public class ShowImageActivity extends AppCompatActivity {
         ls.add("+918840974859");
         ls.add("+919599225823");*/
 
+        receiveCredentials();
+
         followup = findViewById(R.id.btFollowUp);
+        imagepbutton = findViewById(R.id.sendtodoctor);
+
+
 
         database = FirebaseDatabase.getInstance();
         usersRef = database.getReference("Doctor");
@@ -197,10 +217,48 @@ public class ShowImageActivity extends AppCompatActivity {
         DocID = bundle.getString("DocuId");
         remain = bundle.getInt("remainconsult");
         CARD = bundle.getString("cardpass");
+        Docuphone = bundle.getString("Docuphone");
 
         if (0 == remain){
             followup.setVisibility(View.GONE);
         }
+        fStore = FirebaseFirestore.getInstance();
+        if (DocID != null){
+            DocumentReference documentReference2 = fStore.collection("Consultation").document(DocID);
+            documentReference2.addSnapshotListener(ShowImageActivity.this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                    if(documentSnapshot.exists()){
+
+
+                        final String URL = documentSnapshot.getString("urlupatient");
+                        if (URL != null){
+                            imagepbutton.setVisibility(View.VISIBLE);
+                            imagepbutton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent sendStuff = new Intent(ShowImageActivity.this, UploadImageFromPatient.class);
+                                    sendStuff.putExtra("ConsultId", DocID);
+                                    sendStuff.putExtra("Docuphone", Docuphone);
+                                    startActivity(sendStuff);
+
+                                }
+                            });
+                        }
+                        else {
+                            imagepbutton.setVisibility(View.VISIBLE);
+                            Toast.makeText(ShowImageActivity.this, "please update app or new consulation ", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }else {
+                        Log.d("tag", "onEvent: Document do not exists");
+                    }
+                }
+            });
+        }
+
+
 
         pd = new ProgressDialog(ShowImageActivity.this);
         pd.setMessage("loading..");
@@ -212,7 +270,7 @@ public class ShowImageActivity extends AppCompatActivity {
             tvSymptoms=findViewById(R.id.tvSymptoms);
             pb=findViewById(R.id.pbImageLoading);
 
-            fStore = FirebaseFirestore.getInstance();
+
             firebaseStorage=FirebaseStorage.getInstance();
             pd.show();
             if(DocID!=null){
@@ -633,5 +691,26 @@ public class ShowImageActivity extends AppCompatActivity {
         }
     }*/
 
+
+    public static void receiveCredentials(){
+
+        final FirebaseRemoteConfig remoteConfig= FirebaseRemoteConfig.getInstance();
+        ACCOUNT_SID=remoteConfig.getString(account_sid);
+        AUTH_TOKEN=remoteConfig.getString(auth_token);
+        from=remoteConfig.getString(fromNumber);
+        Log.i("remote",ACCOUNT_SID+"="+AUTH_TOKEN+"from"+from);
+        //Toast.makeText(this, idOf, Toast.LENGTH_SHORT).show();
+        remoteConfig.fetch(120)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            remoteConfig.fetchAndActivate();
+
+                            //Toast.makeText(LogindcActivity.this, idOf, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 
 }

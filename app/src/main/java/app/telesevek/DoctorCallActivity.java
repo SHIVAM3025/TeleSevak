@@ -21,24 +21,45 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.StorageReference;
 import com.sinch.android.rtc.SinchError;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+
+import javax.annotation.Nullable;
 
 import app.sinch.BaseActivity;
 import app.sinch.PlaceCallActivity;
 import app.sinch.SinchService;
+import app.telesevek.uploadpkg.ShowImageActivity;
 import app.telesevek.uploadpkg.UploadImage;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -94,11 +115,27 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
     List<String> ls=new ArrayList<>();
 
+    public static String account_sid = "account_sid";
+    public static String auth_token = "auth_token";
+    public static String fromNumber="from";
+
+    public static String ACCOUNT_SID ;
+    public static String AUTH_TOKEN ;
+    public static String from;
+
+    Button btnsshow;
+
+
+    RequestQueue mRequestQue;
+    String URL = "https://fcm.googleapis.com/fcm/send";
+    String tokenID;
+    FirebaseFirestore fstore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_call);
 
+        receiveCredentials();
 
 
         pname = findViewById(R.id.textpname);
@@ -106,7 +143,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         Pphone = findViewById(R.id.textphone);
         Pgender = findViewById(R.id.textgender);
         Page = findViewById(R.id.textage);
-
+        btnsshow = findViewById(R.id.SHOWIMAGE);
 
 
         audio = findViewById(R.id.audio);
@@ -125,6 +162,52 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         age = bundle.getString("page");
         DoctorName=bundle.getString("DoctorName");
         DoctorNum=bundle.getString("DoctorNum");
+
+        mRequestQue= Volley.newRequestQueue(this);
+        fstore= FirebaseFirestore.getInstance();
+        getToken();
+
+        if (consultitemid != null){
+            DocumentReference documentReference2 = fStore.collection("Consultation").document(consultitemid);
+            documentReference2.addSnapshotListener(DoctorCallActivity.this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                    if(documentSnapshot.exists()){
+
+
+                        final String URL = documentSnapshot.getString("urlupatient");
+                        if (URL != null){
+                            btnsshow.setVisibility(View.VISIBLE);
+                            btnsshow.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+
+                                    Intent sendStuff = new Intent(DoctorCallActivity.this, PatientFullImageShow.class);
+                                    sendStuff.putExtra("PatientPassId", URL);
+                                    startActivity(sendStuff);
+
+                                }
+                            });
+                        }
+                        else {
+                            btnsshow.setVisibility(View.GONE);
+                        }
+
+
+                    }else {
+                        Log.d("tag", "onEvent: Document do not exists");
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+
 
 
         pname.setText(Pname);
@@ -167,6 +250,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                 startActivity(chemistinten);
             }
         });
+
 
 
         audio.setOnClickListener(new View.OnClickListener() {
@@ -340,6 +424,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         sendStuff.putExtra("PatientName",Pname);
         sendStuff.putExtra("DoctorName",DoctorName);
         sendStuff.putExtra("DoctorNum",DoctorNum);
+        sendStuff.putExtra("Conid",consultitemid);
         startActivity(sendStuff);
 
         isVideo=true;
@@ -360,6 +445,13 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
             }
         });
+
+
+        try {
+            sendNotificationToUser(DoctorName,Pname);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         DocumentReference consult = fStore.collection("Patient").document(itemid);
@@ -515,5 +607,82 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                 .create()
                 .show();
     }
+
+    public static void receiveCredentials(){
+
+        final FirebaseRemoteConfig remoteConfig= FirebaseRemoteConfig.getInstance();
+        ACCOUNT_SID=remoteConfig.getString(account_sid);
+        AUTH_TOKEN=remoteConfig.getString(auth_token);
+        from=remoteConfig.getString(fromNumber);
+        Log.i("remote",ACCOUNT_SID+"="+AUTH_TOKEN+"from"+from);
+        //Toast.makeText(this, idOf, Toast.LENGTH_SHORT).show();
+        remoteConfig.fetch(120)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            remoteConfig.fetchAndActivate();
+
+                            //Toast.makeText(LogindcActivity.this, idOf, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
+    public void getToken(){
+        fstore.collection("Consultation").document(consultitemid)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        tokenID=documentSnapshot.getString("TokenFCM");
+                        assert tokenID != null;
+                        Log.i("token",tokenID+" SUCCESS");
+                        Toast.makeText(DoctorCallActivity.this, ""+tokenID, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("token","failed to get");
+                    }
+                });
+    }
+
+    public void sendNotificationToUser(String callID,String username) throws JSONException {
+        JSONObject fcm=new JSONObject();
+        fcm.put("to",tokenID);
+
+        JSONObject dataObject=new JSONObject();
+        dataObject.put("title","Incoming Call");
+        dataObject.put("body","You have a call from Doctor "+DoctorName);
+        dataObject.put("callID",callID);
+        dataObject.put("username",username);
+
+        fcm.put("data",dataObject);
+
+        JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, URL, fcm, response -> {
+
+
+            Toast.makeText(this, "SUCCESS", Toast.LENGTH_SHORT).show();
+            Log.i("response",response.toString());
+        }, error -> {
+            Toast.makeText(this, "FAIL", Toast.LENGTH_SHORT).show();
+            Log.i("response",error.networkResponse.toString());
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("content-type","application/json");
+                params.put("authorization","key=AAAAIz3KQd8:APA91bFJiG-094nuzkfO0xhkCoeCx6GQQv6nOoKrOc52za0afjY66dENqplOcke5zdJE7yrMBkKR_byfMWlcf3M4-GaSS2BlFv2HCvcT-ON8YIDdEQ6dC_rAOVjCyhi8T9Qo2WG2GVIo");
+                return params;
+            }
+        };
+        mRequestQue.add(request);
+
+    }
+
+
 
 }

@@ -188,7 +188,7 @@ public class ScratchCardNew extends AppCompatActivity{
                             }
                         });
 
-                        if (FinalDate.equals("null")) {
+                        if(FinalDate.equals("null")) {
                                      }
                         else {
                             Date date1 = null;

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TeleSevak</string>
+
+    <string name="click">पिछले परामर्श का प्रतिमा देखने के लिए<font color='blue'> क्लिक </font>  करे</string>
 </resources>

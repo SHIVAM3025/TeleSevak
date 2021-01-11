@@ -1,7 +1,6 @@
 package app.telesevek;
 
 import androidx.annotation.NonNull;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,11 +20,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
@@ -37,14 +37,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.sinch.android.rtc.SinchError;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,10 +53,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-
 import app.sinch.BaseActivity;
 import app.sinch.SinchService;
-import app.telesevek.EmailSender;
 import app.telesevek.Models.FirebaseUserModel;
 import app.telesevek.Models.Doctor;
 import cz.msebera.android.httpclient.HttpHeaders;
@@ -67,9 +64,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -100,7 +99,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
     ProgressDialog pd;
 
     private static final String TAG2 = "AddPatiant";
-
+    String id_consult;
     private Button btnLogin;
 
     String currentDeviceId;
@@ -108,22 +107,35 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
     Doctor user = Doctor.getInstance();
     JSONArray registration_ids = new JSONArray();
 
-     List<String> ls=new ArrayList<>();
-     String allEmails="";
+    List<String> ls=new ArrayList<>();
+    String allEmails="";
+
+    String token;
 
 
 
 
-/*  DONT PUSH THIS TO GITHUB
-    */
 
-    public static final String ACCOUNT_SID = "";
-    public static final String AUTH_TOKEN = "";
+
+    /*  DONT PUSH THIS TO GITHUB
+     */
+
+    public static String ACCOUNT_SID ;
+    public static String AUTH_TOKEN ;
+    public static String from;
+
+    public static String account_sid = "account_sid";
+    public static String auth_token = "auth_token";
+    public static String fromNumber="from";
 
 
 
     FirebaseDatabase database;
     DatabaseReference usersRef;
+
+    public AddPatiant() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,7 +145,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         ls.add("+918840974859");
         ls.add("+919599225823");*/
 
-
+        receiveCredentials();
 
 
 
@@ -150,6 +162,8 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         Dialog.setMessage("Please wait..");
         Dialog.setCancelable(false);
         Dialog.show();
+
+
 
 
         usersRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
@@ -236,10 +250,15 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         fStore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
 
+
+
+
         addAdmins();
 
         //merging admin and doctors
         mergeAdminDoctors();
+
+        id_consult = fStore.collection("Consultation").document().getId();
 
 
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
@@ -329,7 +348,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         card = getIntent().getStringExtra("cardpass");
         remainconsult = getIntent().getIntExtra("remainconsult",0);
         Toast.makeText(AddPatiant.this, ""+remainconsult, Toast.LENGTH_SHORT).show();
-       /* phone = getIntent().getStringExtra("phonenumber");*/
+        /* phone = getIntent().getStringExtra("phonenumber");*/
 
        /* mPhone.setText(phone);
         mPhone.setEnabled(false);*/
@@ -344,9 +363,11 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //sendNotification(token,"Incoming Call","Incoming Call");
                 final String symtoms = mSymptoms.getText().toString().trim();
                 final String fullName = mFullName.getText().toString();
-               final String phone    = mPhone.getText().toString();
+                phone    = mPhone.getText().toString();
 
 
                 String result = "";
@@ -382,7 +403,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 pd.show();;
 
                 String id = fStore.collection("Patient").document().getId();
-                String id_consult = fStore.collection("Consultation").document().getId();
+
 
 
                 date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
@@ -554,13 +575,19 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 user2.put("url","");
                 user2.put("urldescription","");
                 user2.put("urludate","null");
+                user2.put("urlupatient","null");
+                user2.put("urlupatientdesc","null");
+                user2.put("TokenFCM","null");
                 documentReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
                         SharedPreferences.Editor image = getSharedPreferences("Consultpre", MODE_PRIVATE).edit();
                         image.putString("cid", id_consult);
                         image.commit();
+
+                        token();
+
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -673,10 +700,10 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         for(int j=0;j<ls.size();j++){
 
             String body = "New Patient Request: " +
-                         " Patient Name: "+Name+
-                         " Patient Number: "+Phone;
+                    " Patient Name: "+Name+
+                    " Patient Number: "+Phone;
 
-            String from = "+17633258036";
+            //String from = "+17633258036";
             String to = ls.get(j);
 
             String base64EncodedCredentials = "Basic " + Base64.encodeToString(
@@ -713,7 +740,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
     }
 
-   public interface TwilioApi {
+    public interface TwilioApi {
         @FormUrlEncoded
         @POST("Accounts/{ACCOUNT_SID}/Messages")
         Call<ResponseBody> sendMessage(
@@ -722,6 +749,32 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 @FieldMap Map<String, String> metadata
         );
     }
+
+    public static void receiveCredentials(){
+
+        final FirebaseRemoteConfig remoteConfig= FirebaseRemoteConfig.getInstance();
+        ACCOUNT_SID=remoteConfig.getString(account_sid);
+        AUTH_TOKEN=remoteConfig.getString(auth_token);
+        from=remoteConfig.getString(fromNumber);
+        Log.i("remote",ACCOUNT_SID+"="+AUTH_TOKEN+"from"+from);
+        //Toast.makeText(this, idOf, Toast.LENGTH_SHORT).show();
+        remoteConfig.fetch(120)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            remoteConfig.fetchAndActivate();
+
+                            //Toast.makeText(LogindcActivity.this, idOf, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -800,5 +853,24 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         mSpinner.setTitle("Logging in");
         mSpinner.setMessage("Please wait...");
         mSpinner.show();
+    }
+
+
+
+    public void token(){
+        token=FirebaseInstanceId.getInstance().getToken();
+        fStore.collection("Consultation").document(id_consult)
+                .update("TokenFCM",token)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i("tokenFCM","added successfully");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("tokenFCM","cannot be added");
+            }
+        });
     }
 }

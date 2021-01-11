@@ -183,6 +183,7 @@
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.ChattingActivity" />
         <activity android:name=".ReceiveNotificationActivity" />
+<activity android:name=".uploadpkg.UploadImageFromPatient"/>
 
         <service android:name=".Services.MyFirebaseInstanceIdService">
             <intent-filter>
@@ -194,6 +195,19 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <service android:name="app.telesevek.Services.CallNotificationService" />
+
+        <receiver
+            android:name="app.telesevek.Services.CallNotificationActionReceiver"
+            android:enabled="true"
+            >
+            <intent-filter android:priority="999">
+                <action android:name="ConstantApp.CALL_RECEIVE_ACTION" />
+                <action android:name="ConstantApp.CALL_CANCEL_ACTION" />
+            </intent-filter>
+        </receiver>
+
         <activity android:name="app.sinch.IncomingCallActivity" />
         <activity android:name="app.sinch.PlaceCallActivity" />
 

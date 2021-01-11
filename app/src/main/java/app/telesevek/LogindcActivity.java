@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -26,7 +27,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -48,6 +57,7 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.MODIFY_AUDIO_SETTINGS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
+import static com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE;
 
 public class LogindcActivity extends AppCompatActivity implements UpdateHelper.OnUpdateCheckListener {
     Button mButton;
@@ -62,11 +72,34 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
     FirebaseFirestore fStore;
    /* public static String ACCOUNT_SID="account_sid";
     public static String AUTH_TOKEN="auth_token";*/
-
+   private final int UPDATE_REQUEST_CODE=1234;
+    private AppUpdateManager appUpdateManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logindc);
+
+
+        appUpdateManager = AppUpdateManagerFactory.create(this);
+        appUpdateManager.getAppUpdateInfo().addOnSuccessListener(new com.google.android.play.core.tasks.OnSuccessListener<AppUpdateInfo>() {
+            @Override
+            public void onSuccess(AppUpdateInfo result) {
+
+                if((result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE)
+                        && result.isUpdateTypeAllowed(IMMEDIATE))
+                {
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(result,IMMEDIATE,LogindcActivity.this,UPDATE_REQUEST_CODE);
+                    }
+                    catch (IntentSender.SendIntentException e){
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+        });
+
         parentLayout = findViewById(R.id.parentLayout);
         if (!checkPermission()) {
             requestPermission();
@@ -327,5 +360,31 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
                         Log.e("ERROR","error");
                     }
                 });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        appUpdateManager.getAppUpdateInfo().addOnSuccessListener(new com.google.android.play.core.tasks.OnSuccessListener<AppUpdateInfo>() {
+            @Override
+            public void onSuccess(AppUpdateInfo result) {
+
+                if(result.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
+                {
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(result,IMMEDIATE,LogindcActivity.this,UPDATE_REQUEST_CODE);
+                    }
+                    catch (IntentSender.SendIntentException e){
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+        });
+
+
+
     }
 }

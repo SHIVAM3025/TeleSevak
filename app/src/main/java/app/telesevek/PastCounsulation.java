@@ -78,14 +78,14 @@ public class PastCounsulation extends AppCompatActivity {
 
         fStore = FirebaseFirestore.getInstance();
         if(!isScratchCard) {
-            Query query = fStore.collection("Consultation").whereEqualTo("PatientPhone", phonenumber);
+            Query query = fStore.collection("Consultation").whereEqualTo("PatientPhone", phonenumber).orderBy("Time",Query.Direction.DESCENDING);
 
              response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
                     .setQuery(query, ConsultResponse.class)
                     .build();
 
         }else {
-            Query query = fStore.collection("Consultation").whereEqualTo("PatientCard", scratchCardNumber);
+            Query query = fStore.collection("Consultation").whereEqualTo("PatientCard", scratchCardNumber).orderBy("Time",Query.Direction.DESCENDING);
              response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
                     .setQuery(query, ConsultResponse.class)
                     .build();
@@ -131,6 +131,7 @@ public class PastCounsulation extends AppCompatActivity {
                                         sendStuff.putExtra("cardpass", model.getPatientCard());
                                         sendStuff.putExtra("remainconsult", carde);
                                         sendStuff.putExtra("DocuId", model.getConsultationId());
+                                        sendStuff.putExtra("Docuphone", model.getDoctorId());
                                         startActivity(sendStuff);
                                     }
                                     else {
