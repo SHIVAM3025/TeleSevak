@@ -51,13 +51,11 @@ import java.util.List;
 import java.util.Map;
 
 import app.telesevek.AddPatiant;
-import app.telesevek.DoctorCallActivity;
 import app.telesevek.Doctowillcallyou;
 import app.telesevek.EmailSender;
 import app.telesevek.Models.Doctor;
 import app.telesevek.Models.FirebaseUserModel;
 
-import app.telesevek.PastCounsulation;
 import app.telesevek.PatientFullImageShow;
 import app.telesevek.R;
 import cz.msebera.android.httpclient.HttpHeaders;
@@ -74,9 +72,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
-import static app.telesevek.AddPatiant.ACCOUNT_SID;
-
-import static app.telesevek.AddPatiant.AUTH_TOKEN;
 
 
 public class ShowImageActivity extends AppCompatActivity {
@@ -487,11 +482,14 @@ public class ShowImageActivity extends AppCompatActivity {
                 params.put("registration_ids", registration_ids);
 
                 JSONObject notificationObject = new JSONObject();
-                notificationObject.put("body", "Followup Name is"+fullName);
-                notificationObject.put("title", "New Followup");
+                notificationObject.put("body", "Follow-up Name is "+fullName);
+                notificationObject.put("title", "New Follow-up");
 
 
                 params.put("notification", notificationObject);
+                JSONObject dataObject=new JSONObject();
+                dataObject.put("title","FollowUp");
+                params.put("data",dataObject);
 
                 StringEntity entity = new StringEntity(params.toString());
 

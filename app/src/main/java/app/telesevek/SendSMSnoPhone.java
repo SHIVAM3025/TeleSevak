@@ -22,6 +22,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static app.telesevek.AddPatiant.ACCOUNT_SID;
+import static app.telesevek.AddPatiant.AUTH_TOKEN;
+import static app.telesevek.AddPatiant.from;
+import static app.telesevek.AddPatiant.receiveCredentials;
+
 public class SendSMSnoPhone extends AppCompatActivity {
     String Docuidi;
     String Patientphone;
@@ -29,8 +34,7 @@ public class SendSMSnoPhone extends AppCompatActivity {
     Button submit;
     EditText ed;
     List<String> ls=new ArrayList<>();
-    public static final String ACCOUNT_SID = "ACe455dc68b19d343b393e142de03bd02c";
-    public static final String AUTH_TOKEN = "599ab28152b5e92e4f76c7720e6d87a5";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,7 @@ public class SendSMSnoPhone extends AppCompatActivity {
         Patientphone = bundle.getString("patientphone");
         ls.add(Patientphone);
 
+        receiveCredentials();
         pname= findViewById(R.id.pname);
         submit= findViewById(R.id.submit);
         ed= findViewById(R.id.ed_pred);
@@ -61,7 +66,7 @@ public class SendSMSnoPhone extends AppCompatActivity {
         for(int j=0;j<ls.size();j++){
 
             String body = docuidi +"Doctor Prescription is"+PatientName ;
-            String from = "+17633258036";
+            //String from = "+17633258036";
             String to = ls.get(j);
 
             String base64EncodedCredentials = "Basic " + Base64.encodeToString(
