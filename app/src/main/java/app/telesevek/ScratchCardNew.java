@@ -88,6 +88,13 @@ public class ScratchCardNew extends AppCompatActivity{
 
         fStore = FirebaseFirestore.getInstance();
 
+        findViewById(R.id.ivPaymentSpecial).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),SpecialDoctors.class));
+            }
+        });
+
        /* past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
             @Override

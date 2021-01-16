@@ -57,6 +57,8 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.MODIFY_AUDIO_SETTINGS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.USE_FULL_SCREEN_INTENT;
+import static android.Manifest.permission.WAKE_LOCK;
 import static com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE;
 
 public class LogindcActivity extends AppCompatActivity implements UpdateHelper.OnUpdateCheckListener {
@@ -245,11 +247,15 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
         int resNetState = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_NETWORK_STATE);
         int resModAudio = ContextCompat.checkSelfPermission(getApplicationContext(), MODIFY_AUDIO_SETTINGS);
         int resPhonState = ContextCompat.checkSelfPermission(getApplicationContext(), READ_PHONE_STATE);
+        //int resWake = ContextCompat.checkSelfPermission(getApplicationContext(), WAKE_LOCK);
+
+        //int resKeyguard = ContextCompat.checkSelfPermission(getApplicationContext(), KEYGUARD_SERVICE);
 
         return resCamera == PackageManager.PERMISSION_GRANTED
                 && resRecAudio == PackageManager.PERMISSION_GRANTED
                 && resNetState == PackageManager.PERMISSION_GRANTED
                 && resModAudio == PackageManager.PERMISSION_GRANTED
+
                 && resPhonState == PackageManager.PERMISSION_GRANTED;
     }
 
@@ -268,10 +274,12 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
                     boolean resNetStateAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
                     boolean resModAudioAccepted = grantResults[3] == PackageManager.PERMISSION_GRANTED;
                     boolean resPhonStateAccepted = grantResults[4] == PackageManager.PERMISSION_GRANTED;
-                    if (resCameraAccepted && resRecAudioAccepted && resNetStateAccepted && resModAudioAccepted && resPhonStateAccepted)
-                        Snackbar.make(parentLayout, "Permission Granted, Now you can access location data and camera.", Snackbar.LENGTH_LONG).show();
+                    //boolean resWakeAccepted = grantResults[5] == PackageManager.PERMISSION_GRANTED;
+                    //boolean resKeyAccepted = grantResults[6] == PackageManager.PERMISSION_GRANTED;
+                    if (resCameraAccepted && resRecAudioAccepted && resNetStateAccepted && resModAudioAccepted && resPhonStateAccepted )
+                        Snackbar.make(parentLayout, "Permission Granted! Now you can use all our features.", Snackbar.LENGTH_LONG).show();
                     else {
-                        Snackbar.make(parentLayout, "Permission Denied, You cannot access location data and camera.", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(parentLayout, "Permission Denied! You cannot use all our features.", Snackbar.LENGTH_LONG).show();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(ACCESS_NETWORK_STATE)) {
                                 showMessageOKCancel("You need to allow access to both the permissions",

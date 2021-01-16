@@ -106,5 +106,8 @@ dependencies {
     //mail
     implementation 'com.sun.mail:android-mail:1.6.4'
 
+    //razorpay
+    implementation 'com.razorpay:checkout:1.5.16'
+
 
 }
