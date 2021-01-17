@@ -41,11 +41,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.sinch.android.rtc.SinchError;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 import javax.annotation.Nullable;
@@ -80,6 +83,8 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logindc);
+
+
 
 
         appUpdateManager = AppUpdateManagerFactory.create(this);
@@ -369,6 +374,68 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
                     }
                 });
     }
+
+    public void consult(){
+
+        FirebaseFirestore fstore=FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        fstore.setFirestoreSettings(settings);
+        fstore.collection("Consultation").get()
+
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> snapshots=queryDocumentSnapshots.getDocuments();
+                        for (DocumentSnapshot snapshot:snapshots){
+                            String id=snapshot.getId();
+                            fstore.collection("Consultation").document(id).update("TypeOfDoctor","").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                   if (task.isSuccessful()){
+                                       Toast.makeText(LogindcActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                                   }else{
+                                       Toast.makeText(LogindcActivity.this, "Failed", Toast.LENGTH_SHORT).show();}
+                                }
+                            });
+
+                        }
+                        Toast.makeText(LogindcActivity.this, "consultation updated", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LogindcActivity.this, "Failed update", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void consult2(){
+
+        FirebaseFirestore fstore=FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        fstore.setFirestoreSettings(settings);
+        fstore.collection("Consultation").document()
+
+                .update("TypeOfDoctor","")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(LogindcActivity.this, "Consultation updated", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LogindcActivity.this, "Failed update", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     @Override
     protected void onResume() {

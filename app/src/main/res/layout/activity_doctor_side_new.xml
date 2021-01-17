@@ -133,6 +133,7 @@
         android:background="@color/fbutton_color_peter_river"
         app:itemIconTint="#fff"
         app:itemTextColor="#fff"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -104,6 +104,10 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(),DoctorSideNew.class));
                         overridePendingTransition(0,0);
                         return true;
+                    case R.id.specialist_menu:
+                        startActivity(new Intent(getApplicationContext(),DoctorSideSpecial.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
                 return false;
             }

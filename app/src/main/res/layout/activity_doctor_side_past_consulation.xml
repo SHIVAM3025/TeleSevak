@@ -54,6 +54,7 @@
         android:layout_marginEnd="0dp"
         android:id="@+id/bottomNavPast"
         android:background="@color/fbutton_color_peter_river"
+        app:labelVisibilityMode="labeled"
         app:itemTextColor="#fff"
         app:itemIconTint="#fff"
         app:menu="@menu/doctor_menu" />

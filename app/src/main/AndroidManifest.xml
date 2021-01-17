@@ -35,6 +35,9 @@
         <activity android:name=".FormAfterPayment"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
+        <activity android:name=".DoctorSideSpecial"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".SendSMSnoPhone"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>

@@ -1,11 +1,5 @@
 package app.telesevek;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -19,9 +13,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,9 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
-import javax.annotation.Nullable;
-
-public class DoctorSideFollowupConsulation extends AppCompatActivity {
+public class DoctorSideSpecial extends AppCompatActivity {
 
     FirestoreRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
@@ -59,24 +61,15 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
     Thread t;
 
     String notificationtrue;
+    String typeOfDoctor;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_side_follow_consulation);
 
+        setContentView(R.layout.activity_doctor_side_specialist);
 
-       /* name = findViewById(R.id.D_degree);
-        phone = findViewById(R.id.D_address);
-        date = findViewById(R.id.date);
-
-        followname = findViewById(R.id.followername);
-        followdate = findViewById(R.id.dateFOLLOW);
-
-        fStore = FirebaseFirestore.getInstance();
-        SharedPreferences prefs = getSharedPreferences("PNumber", MODE_PRIVATE);
-        String phonenumber = prefs.getString("no", null);
-*/
         friendList = findViewById(R.id.friend_list);
         progressBar = findViewById(R.id.progress_bar);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -84,7 +77,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavDoctor = findViewById(R.id.bottomNavFollow);
-        bottomNavDoctor.setSelectedItemId(R.id.followUp_menu);
+        bottomNavDoctor.setSelectedItemId(R.id.specialist_menu);
 
         bottomNavDoctor.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -97,6 +90,8 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
                         return true;
 
                     case R.id.followUp_menu:
+                        startActivity(new Intent(getApplicationContext(), DoctorSideFollowupConsulation.class));
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.current_menu:
@@ -104,8 +99,6 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.specialist_menu:
-                        startActivity(new Intent(getApplicationContext(),DoctorSideSpecial.class));
-                        overridePendingTransition(0,0);
                         return true;
                 }
                 return false;
@@ -140,7 +133,23 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
 
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfConsultation", "Followup").whereEqualTo("DoctorId", phonenumber).orderBy("Time",Query.Direction.DESCENDING
+
+        fStore.collection("Doctor").document(phonenumber)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        typeOfDoctor= (String) documentSnapshot.get("TypeOfDoctor");
+                        Toast.makeText(DoctorSideSpecial.this, "Type of Doctor: "+typeOfDoctor, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(DoctorSideSpecial.this, "Could not get Doctor", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfDoctor", typeOfDoctor).whereEqualTo("DoctorId", phonenumber).orderBy("Time",Query.Direction.DESCENDING
         );
 
         FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
@@ -148,9 +157,9 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
                 .build();
 
 
-        adapter = new FirestoreRecyclerAdapter<ConsultResponse, DoctorSideFollowupConsulation.FriendsHolder>(response) {
+        adapter = new FirestoreRecyclerAdapter<ConsultResponse, DoctorSideSpecial.FriendsHolder>(response) {
             @Override
-            public void onBindViewHolder(final DoctorSideFollowupConsulation.FriendsHolder holder, int position, final ConsultResponse model) {
+            public void onBindViewHolder(final DoctorSideSpecial.FriendsHolder holder, int position, final ConsultResponse model) {
                 progressBar.setVisibility(View.GONE);
                 holder.textName.setText(model.getPName());
                 holder.textCompany.setText(model.getDateTime());
@@ -167,7 +176,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
                 holder.call.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent sendStuff = new Intent(DoctorSideFollowupConsulation.this, DoctorCallActivityFollow.class);
+                        Intent sendStuff = new Intent(DoctorSideSpecial.this, DoctorCallActivity.class);
                         sendStuff.putExtra("PatientPassId", model.getPatientPhone());
                         sendStuff.putExtra("PatientCard", model.getPatientCard());
                         sendStuff.putExtra("Pname", model.getPName());
@@ -186,11 +195,11 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
             }
 
             @Override
-            public FriendsHolder onCreateViewHolder(ViewGroup group, int i) {
+            public DoctorSideSpecial.FriendsHolder onCreateViewHolder(ViewGroup group, int i) {
                 View view = LayoutInflater.from(group.getContext())
                         .inflate(R.layout.list_item_consultation_follow, group, false);
 
-                return new FriendsHolder(view);
+                return new DoctorSideSpecial.FriendsHolder(view);
             }
 
             @Override
@@ -266,6 +275,8 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
         };
 
         t.start();
+
+
     }
 
     public class FriendsHolder extends RecyclerView.ViewHolder {
@@ -300,7 +311,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
         DocumentReference usernotify = fStore.collection("FollowUPNotification").document("PatientRequestNotification");
         usernotify.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 if (documentSnapshot.exists()) {
                     notificationtrue = documentSnapshot.getString("Notification");
                     if ("True".equals(notificationtrue)) {
@@ -338,4 +349,6 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
+
+
 }
