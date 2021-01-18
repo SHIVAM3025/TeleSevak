@@ -217,6 +217,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
                 user.put("Status","Requested");
                 user.put("ItemId",id);
                 user.put("TypeOfConsultation","Primary");
+                user.put("TypeOfDoctor",typeOfDoctor);
                /* user.put("ChemistId",chemistid);
                 user.put("ChemistName",Chemistname);
                 user.put("ChemistPhoneNumber",chemistphonenumber);*/
@@ -291,6 +292,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
                 user2.put("DateTime",date2);
                 user2.put("Status","Requested");
                 user2.put("TypeOfConsultation","Primary");
+                user2.put("TypeOfDoctor",typeOfDoctor);
                 user2.put("Time",currentTime);
                 user2.put("url","");
                 user2.put("urldescription","");

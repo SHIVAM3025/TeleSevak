@@ -15,5 +15,9 @@
         android:title="Follow Up"
         android:id="@+id/followUp_menu"
         android:icon="@drawable/ic_baseline_calendar_today_24"/>
+    <item
+        android:title="Specialist"
+        android:id="@+id/specialist_menu"
+        android:icon="@drawable/ic_consult_new_new"/>
 
 </menu>
