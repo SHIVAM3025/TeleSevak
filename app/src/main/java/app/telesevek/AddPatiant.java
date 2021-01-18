@@ -649,9 +649,11 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                             String id=documents.getId();
                             ls.add(id);
                             String email=documents.getString("Email");
+                            if(email!=null){
                             if (!email.equals("")){
                                 allEmails+=email+",";
                             }
+                            }else Toast.makeText(AddPatiant.this, "Email is NULL", Toast.LENGTH_SHORT).show();
                         }
                         /*for(int i=0;i<7;i++){
                             Log.i("Merge",ls.get(i));

@@ -149,8 +149,9 @@ public class DoctorSideSpecial extends AppCompatActivity {
             }
         });
 
-        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfDoctor", typeOfDoctor).whereEqualTo("DoctorId", phonenumber).orderBy("Time",Query.Direction.DESCENDING
+        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfDoctor",typeOfDoctor).orderBy("Time",Query.Direction.DESCENDING
         );
+
 
         FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
                 .setQuery(query, ConsultResponse.class)
