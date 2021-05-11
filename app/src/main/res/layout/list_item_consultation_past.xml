@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/myreact2"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="20dp"
+        android:id="@+id/box"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:id="@+id/tx_fake"
+            android:layout_below="@+id/D_name"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:text="Patient Name:"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#A9A9"
+            android:layout_toRightOf="@+id/tx_fake"
+            android:id="@+id/D_degree"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="16dp"
+            android:text="Alok Kumar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:id="@+id/tv_fsy"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/D_degree"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:text="Symptoms:"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:id="@+id/tv_dr"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tv_fsy"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:text="Seen By Doctor:"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#A9A9"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tv_real_doctor"
+            android:layout_toRightOf="@+id/tv_dr"
+            android:layout_below="@+id/tv_fsy"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:textSize="16dp"
+            android:text="drname"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#A9A9"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tv_real_sy"
+            android:layout_toRightOf="@+id/tv_fsy"
+            android:layout_below="@+id/D_degree"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:textSize="16dp"
+            android:text="sar mai dard"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/consult"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textAllCaps="false"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/border_button"
+            android:layout_centerInParent="true"
+            android:text="Consult" />
+
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#A9A9"
+            android:textStyle="bold"
+            android:textSize="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/tv_dr"
+            android:id="@+id/date"
+            android:text="Requested on 27/5/20 10:30"
+            />
+
+
+
+    </RelativeLayout>
+
+    <!-- <Button
+         android:layout_width="140dp"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/box"
+         android:layout_marginTop="50dp"
+         android:id="@+id/accept"
+         android:layout_marginLeft="40dp"
+         android:background="@drawable/border"
+         android:gravity="center"
+         android:text="Accept" />-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

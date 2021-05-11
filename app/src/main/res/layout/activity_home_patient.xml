@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".AddPatiant">
+
+    <RelativeLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:background="#36A8C1"
+        android:layout_height="56dp">
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/newapplogo"
+            android:tint="@color/white" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:layout_below="@id/appbar"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/f_row"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/title"
+            android:textSize="24dp"
+            android:maxLines="3"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="16dp"
+            android:layout_marginLeft="24dp"
+            android:textColor="#3F3D56"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="15 मिनट में अनुभवी डॉक्टरों से कराएं इलाज" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="18dp"
+            android:layout_weight="1"
+            card_view:srcCompat="@drawable/phonemokup" />
+
+
+    </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E7E7E7"/>
+    <LinearLayout
+        android:id="@+id/s_row"
+        android:layout_weight="1.1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/myreactmain"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:layout_marginRight="24dp"
+            android:layout_marginLeft="24dp"
+            android:id="@+id/ivPaymentSpecial"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="विशेषज्ञ डॉक्टरों से परामर्श शुरू करें"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:layout_gravity="center_vertical"
+                android:lineSpacingExtra="3dp"
+                android:id="@+id/online"
+                android:layout_marginLeft="24dp"
+                android:textSize="20dp"
+                android:textColor="#1DA1B4"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:layout_width="match_parent"
+                android:text="आगे बढ़े"
+                android:textSize="15dp"
+                android:layout_marginLeft="25dp"
+                android:id="@+id/bt_online"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/border_button"
+                android:drawableRight="@drawable/ic_vector"
+                android:textColor="#FFFFFF"
+                android:layout_height="38dp"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rowlast"
+            android:layout_weight="0.9"
+            android:layout_width="match_parent"
+            android:background="#ffffff"
+            android:layout_marginBottom="64dp"
+            android:layout_marginTop="30dp"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="match_parent"
+                android:text="स्वास्थ्य कार्ड के माध्यम से परामर्श लें"
+                android:textSize="16dp"
+                android:layout_marginLeft="25dp"
+                android:id="@+id/helth"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/border_button"
+                android:drawableRight="@drawable/ic_vector2"
+                android:textColor="#FFFFFF"
+                android:layout_height="48dp"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/gopre"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+        android:gravity="center"
+        android:layout_marginBottom="64dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/click"
+        android:layout_alignParentBottom="true"
+        android:background="#f0ed93"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/call"
+        android:layout_alignParentBottom="true"
+        android:background="#FDFDA9"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        android:layout_height="70dp">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:orientation="horizontal">
+
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/icon"
+                android:layout_width="41dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="41dp"
+                android:src="@drawable/newcallicon"
+                />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/callb"
+                android:layout_width="18dp"
+                android:background="@drawable/callbutton"
+                android:layout_gravity="center"
+                android:layout_marginLeft="22dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="18dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#ffffff"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/ic_baseline_call_24"
+                />
+
+
+            <TextView
+                android:id="@+id/drnametitile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:layout_weight="1"
+                android:textColor="#525151"
+                android:text="डॉ रश्मि कुमार आपको थोड़ी देर में सम्पर्क करेंगे "
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/icon"
+                android:layout_toEndOf="@+id/icon" />
+
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="8dp"
+                android:layout_weight="1"
+                android:layout_marginTop="9dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="#606059"
+                android:text="( MBBS, MD )           |          अनुभव - ७ वर्ष           |           लखनऊ "
+                android:layout_toRightOf="@+id/icon"
+                android:layout_below="@+id/drnametitile"
+                />
+
+
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/fsubmit"
+        android:layout_alignParentBottom="true"
+        android:background="#FDFDA9"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        android:layout_height="70dp">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:orientation="horizontal">
+
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/icon2"
+                android:layout_width="41dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="41dp"
+                android:src="@drawable/newcallicon"
+                />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/callb2"
+                android:layout_width="18dp"
+                android:background="@drawable/callbutton"
+                android:layout_gravity="center"
+                android:layout_marginLeft="22dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="18dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#ffffff"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/ic_baseline_call_24"
+                />
+
+
+            <TextView
+                android:id="@+id/drnametitile2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:layout_weight="1"
+                android:layout_centerInParent="true"
+                android:textColor="#525151"
+                android:text="डॉक्टर आपको थोड़ी देर में सम्पर्क करेंगे "
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/icon2"
+                android:layout_toEndOf="@+id/icon2" />
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_above="@id/bottomNav"
+        android:background="@drawable/shadow"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:elevation="4dp"
+        android:backgroundTint="@color/fbutton_color_peter_river"
+        android:outlineAmbientShadowColor="#707070"
+        android:outlineSpotShadowColor="#707070"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/patient_menu" />
+
+</RelativeLayout>

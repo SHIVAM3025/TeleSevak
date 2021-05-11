@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".AddPatiant">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/appbar"
+            android:background="#36A8C1"
+            android:layout_height="56dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="परामर्श ले"
+                android:drawableLeft="@drawable/ic_baseline_keyboard_arrow_left_24"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pname"
+        android:textAllCaps="false"
+        android:layout_below="@+id/appbar"
+        android:textColor="#382727"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
+        android:textSize="14dp"
+        android:text="रोगी का नाम दर्ज करें"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/pname"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:textSize="14dp"
+        android:id="@+id/ed_pname"
+        android:inputType="text"
+        android:background="@drawable/edittextr"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_height="30dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:textColor="#382727"
+        android:id="@+id/p_number"
+        android:backgroundTint="#f1f5f8"
+        android:layout_below="@+id/ed_pname"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:textSize="14dp"
+        android:text="रोगी फोन नंबर दर्ज करें"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/p_number"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:textSize="14dp"
+        android:inputType="phone"
+        android:id="@+id/ed_pnumber"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/edittextr"
+        android:layout_height="30dp"/>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:id="@+id/textageandg"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@+id/ed_pnumber"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="#382727"
+                android:id="@+id/age"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:textSize="14dp"
+                android:text="उम्र"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="#382727"
+                android:id="@+id/gender"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:textSize="14dp"
+                android:text="लिंग"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:id="@+id/edagelinear"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@+id/textageandg"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textColor="#000000"
+                android:id="@+id/ed_age"
+                android:inputType="phone"
+                android:gravity="center_vertical"
+                android:textSize="14dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/edittextr"
+                android:layout_weight="1.4"
+                android:layout_marginTop="5dp"
+                />
+
+           <RadioGroup
+               android:layout_width="wrap_content"
+               android:orientation="horizontal"
+               android:id="@+id/gr"
+               android:layout_height="wrap_content">
+           <RadioButton
+               android:layout_width="wrap_content"
+               android:text="पुस्र्ष"
+               android:id="@+id/male"
+               android:checked="true"
+               android:layout_marginRight="10dp"
+               android:layout_height="wrap_content"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:text="महिला"
+                android:id="@+id/female"
+                android:layout_height="wrap_content"/>
+
+           </RadioGroup>
+        </LinearLayout>
+
+
+
+
+
+
+
+    <!--<Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ed_symptom"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/submit"
+        android:backgroundTint="#f1f5f8"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="Submit" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#000000"
+        android:layout_marginTop="30dp"
+        android:id="@+id/view"
+        android:backgroundTint="#f1f5f8"
+        android:layout_below="@+id/submit"
+        android:layout_height="5dp"/>
+
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:backgroundTint="#f1f5f8"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/viewbill"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="View Bill" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewbill"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#f1f5f8"
+        android:id="@+id/ViewPastConsultations"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="View Past Consultations" />
+-->
+    </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/submit"
+        android:textSize="16dp"
+        android:background="@drawable/border_button2"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:text="आगे बड़े" />
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:outlineAmbientShadowColor="@color/fbutton_color_peter_river"
+        android:outlineSpotShadowColor="@color/fbutton_color_peter_river"
+        android:backgroundTint="@color/fbutton_color_peter_river"
+        app:labelVisibilityMode="labeled"
+        android:background="#fff"
+        app:menu="@menu/patient_menu"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"/>
+-->
+    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:background="#ffffff"
+        android:id="@+id/bootombutton"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/consult"
+            android:drawableTop="@drawable/ic_doctor"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:textColor="@color/fbutton_color_peter_river"
+            android:drawableTint="@color/fbutton_color_peter_river"
+            android:background="@drawable/settop"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="परामर्श ले"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/Past"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_document"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:text="पुराने परामर्श"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/card"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_card"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textSize="12dp"
+            android:text="कार्ड खरीदें"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:id="@+id/odoctor"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:background="#ffffff"
+            android:textAllCaps="false"
+            android:drawableTop="@drawable/ic_ourdoctors"
+            android:textSize="12dp"
+            android:text="हमारे डॉक्टर"/>
+    </LinearLayout>
+
+    -->
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_above="@id/bottomNav"
+        android:background="@drawable/shadow"/>
+
+
+
+</RelativeLayout>
