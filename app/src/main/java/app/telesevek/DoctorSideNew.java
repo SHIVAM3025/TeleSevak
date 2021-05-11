@@ -26,8 +26,10 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,6 +37,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 
 
@@ -66,9 +69,10 @@ public class DoctorSideNew extends AppCompatActivity{
     String Did;
     String DNumber;
     String date;
-    String date2;
+    TextView val;
     String date3;
     String Dname;
+    String dtype;
     Button past;
     Button Followup;
     Button oneday;
@@ -90,6 +94,7 @@ public class DoctorSideNew extends AppCompatActivity{
     RelativeLayout LAYOUT;
     Thread t;
     ProgressDialog pd;
+    Query query;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +113,7 @@ public class DoctorSideNew extends AppCompatActivity{
         friendList.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
+        val = findViewById(R.id.tex_val);
 
         pd = new ProgressDialog(DoctorSideNew.this);
         pd.setMessage("loading..");
@@ -128,18 +134,9 @@ public class DoctorSideNew extends AppCompatActivity{
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.followUp_menu:
-                        startActivity(new Intent(getApplicationContext(),DoctorSideFollowupConsulation.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
                     case R.id.current_menu:
                         return true;
 
-                    case R.id.specialist_menu:
-                        startActivity(new Intent(getApplicationContext(),DoctorSideSpecial.class));
-                        overridePendingTransition(0,0);
-                        return true;
                 }
                 return false;
             }
@@ -257,16 +254,23 @@ public class DoctorSideNew extends AppCompatActivity{
                         Did = documentSnapshot.getString("DoctorId");
                         Dname = documentSnapshot.getString("Name");
                         DNumber = documentSnapshot.getString("PhoneNumber");
+                        dtype = documentSnapshot.getString("TypeOfDoctor");
 
 
                         SharedPreferences.Editor doctorsave = getSharedPreferences("doctornamevideocall", MODE_PRIVATE).edit();
                         doctorsave.putString("dnamecall", Dname);
+                        doctorsave.putString("drnum", DNumber);
                         doctorsave.commit();
+
+
+                        Toast.makeText(DoctorSideNew.this, ""+dtype, Toast.LENGTH_SHORT).show();
                     }else {
                         Log.d("tag", "onEvent: Document do not exists");
                     }
                 }
             });
+
+
         }
 
         /*t = new Thread() {
@@ -289,20 +293,39 @@ public class DoctorSideNew extends AppCompatActivity{
         };
 
         t.start();*/
-
+        SharedPreferences type = getSharedPreferences("doctornamevideocall", MODE_PRIVATE);
+        String dtype = type.getString("dtype", "10");
 
         String datetime = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Consultation").whereEqualTo("Status","Requested").whereEqualTo("TypeOfConsultation","Primary").orderBy("Time",Query.Direction.ASCENDING);
 
+        if (dtype.equals("0")) {
+            query = fStore.collection("Consultation").whereEqualTo("Status","Requested").whereEqualTo("TypeOfConsultation","Primary").orderBy("DateTime",Query.Direction.ASCENDING);
+        }else {
+             query = fStore.collection("Consultation").whereEqualTo("Status", "Requested").whereEqualTo("TypeOfConsultation", "Primary").orderBy("DateTime", Query.Direction.ASCENDING).whereEqualTo("TypeOfDoctor", dtype);
 
-
+        }
 
 
         FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
                 .setQuery(query, ConsultResponse.class)
                 .build();
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.getResult().isEmpty()){
+                    progressBar.setVisibility(View.GONE);
+                    val.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+
+
+
+
 
 
 
@@ -318,18 +341,23 @@ public class DoctorSideNew extends AppCompatActivity{
                 holder.textName.setText(model.getPName());
                 holder.textTitle.setText(model.getSymtoms());
                 holder.textCompany.setText(model.getDateTime());
+                holder.type.setText(model.getTypeOfDoctor());
                 /*Glide.with(getApplicationContext())
                         .load(model.getImage())
                         .into(holder.imageView);*/
+               if (model.getPName().isEmpty()){
+                   progressBar.setVisibility(View.GONE);
+               }
 
 
-                holder.reject.setOnClickListener(new View.OnClickListener() {
+
+               /* holder.reject.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view)
                     {
                         holder.itemView.setVisibility(View.INVISIBLE);
                     }
-                });
+                });*/
 
                 SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
                 String phonenumber = prefs.getString("phone", null);
@@ -408,7 +436,7 @@ public class DoctorSideNew extends AppCompatActivity{
                                         sendStuff.putExtra("pgender", model.getGender());
                                         sendStuff.putExtra("consultitemid", model.getConsultationId());
                                         sendStuff.putExtra("DoctorName",model.getDoctorName());
-                                        sendStuff.putExtra("DoctorNum",model.getDoctorId());
+                                        sendStuff.putExtra("DoctorNum",DNumber);
                                         startActivity(sendStuff);
 
                                         pd.dismiss();
@@ -487,7 +515,7 @@ public class DoctorSideNew extends AppCompatActivity{
             @Override
             public FriendsHolder onCreateViewHolder(ViewGroup group, int i) {
                 View view = LayoutInflater.from(group.getContext())
-                        .inflate(R.layout.list_item_patient, group, false);
+                        .inflate(R.layout.list_item_consultation, group, false);
 
                 return new FriendsHolder(view);
             }
@@ -496,6 +524,7 @@ public class DoctorSideNew extends AppCompatActivity{
             public void onError(FirebaseFirestoreException e) {
                 Log.e("error", e.getMessage());
                 pd.dismiss();
+                progressBar.setVisibility(View.GONE);
             }
         };
 
@@ -675,16 +704,19 @@ public class DoctorSideNew extends AppCompatActivity{
         TextView textTitle;
         TextView textCompany;
         TextView reject;
-        TextView call;
+        Button call;
+        TextView type;
 
         public FriendsHolder(View itemView) {
             super(itemView);
 
             textName = itemView.findViewById(R.id.D_degree);
-            textTitle = itemView.findViewById(R.id.D_address);
+            textTitle = itemView.findViewById(R.id.tv_real_sy);
             textCompany = itemView.findViewById(R.id.date);
-            reject = itemView.findViewById(R.id.reject);
-            call = itemView.findViewById(R.id.call);
+
+            call = itemView.findViewById(R.id.consult);
+            type = itemView.findViewById(R.id.tv_real_type);
+
         }
     }
 

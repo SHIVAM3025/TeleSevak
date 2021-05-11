@@ -28,7 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-<<<<<<< HEAD
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,13 +38,13 @@ import java.util.Map;
 
 import app.telesevek.R;
 import app.telesevek.SendSMSnoPhone;
-=======
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import app.telesevek.R;
->>>>>>> origin/master
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
@@ -67,12 +67,10 @@ public class UploadImageFromPatient extends AppCompatActivity {
 
     String Patientphone;
     String id;
-<<<<<<< HEAD
+
     public static final String ACCOUNT_SID = "ACe455dc68b19d343b393e142de03bd02c";
     public static final String AUTH_TOKEN = "599ab28152b5e92e4f76c7720e6d87a5";
-=======
 
->>>>>>> origin/master
     List<String> ls=new ArrayList<>();
     Button Nophone;
     String Conid;

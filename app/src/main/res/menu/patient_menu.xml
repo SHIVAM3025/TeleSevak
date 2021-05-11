@@ -11,10 +11,10 @@
         android:icon="@drawable/ic_documentation_new_new"
         android:id="@+id/pastConsult"/>
 
-    <item
+    <!--<item
         android:title="कार्ड खरीदें"
         android:icon="@drawable/ic_card_scratch_new"
-        android:id="@+id/buyCard"/>
+        android:id="@+id/buyCard"/>-->
 
     <item
         android:title="हमारे डॉक्टर"

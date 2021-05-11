@@ -28,7 +28,8 @@
        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:digits="0123456789"
-        android:hint="enter code"
+        android:textColorHint="#707070"
+        android:hint="कृपया ओ टी पि दर्ज कैरे"
         android:maxLength="6" />
 
 

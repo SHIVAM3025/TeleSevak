@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:id="@+id/appbar"
         android:background="#36A8C1"
-        android:layout_height="70dp">
+        android:layout_height="56dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -228,7 +228,11 @@
         android:src="@drawable/bottomhand"
         />
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_above="@id/bottomNav"
+        android:background="@drawable/shadow"/>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

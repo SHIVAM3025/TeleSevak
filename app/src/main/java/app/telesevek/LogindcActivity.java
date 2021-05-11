@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -15,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,14 +48,19 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.sinch.android.rtc.SinchError;
+import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 import javax.annotation.Nullable;
 
+import app.telesevek.NewSceen.HomePatient;
 import app.telesevek.RemoteConfig.UpdateHelper;
 
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
@@ -79,13 +87,23 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
     public static String AUTH_TOKEN="auth_token";*/
    private final int UPDATE_REQUEST_CODE=1234;
     private AppUpdateManager appUpdateManager;
+
+    private static ViewPager mPager;
+    private static int currentPage = 0;
+    private static int NUM_PAGES = 0;
+    private static final Integer[] IMAGES= {R.drawable.gc,R.drawable.gb,R.drawable.ga};
+    private static final String[] TEXT= {"प्रसिद्द डॉक्टरों से करें परामर्श ","दवाइयों पर भारी बचत ","पूरे परिवार का इलाज कराएँ "};
+    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+    private ArrayList<String> TEXTArray = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logindc);
 
-
-
+        init();
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("Drselected", Context.MODE_PRIVATE);
+        settings.edit().clear().commit();
+/*
 
         appUpdateManager = AppUpdateManagerFactory.create(this);
         appUpdateManager.getAppUpdateInfo().addOnSuccessListener(new com.google.android.play.core.tasks.OnSuccessListener<AppUpdateInfo>() {
@@ -105,7 +123,7 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
                 }
 
             }
-        });
+        });*/
 
         parentLayout = findViewById(R.id.parentLayout);
         if (!checkPermission()) {
@@ -203,10 +221,8 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
             @Override
             public void onClick(View view)
             {
-                SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
-                final String phonenumber = prefs.getString("pimageid", null);
 
-                Intent Doctowillcallyou = new Intent(LogindcActivity.this, app.telesevek.ScratchCardNew.class);
+                Intent Doctowillcallyou = new Intent(LogindcActivity.this, HomePatient.class);
                 startActivity(Doctowillcallyou);
 
                /* if(phonenumber != null) {
@@ -441,7 +457,7 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
     protected void onResume() {
         super.onResume();
 
-        appUpdateManager.getAppUpdateInfo().addOnSuccessListener(new com.google.android.play.core.tasks.OnSuccessListener<AppUpdateInfo>() {
+        /*appUpdateManager.getAppUpdateInfo().addOnSuccessListener(new com.google.android.play.core.tasks.OnSuccessListener<AppUpdateInfo>() {
             @Override
             public void onSuccess(AppUpdateInfo result) {
 
@@ -457,9 +473,76 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
                 }
 
             }
-        });
+        });*/
 
 
 
     }
+
+
+    private void init() {
+        for(int i=0;i<IMAGES.length;i++)
+            ImagesArray.add(IMAGES[i]);
+
+        for(int i=0;i<TEXT.length;i++)
+            TEXTArray.add(TEXT[i]);
+
+        mPager = (ViewPager) findViewById(R.id.pager);
+
+
+        mPager.setAdapter(new SlidingImage_Adapter(LogindcActivity.this,ImagesArray,TEXTArray));
+
+
+        CirclePageIndicator indicator = (CirclePageIndicator)
+                findViewById(R.id.indicator);
+
+        indicator.setViewPager(mPager);
+
+        final float density = getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+        indicator.setRadius(7 * density);
+        NUM_PAGES =IMAGES.length;
+        NUM_PAGES =TEXT.length;
+
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                mPager.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+
+        // Pager listener over indicator
+        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+
+            }
+
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
+            }
+        });
+
+    }
+
 }

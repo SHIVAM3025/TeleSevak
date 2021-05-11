@@ -3,14 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#44E4F9FF"
     android:layout_height="match_parent"
     tools:context=".Buycard">
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/appbar"
-        android:background="@color/fbutton_color_peter_river"
-        android:layout_height="70dp">
+        android:background="#36A8C1"
+        android:layout_height="56dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -25,25 +28,6 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:text="ये डॉक्टर हैं जो हमारे आवेदन के माध्यम से परामर्श करते हैं"
-        android:textColor="#4A86E8"
-        android:textSize="20dp"
-        android:id="@+id/buytitla"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/appbar"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_height="wrap_content"/>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:background="#A9A9"
-        android:id="@+id/view"
-        android:layout_below="@+id/buytitla"
-        android:layout_height="1dp"/>
 
 
     <ProgressBar
@@ -56,10 +40,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friend_list"
         android:layout_marginBottom="65dp"
-        android:layout_below="@+id/view"
+        android:layout_below="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="#00000000"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_above="@id/bottomNav"
+        android:background="@drawable/shadow"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
@@ -71,9 +62,9 @@
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:background="#fff"
-        android:outlineAmbientShadowColor="@color/fbutton_color_peter_river"
-        android:outlineSpotShadowColor="@color/fbutton_color_peter_river"
-        android:backgroundTint="@color/fbutton_color_peter_river"
+        android:outlineAmbientShadowColor="#36A8C1"
+        android:outlineSpotShadowColor="#36A8C1"
+        android:backgroundTint="#36A8C1"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/patient_menu"
         app:itemTextAppearanceActive="@style/BottomNavigationView.Active"

@@ -4,61 +4,60 @@
     android:layout_height="match_parent"
     android:background="#ffffffff"
     android:orientation="vertical"
-    android:weightSum="5">
+    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#fffafafa"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/remoteUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:text=""
-            android:textSize="28sp" />
 
-        <TextView
-            android:id="@+id/callState"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Ringing"
-            android:textAllCaps="true"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/callDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="4dp"
-            android:text="00:00"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="16sp" />
-
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_height="match_parent"
         android:background="@android:color/darker_gray"
-        android:orientation="vertical"
-        android:padding="0dip">
+        >
+
 
         <LinearLayout
             android:id="@+id/remoteVideo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal" />
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" />
+
+
+           <!-- <TextView
+                android:id="@+id/remoteUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:text=""
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/callState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Ringing"
+                android:layout_below="@+id/remoteUser"
+                android:textAllCaps="true"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/callDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:layout_below="@+id/callState"
+                android:layout_marginTop="4dp"
+                android:text="00:00"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="16sp" />-->
+
+
+
+
+
 
         <RelativeLayout
             android:id="@+id/localVideo"
@@ -67,25 +66,18 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bottomPanel"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/colorAccent">
 
         <Button
             android:id="@+id/hangupButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
-            android:text="END call"
-            android:textSize="20sp" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_phone_call"
+            android:layout_marginBottom="34dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
+
+
 
 </LinearLayout>

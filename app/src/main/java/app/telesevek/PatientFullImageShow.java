@@ -15,11 +15,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PatientFullImageShow extends AppCompatActivity {
-    ImageView downloadedIV;
+    ImageView downloadedIV,downloadedIV1,downloadedIV2,downloadedIV3,downloadedIV4;
     String pidimage;
     FirebaseFirestore objectFirebaseFirestore;
     DocumentReference objectDocumentReference;
-    String url;
+    String url,url1,url2,url3,url4;
     float[] lastEvent = null;
     float d = 0f;
     float newRot = 0f;
@@ -42,22 +42,29 @@ public class PatientFullImageShow extends AppCompatActivity {
         setContentView(R.layout.activity_patient_full_image_show);
 
         Bundle bundle = getIntent().getExtras();
-        url = bundle.getString("PatientPassId");
-            downloadedIV = findViewById(R.id.downloadImage);
+        url = bundle.getString("url");
 
-        Glide.with(PatientFullImageShow.this)
-                .load(url)
-                .into(downloadedIV);
+         if (url != null){
+             downloadedIV = findViewById(R.id.downloadImage);
+             Glide.with(PatientFullImageShow.this)
+                     .load(url)
+                     .into(downloadedIV);
+             downloadedIV.setOnTouchListener(new View.OnTouchListener() {
+                 @Override
+                 public boolean onTouch(View v, MotionEvent event) {
+                     ImageView view = (ImageView) v;
+                     view.bringToFront();
+                     viewTransformation(view, event);
+                     return true;
+                 }
+             });
+         }
 
-        downloadedIV.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ImageView view = (ImageView) v;
-                view.bringToFront();
-                viewTransformation(view, event);
-                return true;
-            }
-        });
+
+
+
+
+
 
 }
     private void viewTransformation(View view, MotionEvent event) {

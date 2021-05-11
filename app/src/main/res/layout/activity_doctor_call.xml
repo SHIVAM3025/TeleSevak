@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/appbar"
+        android:gravity="center"
         android:background="@color/fbutton_color_peter_river"
         android:layout_height="70dp">
 
@@ -17,9 +18,11 @@
             android:layout_width="match_parent"
             android:text="Patient Details"
             android:textColor="#FFFFFF"
+            android:id="@+id/backarrow"
             android:textSize="20dp"
+            android:drawableLeft="@drawable/ic_baseline_keyboard_arrow_left_24"
             android:layout_marginLeft="20dp"
-            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content">
 
         </TextView>
@@ -29,15 +32,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/appbar"
         android:id="@+id/lname"
-        android:layout_marginTop="100dp"
         android:weightSum="2">
 
     <TextView
         android:layout_width="match_parent"
         android:text="Patient Name:"
         android:layout_weight="1"
-        android:textSize="20dp"
+        android:textSize="14dp"
         android:layout_marginLeft="10dp"
         android:layout_height="wrap_content">
     </TextView>
@@ -46,7 +50,7 @@
             android:layout_width="match_parent"
             android:text="yyyyyyy"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:id="@+id/textpname"
             android:layout_height="wrap_content">
         </TextView>
@@ -66,7 +70,7 @@
             android:layout_width="match_parent"
             android:text="Patient Symptoms:"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content">
         </TextView>
@@ -76,7 +80,7 @@
             android:text="yyyyyyy"
             android:id="@+id/textpsymtoms"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:layout_height="wrap_content">
         </TextView>
     </LinearLayout>
@@ -94,7 +98,7 @@
             android:layout_width="match_parent"
             android:text="Patient Phone Number:"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content">
         </TextView>
@@ -104,7 +108,7 @@
             android:text="yyyyyyy"
             android:layout_weight="1"
             android:id="@+id/textphone"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:layout_height="wrap_content">
         </TextView>
     </LinearLayout>
@@ -122,7 +126,7 @@
             android:layout_width="match_parent"
             android:text="Patient Gender:"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content">
         </TextView>
@@ -131,7 +135,7 @@
             android:layout_width="match_parent"
             android:text="yyyyyyy"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:id="@+id/textgender"
             android:layout_height="wrap_content">
         </TextView>
@@ -150,7 +154,7 @@
             android:layout_width="match_parent"
             android:text="Patient Age:"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content">
         </TextView>
@@ -160,7 +164,7 @@
             android:text="yyyyyyy"
             android:layout_weight="1"
             android:id="@+id/textage"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:layout_height="wrap_content">
         </TextView>
     </LinearLayout>
@@ -172,7 +176,7 @@
         android:layout_height="40dp"
         android:layout_below="@+id/age"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="10dp"
         android:textColor="#ffffff"
         android:layout_centerVertical="true"
         android:id="@+id/audio"
@@ -218,6 +222,23 @@
 
 
     <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/send"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textColor="#ffffff"
+        android:layout_centerVertical="true"
+        android:id="@+id/sendpdf"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@color/fbutton_color_peter_river"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:text="Send pdf to Patient" />
+
+
+    <Button
         android:id="@+id/SHOWIMAGE"
         android:layout_width="match_parent"
         android:layout_height="39dp"
@@ -231,59 +252,9 @@
         android:background="#f0ed93"
         android:textAllCaps="false"
         android:textSize="14sp"
-        android:layout_below="@+id/send"/>
+        android:layout_below="@+id/sendpdf"/>
 
 
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:background="#0095b6"
-        android:id="@+id/bootombutton"
-        android:layout_alignParentBottom="true"
-        android:layout_height="60dp">
 
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:id="@+id/card"
-            android:layout_marginTop="10dp"
-            android:drawableTop="@drawable/ic_baseline_favorite_24"
-            android:textAllCaps="false"
-            android:layout_weight="1"
-            android:background="#0095b6"
-            android:textSize="12dp"
-            android:text="View Current"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:id="@+id/followup"
-            android:layout_marginTop="10dp"
-            android:drawableTop="@drawable/ic_baseline_calendar_today_24"
-            android:textAllCaps="false"
-            android:layout_weight="1"
-            android:background="#0095b6"
-            android:textSize="12dp"
-            android:text="Follow UP"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:id="@+id/past"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:background="#0095b6"
-            android:textAllCaps="false"
-            android:drawableTop="@drawable/pastconsult"
-            android:textSize="12dp"
-            android:text="View Past"/>
-    </LinearLayout>
 </RelativeLayout>

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1FCFF">
+    android:background="#FFFFFF">
+
 
     <RelativeLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@color/fbutton_color_peter_river"
+        android:background="#36A8C1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,49 +29,220 @@
     </RelativeLayout>
 
 
-    <ImageView
-        android:id="@+id/ivFemaleDoctor"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/female_physician"
-        app:layout_constraintEnd_toStartOf="@+id/ivShalyaDoctor"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="4"
+            android:layout_marginBottom="64dp"
+            android:layout_below="@+id/appbar"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:weightSum="2"
+    android:layout_weight="1"
+    android:layout_marginTop="16dp"
+    android:id="@+id/fr"
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/ivChildDoctor"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/child_specialist"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54" />
+        android:id="@+id/ivcovid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/corona"
+        />
 
-    <ImageView
-        android:id="@+id/ivShalyaDoctor"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/shalya_physician"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
 
     <ImageView
         android:id="@+id/ivCommonDoctor"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
         android:src="@drawable/normal_doctor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivChildDoctor"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54" />
+        />
+
+
+
+
+
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:weightSum="2"
+        android:id="@+id/fr1"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/fr"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/ivChildDoctor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/child_specialist"
+            />
+
+        <ImageView
+            android:id="@+id/ivShalyaDoctor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/shalya_physician"
+             />
+
+
+
+
+    </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="2"
+                android:id="@+id/newa"
+                android:orientation="horizontal"
+                android:scaleType="fitXY"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/fr"
+                android:layout_height="match_parent">
+
+
+
+                <ImageView
+                    android:id="@+id/ivFemaleDoctor"
+                    android:layout_width="match_parent"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/female_physician"
+                    android:layout_weight="1"/>
+
+
+
+
+                <ImageView
+                    android:id="@+id/tyucha"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    />
+
+
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="2"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:id="@+id/netralinear"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/fr"
+                android:layout_height="match_parent">
+
+<!--
+
+                <ImageView
+                    android:id="@+id/netra"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/netra"
+                    />
+
+
+
+                <ImageView
+                    android:id="@+id/hide"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginTop="16dp"
+                    />
+-->
+
+
+
+            </LinearLayout>
+
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="1"
+                android:layout_marginBottom="70dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/fr1"
+                android:layout_marginLeft="15dp"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="कोड विशेषज्ञ चिकित्सक"
+                        android:id="@+id/code"
+                        android:textSize="18dp"
+                        android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/test"
+                    android:layout_below="@+id/code"
+                    android:layout_width="150dp"
+                    android:layout_height="140dp"
+                    android:background="@color/white"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/dg"
+                    />
+            </RelativeLayout>
+                <ImageView
+                    android:id="@+id/dummy"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="16dp"
+                    />
+
+
+
+            </LinearLayout>
+        -->
+        </LinearLayout>
 
     <ProgressBar
         android:id="@+id/pbPayment"
@@ -102,4 +274,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/patient_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>

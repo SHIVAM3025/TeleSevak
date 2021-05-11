@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ import java.util.Locale;
 import javax.annotation.Nullable;
 
 import app.telesevek.uploadpkg.ShowImageActivity;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 public class ScratchCardNew extends AppCompatActivity{
@@ -42,8 +45,10 @@ public class ScratchCardNew extends AppCompatActivity{
    Date date1;
    Date date;
 
+    Date date4;
+    Date date5;
 
-    Button parcha;
+
     Button buy;
     Button ourdoctor;
 
@@ -64,11 +69,18 @@ public class ScratchCardNew extends AppCompatActivity{
     String cardnumber;
     String dateFOLLOW;
 
+    Typeface a;
+    Typeface b;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrach_card);
+        setContentView(R.layout.activity_scrach_card2);
+
+
+
+
 
         pd = new ProgressDialog(ScratchCardNew.this);
         pd.setMessage("loading..");
@@ -82,18 +94,18 @@ public class ScratchCardNew extends AppCompatActivity{
 
         scrached = findViewById(R.id.etScratch);
         submit = findViewById(R.id.submit);
-        parcha = findViewById(R.id.gopre);
+
 
 
 
         fStore = FirebaseFirestore.getInstance();
 
-        findViewById(R.id.ivPaymentSpecial).setOnClickListener(new View.OnClickListener() {
+      /* findViewById(R.id.ivPaymentSpecial).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),SpecialDoctors.class));
             }
-        });
+        });*/
 
        /* past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
@@ -129,8 +141,6 @@ public class ScratchCardNew extends AppCompatActivity{
         //
 
 
-        SharedPreferences prefs = getSharedPreferences("Consultpre", MODE_PRIVATE);
-        String cid = prefs.getString("cid", null);
 
 
 
@@ -138,97 +148,16 @@ public class ScratchCardNew extends AppCompatActivity{
 
 
 
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
+      /*  FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .setTimestampsInSnapshotsEnabled(false)
                 .build();
-                fStore.setFirestoreSettings(settings);
+                fStore.setFirestoreSettings(settings);*/
 
 
 
 
 
-        if (cid != null){
-            DocumentReference documentReference2 = fStore.collection("Consultation").document(cid);
-            documentReference2.addSnapshotListener(ScratchCardNew.this, new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                    if(documentSnapshot.exists()){
-                        String Did = documentSnapshot.getString("DoctorId");
-                        String CurrentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                        String FinalDate = documentSnapshot.getString("urludate");
-                        String doctorid = documentSnapshot.getString("DoctorId");
-                        final String scratcard = documentSnapshot.getString("PatientCard");
-
-
-                        parcha.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                DocumentReference get = fStore.collection("ScratchCard").document(scratcard);
-                                get.addSnapshotListener(ScratchCardNew.this, new EventListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                                        if (documentSnapshot.exists()) {
-                                            Integer oldcardNEW = (Integer) documentSnapshot.getLong("RemainingConsultations").intValue();
-                                            if(0 < oldcardNEW){
-                                                Integer carde = oldcardNEW - 1;
-                                                Integer carde2 = oldcardNEW;
-                                                Intent sendStuff = new Intent(ScratchCardNew.this, ShowImageActivity.class);
-                                                sendStuff.putExtra("cardpass", scratcard);
-                                                sendStuff.putExtra("remainconsult", carde);
-                                                sendStuff.putExtra("DocuId", cid);
-                                                startActivity(sendStuff);
-                                            }
-                                            else {
-                                                Intent sendStuff = new Intent(ScratchCardNew.this, ShowImageActivity.class);
-                                                sendStuff.putExtra("cardpass", scratcard);
-                                                sendStuff.putExtra("remainconsult", "0");
-                                                sendStuff.putExtra("DocuId", cid);
-                                                startActivity(sendStuff);
-                                            }
-
-                                        } else {
-                                            Log.d("tag", "onEvent: Document do not exists");
-                                            pd.dismiss();
-                                        }
-                                    }
-                                });
-                            }
-                        });
-
-                        if(FinalDate.equals("null")) {
-                                     }
-                        else {
-                            Date date1 = null;
-                            Date date2 = null;
-                            SimpleDateFormat dates = new SimpleDateFormat("yyyy-MM-dd");
-                            try {
-                                date1 = dates.parse(CurrentDate);
-                            } catch (ParseException ex) {
-                                ex.printStackTrace();
-                            }
-                            try {
-                                date2 = dates.parse(FinalDate);
-                            } catch (ParseException ex) {
-                                ex.printStackTrace();
-                            }
-                            long difference = Math.abs(date1.getTime() - date2.getTime());
-                            long differenceDates = difference / (24 * 60 * 60 * 1000);
-                            String dayDifference = Long.toString(differenceDates);
-
-                            if ("0".equals(dayDifference)){
-                                parcha.setVisibility(View.VISIBLE);
-
-
-
-                            }
-                        }
-
-                    }else {
-                        Log.d("tag", "onEvent: Document do not exists");
-                    }
-                }
-            });
-        }
 
          //videocall
 
@@ -444,10 +373,10 @@ public class ScratchCardNew extends AppCompatActivity{
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.buyCard:
+                   /* case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*/
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));

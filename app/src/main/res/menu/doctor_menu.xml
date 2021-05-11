@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <item
+        android:title="Current"
+        android:id="@+id/current_menu"
+        android:icon="@drawable/ic_consult_new_new"/>
+
     <item
         android:title="View Past"
         android:id="@+id/viewPast_menu"
         android:icon="@drawable/ic_baseline_calendar_today_24"/>
 
-    <item
-        android:title="Current"
-        android:id="@+id/current_menu"
-        android:icon="@drawable/ic_baseline_favorite_24"/>
 
-    <item
-        android:title="Follow Up"
-        android:id="@+id/followUp_menu"
-        android:icon="@drawable/ic_baseline_calendar_today_24"/>
-    <item
-        android:title="Specialist"
-        android:id="@+id/specialist_menu"
-        android:icon="@drawable/ic_consult_new_new"/>
+
 
 </menu>

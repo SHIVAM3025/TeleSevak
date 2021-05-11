@@ -43,6 +43,17 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/tex_val"
+        android:layout_centerVertical="true"
+        android:text="No Past Consultation"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"/>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

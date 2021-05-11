@@ -1,6 +1,7 @@
 package app.telesevek;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,20 +9,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+
+import app.telesevek.NewSceen.HomePatient;
 
 public class OurDoctor extends AppCompatActivity {
     ProgressBar progressBar;
@@ -32,6 +38,9 @@ public class OurDoctor extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirestoreRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
+    Typeface b;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +49,8 @@ public class OurDoctor extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         init();
         getFriendList();
+
+        b= Typeface.createFromAsset(getAssets(),"font/Helvetica.ttf");
 
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.ourDoctors);
@@ -53,16 +64,16 @@ public class OurDoctor extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.buyCard:
+                /*    case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*/
 
                     case R.id.ourDoctors:
                         return true;
 
                     case R.id.consultDoctor:
-                        startActivity(new Intent(getApplicationContext(),ScratchCardNew.class));
+                        startActivity(new Intent(getApplicationContext(), HomePatient.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -110,6 +121,11 @@ public class OurDoctor extends AppCompatActivity {
     private void init(){
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         friendList.setLayoutManager(linearLayoutManager);
+        friendList.setLayoutManager(new GridLayoutManager(this, 2));
+        int spanCount = 2; // 3 columns
+        int spacing = 50; // 50px
+        boolean includeEdge = true;
+        friendList.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         db = FirebaseFirestore.getInstance();
     }
 
@@ -124,7 +140,20 @@ public class OurDoctor extends AppCompatActivity {
             public void onBindViewHolder(OurDoctor.FriendsHolder holder, int position, DoctorResponse model) {
                 progressBar.setVisibility(View.GONE);
                 holder.textName.setText(model.getName());
-                holder.textCompany.setText(model.getFullAddress());
+                holder.degree.setText(model.getDegree());
+                holder.exp.setText(model.getExp());
+                holder.city.setText(model.getFullAddress());
+
+                holder.textName.setTypeface(b);
+                holder.degree.setTypeface(b);
+                holder.exp.setTypeface(b);
+                holder.city.setTypeface(b);
+
+                Glide.with(getApplicationContext()).load(model.getUrl()).into(holder.img);
+
+
+
+
                /* Glide.with(getApplicationContext())
                         .load(model.getImage())
                         .into(holder.imageView);*/
@@ -157,13 +186,24 @@ public class OurDoctor extends AppCompatActivity {
 
     public class FriendsHolder extends RecyclerView.ViewHolder {
         TextView textName;
-        TextView textCompany;
+        TextView degree;
+        TextView exp;
+        TextView city;
+
+        ImageView img;
+
 
 
         public FriendsHolder(View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.name);
-            textCompany = itemView.findViewById(R.id.company);
+            degree = itemView.findViewById(R.id.degree);
+            exp = itemView.findViewById(R.id.anubav);
+            city = itemView.findViewById(R.id.city);
+
+            img= itemView.findViewById(R.id.profile_image);
+
+
         }
     }
 

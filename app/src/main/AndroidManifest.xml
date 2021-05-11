@@ -10,9 +10,11 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.microphone"
@@ -28,20 +30,32 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".SpecialDoctors"
+        <activity android:name=".NewSceen.HomePatient"></activity>
+        <activity android:name=".PrePeringVideocall" />
+        <activity
+            android:name=".SpecialDoctors"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FormAfterPayment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FormAfterPayment"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".DoctorSideSpecial"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorSideSpecial"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SendSMSnoPhone"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddPatiantNew"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddPatiantSymtom"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SendSMSnoPhone"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DoctorNotAvailable"
             android:configChanges="orientation"
@@ -121,6 +135,7 @@
             android:name=".PetientLoading"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        <activity android:name=".coupon" />
         <activity
             android:name=".ScratchCardNew"
             android:configChanges="orientation"
@@ -181,10 +196,13 @@
             android:name=".TommarowPatient"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        <activity android:name=".uploadpkg.BasicActivity" />
+        <activity android:name=".uploadpkg.ViewUploadsActivity" />
         <activity
             android:name=".NoOldParamarsh"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        <activity android:name=".NewDoctorWillCallOffiline" />
         <activity android:name=".SplachScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -192,32 +210,43 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddPatiant"
+        <activity
+            android:name=".AddPatiant"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".uploadpkg.ShowImageActivity"/>
+        <activity android:name=".uploadpkg.PreUpload" />
+        <activity android:name=".uploadpkg.ShowImageActivity" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.ChattingActivity" />
         <activity android:name=".ReceiveNotificationActivity" />
-<activity android:name=".uploadpkg.UploadImageFromPatient"/>
+        <activity android:name=".uploadpkg.UploadImageFromPatient" />
+        <activity android:name=".NewDoctorWillCall" />
+        <activity android:name=".PrePeringVideocallDoctor" />
+        <activity android:name="app.sinch.CallScreenActivity" />
 
         <service android:name=".Services.MyFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Services.MyFirebaseMessagingService">
+        <service android:name=".Services.MyFirebaseMessagingService"
+            >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service android:name="app.telesevek.Services.CallNotificationService" />
+        <service
+            android:name=".Services.CallNotificationService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
 
         <receiver
-            android:name="app.telesevek.Services.CallNotificationActionReceiver"
-            android:enabled="true"
-            >
-            <intent-filter android:priority="999">
+            android:name=".Services.CallNotificationActionReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="99999">
                 <action android:name="ConstantApp.CALL_RECEIVE_ACTION" />
                 <action android:name="ConstantApp.CALL_CANCEL_ACTION" />
             </intent-filter>
@@ -226,24 +255,20 @@
         <activity android:name="app.sinch.IncomingCallActivity" />
         <activity android:name="app.sinch.PlaceCallActivity" />
 
-
         <service android:name="app.sinch.SinchService" />
-
         <service
             android:name=".Notify.ForegroundService"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".ProfileDoctor" />
-        <activity android:name="app.sinch.CallScreenActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_kVdwpjtDFeNxWV"/>
+            android:value="rzp_live_kVdwpjtDFeNxWV" />
     </application>
 
 </manifest>

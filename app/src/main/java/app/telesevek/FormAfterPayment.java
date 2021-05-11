@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +38,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.sinch.android.rtc.SinchError;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +55,7 @@ import java.util.TimeZone;
 import app.sinch.BaseActivity;
 import app.sinch.SinchService;
 import app.telesevek.Models.Doctor;
+import app.telesevek.NewSceen.HomePatient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,7 +80,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
     Button past;
     Button buy;
     Button ourdoctor;
-    FirebaseFirestore fStore;
+    FirebaseFirestore fstore;
     String card;
     int remainconsult;
     String phone;
@@ -97,10 +105,15 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
     JSONArray registration_ids = new JSONArray();
 
     List<String> ls=new ArrayList<>();
+    List<String> lsdoctor=new ArrayList<>();
     String allEmails="";
 
     String token;
     String typeOfDoctor;
+    String typeall;
+
+    String tokenID;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,9 +121,23 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
 
         setContentView(R.layout.activity_add_patiant);
 
+        mRequestQue = Volley.newRequestQueue(this);
+
+        fstore = FirebaseFirestore.getInstance();
+        getToken();
+        token();
+
         receiveCredentials();
 
-        typeOfDoctor= Objects.requireNonNull(getIntent().getExtras()).getString("type");
+
+        RelativeLayout back = findViewById(R.id.appbar);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent go = new Intent(FormAfterPayment.this, HomePatient.class);
+                startActivity(go);
+            }
+        });
 
 
 
@@ -129,7 +156,6 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
         pd.setMessage("loading..");
 
         fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
 
         addAdmins();
@@ -147,6 +173,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final String symtoms = mSymptoms.getText().toString().trim();
                 final String fullName = mFullName.getText().toString();
                 phone    = mPhone.getText().toString();
@@ -184,8 +211,8 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
                 }
                 pd.show();
 
-                String id = fStore.collection("Patient").document().getId();
-                id_consult = fStore.collection("Consultation").document().getId();
+                String id = fstore.collection("Patient").document().getId();
+                id_consult = fstore.collection("Consultation").document().getId();
 
 
                 date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
@@ -204,7 +231,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
 
                 // register the user in firebase
 
-                DocumentReference documentReference = fStore.collection("Patient").document(phone);
+                DocumentReference documentReference = fstore.collection("Patient").document(phone);
                 Map<String,Object> user = new HashMap<>();
                 user.put("Name",fullName);
                 user.put("PhoneNumber","+91"+phone);
@@ -256,6 +283,11 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
 
                         sendSMS(fullName,phone);
 
+
+                            sendNotificationall(mFullName.getText().toString(),mSymptoms.getText().toString());
+
+
+
                         pd.dismiss();
 
                     }
@@ -268,18 +300,18 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
                 });
 
                 //adding token to the collection
-                token();
+
                 Log.i("tokenFCM",token);
 
                 date2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault()).format(new Date());
-                DocumentReference documentReference2 = fStore.collection("Consultation").document(id_consult);
+                DocumentReference documentReference2 = fstore.collection("Consultation").document(id_consult);
                 Map<String,Object> user2 = new HashMap<>();
                 user2.put("ConsultationId",id_consult);
                 user2.put("PatientId",id);
                 user2.put("PatientPhone","+91"+phone);
                 user2.put("ItemId",id);
                 user2.put("PName",fullName);
-                user2.put("PatientCard",card);
+                user2.put("PatientCard","000888");
                 user2.put("Symtoms",symtoms);
                 user2.put("Age",Age);
                 user2.put("Gender",result);
@@ -292,11 +324,15 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
                 user2.put("DateTime",date2);
                 user2.put("Status","Requested");
                 user2.put("TypeOfConsultation","Primary");
-                user2.put("TypeOfDoctor",typeOfDoctor);
+                user2.put("TypeOfDoctor",typeall);
                 user2.put("Time",currentTime);
                 user2.put("url","");
                 user2.put("urldescription","");
                 user2.put("urludate","null");
+                user2.put("urlupatient","null");
+                user2.put("urlupatientdesc","null");
+                user2.put("urlpdf","null");
+                user2.put("TokenFCM",token);
                 documentReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -325,7 +361,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
 
     public void addAdmins(){
 
-        fStore.collection("Admins").whereEqualTo("IsActive","true")
+        fstore.collection("Admins").whereEqualTo("IsActive","true")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -352,7 +388,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
 
     public void mergeAdminDoctors(){
 
-        fStore.collection("Doctor").whereEqualTo("IsActive","true").whereEqualTo("TypeOfDoctor",typeOfDoctor)
+        fstore.collection("Doctor").whereEqualTo("IsActive","true").whereEqualTo("TypeOfDoctor",typeOfDoctor)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -362,9 +398,9 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
                             String id=documents.getId();
                             ls.add(id);
                             String email=documents.getString("Email");
-                            if (!email.equals("")){
+                            /*if (!email.equals("")){
                                 allEmails+=email+",";
-                            }
+                            }*/
                         }
                         /*for(int i=0;i<7;i++){
                             Log.i("Merge",ls.get(i));
@@ -498,11 +534,12 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
             Log.i("DAY","Sat or Sun");
             startActivity(new Intent(getApplicationContext(),DoctorNotAvailable.class));
 
+
         }else
         {
             if (hr>=9&&hr<18){
                 Log.i("HOUR",String.valueOf(hr));
-                Intent intent = new Intent(FormAfterPayment.this, Doctowillcallyou.class);
+                Intent intent = new Intent(FormAfterPayment.this, NewDoctorWillCallOffiline.class);
                 startActivity(intent);
                 //status();
             }else {
@@ -523,7 +560,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
 
     public void token(){
         token=FirebaseInstanceId.getInstance().getToken();
-        fStore.collection("Consultation").document(id_consult)
+       /* fstore.collection("Consultation").document(id_consult)
                 .update("TokenFCM",token)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -535,7 +572,7 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
             public void onFailure(@NonNull Exception e) {
                 Log.i("tokenFCM","cannot be added");
             }
-        });
+        });*/
     }
 
     @Override
@@ -546,4 +583,217 @@ public class FormAfterPayment extends BaseActivity implements SinchService.Start
         overridePendingTransition(0,0);
         startActivity(intent);
     }
+
+
+    public void getToken(){
+
+        SharedPreferences prefs = getSharedPreferences("Drselected", MODE_PRIVATE);
+        String drstatus = prefs.getString("drname","0");//"No name defined" is the default value.
+         typeOfDoctor = prefs.getString("type","102");//"No name defined" is the default value.
+         typeall = prefs.getString("typeall","all");//"No name defined" is the default value.
+
+        if(typeOfDoctor.equals("102"))
+        {
+            fstore.collection("Doctor").whereEqualTo("IsActive","true").whereEqualTo("TypeOfDoctor",typeall)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            List<DocumentSnapshot> snapshots=queryDocumentSnapshots.getDocuments();
+                            for ( DocumentSnapshot documents : snapshots){
+                                String drtoken=documents.getString("TokenFCM");
+                                lsdoctor.add(drtoken);
+
+
+                            }
+                        }
+                    })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("fail","Could not get admins documents");
+                        }
+                    });
+
+            fstore.collection("Doctor").whereEqualTo("TypeOfDoctor","0")
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            List<DocumentSnapshot> snapshots=queryDocumentSnapshots.getDocuments();
+                            for ( DocumentSnapshot documents : snapshots){
+                                String drtoken=documents.getString("TokenFCM");
+                                lsdoctor.add(drtoken);
+
+
+                            }
+                        }
+                    })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("fail","Could not get admins documents");
+                        }
+                    });
+        }
+        else {
+            fstore.collection("Doctor").document(drstatus)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            tokenID = documentSnapshot.getString("TokenFCM");
+                            assert tokenID != null;
+                            Log.i("token", tokenID + " SUCCESS");
+                            }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.i("token", "failed to get");
+                        }
+                    });
+
+            fstore.collection("Doctor").whereEqualTo("TypeOfDoctor","0")
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            List<DocumentSnapshot> snapshots=queryDocumentSnapshots.getDocuments();
+                            for ( DocumentSnapshot documents : snapshots){
+                                String drtoken=documents.getString("TokenFCM");
+                                lsdoctor.add(drtoken);
+
+
+                            }
+                        }
+                    })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("fail","Could not get admins documents");
+                        }
+                    });
+        }
+    }
+
+
+    public void sendNotificationall(String callID,String username){
+
+
+        SharedPreferences prefs = getSharedPreferences("Drselected", MODE_PRIVATE);
+        String drstatus = prefs.getString("drname","0");//"No name defined" is the default value.
+       /* typeOfDoctor = prefs.getString("type","0");//"No name defined" is the default value.*/
+        String typeall = prefs.getString("typeall","all");//"No name defined" is the default value.
+
+        if(typeOfDoctor.equals("102"))
+        {
+            for(int j=0;j<lsdoctor.size();j++) {
+                //String from = "+17633258036";
+                String token = lsdoctor.get(j);
+                JSONObject fcm = new JSONObject();
+                try {
+                    fcm.put("to", token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JSONObject dataObject = new JSONObject();
+                try {
+                    dataObject.put("title", "New Patient");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    dataObject.put("body", "You have a new Patient");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    dataObject.put("callID", callID);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    dataObject.put("username", username);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    fcm.put("data", dataObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL, fcm, response -> {
+
+
+                    Toast.makeText(this, "SUCCESS", Toast.LENGTH_SHORT).show();
+                    Log.i("response", response.toString());
+                }, error -> {
+                    Toast.makeText(this, "FAIL", Toast.LENGTH_SHORT).show();
+                    Log.i("response", error.networkResponse.toString());
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("content-type", "application/json");
+                        params.put("authorization", "key=AAAAIz3KQd8:APA91bFJiG-094nuzkfO0xhkCoeCx6GQQv6nOoKrOc52za0afjY66dENqplOcke5zdJE7yrMBkKR_byfMWlcf3M4-GaSS2BlFv2HCvcT-ON8YIDdEQ6dC_rAOVjCyhi8T9Qo2WG2GVIo");
+                        return params;
+                    }
+                };
+                mRequestQue.add(request);
+            }
+
+        }
+        else {
+            try {
+                sendNotificationToUser(callID,username);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+    public void sendNotificationToUser(String callID,String username) throws JSONException {
+        JSONObject fcm=new JSONObject();
+        fcm.put("to",tokenID);
+
+        JSONObject dataObject=new JSONObject();
+        dataObject.put("title","New Patient");
+        dataObject.put("body","You have a new Patient");
+        dataObject.put("callID",callID);
+        dataObject.put("username",username);
+
+        fcm.put("data",dataObject);
+
+        JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, URL, fcm, response -> {
+
+
+            Toast.makeText(this, "SUCCESS", Toast.LENGTH_SHORT).show();
+            Log.i("response",response.toString());
+        }, error -> {
+            Toast.makeText(this, "FAIL", Toast.LENGTH_SHORT).show();
+            Log.i("response",error.networkResponse.toString());
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("content-type","application/json");
+                params.put("authorization","key=AAAAIz3KQd8:APA91bFJiG-094nuzkfO0xhkCoeCx6GQQv6nOoKrOc52za0afjY66dENqplOcke5zdJE7yrMBkKR_byfMWlcf3M4-GaSS2BlFv2HCvcT-ON8YIDdEQ6dC_rAOVjCyhi8T9Qo2WG2GVIo");
+                return params;
+            }
+        };
+        mRequestQue.add(request);
+
+    }
+
+
+
 }

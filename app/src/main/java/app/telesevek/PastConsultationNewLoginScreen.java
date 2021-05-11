@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
+import app.telesevek.NewSceen.HomePatient;
 import app.telesevek.PhoneAuthConsulation.VerifyPhoneActivity;
 
 public class PastConsultationNewLoginScreen extends AppCompatActivity {
@@ -120,7 +121,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                     phoneNumber = etNumber.getText().toString().trim();
 
                     if (phoneNumber.isEmpty() || phoneNumber.length() != 10) {
-                        etNumber.setError("Valid number is required");
+                        etNumber.setError("कृपया मोबाइल नंबर लिखें");
                         etNumber.requestFocus();
                         return;
                     }
@@ -167,7 +168,7 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                     cardNumber = etNumber.getText().toString().trim();
 
                     if (cardNumber.isEmpty() || cardNumber.length() < 4 ) {
-                        etNumber.setError("Valid number is required");
+                        etNumber.setError("कृपया अपना कार्ड नंबर डालें");
                         etNumber.requestFocus();
                         return;
                     }
@@ -353,18 +354,18 @@ public class PastConsultationNewLoginScreen extends AppCompatActivity {
                     case R.id.pastConsult:
                         return true;
 
-                    case R.id.buyCard:
+                    /*case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
                         return true;
-
+*/
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.consultDoctor:
-                        startActivity(new Intent(getApplicationContext(),ScratchCardNew.class));
+                        startActivity(new Intent(getApplicationContext(), HomePatient.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

@@ -84,7 +84,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavDoctor = findViewById(R.id.bottomNavFollow);
-        bottomNavDoctor.setSelectedItemId(R.id.followUp_menu);
+        bottomNavDoctor.setSelectedItemId(R.id.viewPast_menu);
 
         bottomNavDoctor.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -96,17 +96,11 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
 
-                    case R.id.followUp_menu:
-                        return true;
-
                     case R.id.current_menu:
                         startActivity(new Intent(getApplicationContext(), DoctorSideNew.class));
                         overridePendingTransition(0, 0);
                         return true;
-                    case R.id.specialist_menu:
-                        startActivity(new Intent(getApplicationContext(),DoctorSideSpecial.class));
-                        overridePendingTransition(0,0);
-                        return true;
+
                 }
                 return false;
             }
@@ -153,7 +147,7 @@ public class DoctorSideFollowupConsulation extends AppCompatActivity {
             public void onBindViewHolder(final DoctorSideFollowupConsulation.FriendsHolder holder, int position, final ConsultResponse model) {
                 progressBar.setVisibility(View.GONE);
                 holder.textName.setText(model.getPName());
-                holder.textCompany.setText(model.getDateTime());
+                holder.textCompany.setText(model.getTime());
 
 
                 holder.reject.setOnClickListener(new View.OnClickListener() {

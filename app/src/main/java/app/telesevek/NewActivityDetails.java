@@ -21,6 +21,8 @@ public class NewActivityDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_details);
 
+
+
         final String card = getIntent().getStringExtra("cardpass");
         final int remainconsult = getIntent().getIntExtra("remainconsult",0);
         String price = getIntent().getStringExtra("cardprice");
@@ -48,7 +50,7 @@ public class NewActivityDetails extends AppCompatActivity {
                     @Override
                     public void onClick(View view)
                     {
-                        Intent sendStuff = new Intent(NewActivityDetails.this, AddPatiant.class);
+                        Intent sendStuff = new Intent(NewActivityDetails.this, AddPatiantNew.class);
                         sendStuff.putExtra("cardpass", card);
                         sendStuff.putExtra("remainconsult", remainconsult);
                         startActivity(sendStuff);
@@ -68,10 +70,10 @@ public class NewActivityDetails extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.buyCard:
+                   /* case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*/
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));

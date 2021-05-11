@@ -102,7 +102,7 @@ public class PastCounsulation extends AppCompatActivity {
                 String s=model.getDateTime().substring(0,10);
 
                 holder.textCompany.setText(s);
-                holder.tvsamasya.setText(model.getSymtoms());
+             /*   holder.tvsamasya.setText(model.getSymtoms());*/
                 /*Glide.with(getApplicationContext())
                         .load(model.getImage())
                         .into(holder.imageView);*/
@@ -186,10 +186,10 @@ public class PastCounsulation extends AppCompatActivity {
                     case R.id.pastConsult:
                         return true;
 
-                    case R.id.buyCard:
+                  /*  case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*/
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));
@@ -298,7 +298,7 @@ public class PastCounsulation extends AppCompatActivity {
             textName = itemView.findViewById(R.id.name);
             textTitle = itemView.findViewById(R.id.title);
             textCompany = itemView.findViewById(R.id.company);
-            tvsamasya=itemView.findViewById(R.id.tvSamasya);
+
 
         }
     }

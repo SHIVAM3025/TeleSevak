@@ -147,10 +147,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.pastConsult:
                         return true;
 
-                    case R.id.buyCard:
+                  /*  case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(), Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*/
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(), OurDoctor.class));

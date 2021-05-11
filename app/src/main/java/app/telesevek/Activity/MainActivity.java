@@ -1,24 +1,38 @@
 package app.telesevek.Activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import javax.annotation.Nullable;
 
 import app.telesevek.DoctorSideNew;
 import app.telesevek.Models.Doctor;
 import app.telesevek.Models.FirebaseUserModel;
+import app.telesevek.PrePeringVideocallDoctor;
 import app.telesevek.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,13 +48,59 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference usersRef;
-
+    String token;
+    FirebaseFirestore fStore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainchat);
+        fStore = FirebaseFirestore.getInstance();
 
-        SharedPreferences sharedpreferences = getSharedPreferences(user.appPreferences, Context.MODE_PRIVATE);
+
+        SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
+        String phonenumber = prefs.getString("phone", null);
+
+        token= FirebaseInstanceId.getInstance().getToken();
+        fStore.collection("Doctor").document(phonenumber)
+                .update("TokenFCM",token)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i("tokenFCM","added successfully");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("tokenFCM","cannot be added");
+            }
+        });
+
+
+        if (phonenumber != null) {
+            DocumentReference documentReference2 = fStore.collection("Doctor").document(phonenumber);
+            documentReference2.addSnapshotListener(MainActivity.this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                    if (documentSnapshot.exists()) {
+
+                        String dtype = documentSnapshot.getString("TypeOfDoctor");
+                        String checkcovid = documentSnapshot.getString("CovidDoctor");
+
+
+                        SharedPreferences.Editor doctorsave = getSharedPreferences("doctornamevideocall", MODE_PRIVATE).edit();
+                        doctorsave.putString("dtype", dtype);
+                        doctorsave.commit();
+
+
+                    } else {
+                        Log.d("tag", "onEvent: Document do not exists");
+                    }
+                }
+            });
+        }
+
+
+            SharedPreferences sharedpreferences = getSharedPreferences(user.appPreferences, Context.MODE_PRIVATE);
         user.sharedpreferences = sharedpreferences;
 
         currentDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -113,4 +173,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
     }
+
+
+
 }

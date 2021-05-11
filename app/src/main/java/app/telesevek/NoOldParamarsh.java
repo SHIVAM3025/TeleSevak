@@ -17,7 +17,7 @@ public class NoOldParamarsh extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_old_paramarsh);
 
-        findViewById(R.id.btStartNewConsult).setOnClickListener(new View.OnClickListener() {
+      /*  findViewById(R.id.btStartNewConsult).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -26,7 +26,7 @@ public class NoOldParamarsh extends AppCompatActivity {
                 overridePendingTransition(0,0);
                 startActivity(intent);
             }
-        });
+        });*/
 
 
         BottomNavigationView bottomNav=findViewById(R.id.bottomNavPastLoginNew);
@@ -39,10 +39,10 @@ public class NoOldParamarsh extends AppCompatActivity {
                     case R.id.pastConsult:
                         return true;
 
-                    case R.id.buyCard:
+                   /* case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*/
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));

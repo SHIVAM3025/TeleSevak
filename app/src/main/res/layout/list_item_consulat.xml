@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="15dp"
-
     android:layout_marginTop="15dp"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
-
     android:paddingBottom="25dp"
     android:paddingTop="20dp"
     android:layout_marginBottom="5dp"
     app:cardCornerRadius="15dp"
     app:cardElevation="5dp"
-
     app:cardPreventCornerOverlap="true"
-    app:contentPadding="15dp"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/i"
        >
 
 
@@ -130,6 +127,140 @@
             android:textSize="20sp" />
 
 
-    </RelativeLayout>
+    </RelativeLayout>-->
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_below="@+id/i"
+        android:id="@+id/bootombutton"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:id="@+id/pp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="0.9"
+            android:background="#8BCEDD"
+            android:textSize="12dp">
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="रोगी का नाम"
+                android:layout_marginTop="20dp"
+                android:textColor="#454646"
+                android:textSize="16dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="0"
+                android:id="@+id/name"
+                android:textColor="#0095B6"
+                android:textSize="14dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:id="@+id/pb"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="0.9"
+            android:background="#8BCEDD"
+            android:textSize="12dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="डाक्टर"
+                android:textColor="#454646"
+                android:textSize="16dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="0"
+                android:id="@+id/title"
+                android:textColor="#0095B6"
+                android:textSize="14dp"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:id="@+id/cv"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="#8BCEDD"
+            android:textSize="12dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="दिनांक"
+                android:textColor="#454646"
+                android:textSize="16dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="0"
+                android:id="@+id/company"
+                android:textColor="#0095B6"
+                android:textSize="14dp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:id="@+id/row"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1.2"
+            android:background="#8BCEDD"
+            android:textSize="12dp">
+            <ImageView
+                android:layout_width="30dp"
+                android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                android:gravity="center_horizontal"
+                android:layout_height="30dp"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
 </androidx.cardview.widget.CardView >

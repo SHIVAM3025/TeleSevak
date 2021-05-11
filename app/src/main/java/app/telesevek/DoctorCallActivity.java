@@ -59,8 +59,10 @@ import javax.annotation.Nullable;
 import app.sinch.BaseActivity;
 import app.sinch.PlaceCallActivity;
 import app.sinch.SinchService;
+import app.telesevek.uploadpkg.PreUpload;
 import app.telesevek.uploadpkg.ShowImageActivity;
 import app.telesevek.uploadpkg.UploadImage;
+import app.telesevek.uploadpkg.ViewUploadsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,6 +99,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
     Button audio;
     Button video;
     Button sendscan;
+    Button sendpdf;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private View parentLayout;
     ImageView uploadPicIV;
@@ -130,6 +133,8 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
     String URL = "https://fcm.googleapis.com/fcm/send";
     String tokenID;
     FirebaseFirestore fstore;
+
+    TextView txt_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +154,8 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         audio = findViewById(R.id.audio);
         video = findViewById(R.id.video);
         sendscan = findViewById(R.id.send);
+        sendpdf = findViewById(R.id.sendpdf);
+        txt_back = findViewById(R.id.backarrow);
         fStore = FirebaseFirestore.getInstance();
 
         Bundle bundle = getIntent().getExtras();
@@ -167,6 +174,16 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         fstore= FirebaseFirestore.getInstance();
         getToken();
 
+        Toast.makeText(this, ""+Patientcard, Toast.LENGTH_SHORT).show();
+
+        txt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent go = new Intent(DoctorCallActivity.this,DoctorSideNew.class);
+                startActivity(go);
+            }
+        });
+
         if (consultitemid != null){
             DocumentReference documentReference2 = fStore.collection("Consultation").document(consultitemid);
             documentReference2.addSnapshotListener(DoctorCallActivity.this, new EventListener<DocumentSnapshot>() {
@@ -175,7 +192,11 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                     if(documentSnapshot.exists()){
 
 
-                        final String URL = documentSnapshot.getString("urlupatient");
+                        final String URL = documentSnapshot.getString("pre0");
+                        final String URL1 = documentSnapshot.getString("pre1");
+                        final String URL2 = documentSnapshot.getString("pre2");
+                        final String URL3 = documentSnapshot.getString("pre3");
+                        final String URL4 = documentSnapshot.getString("pre4");
                         if (URL != null){
                             btnsshow.setVisibility(View.VISIBLE);
                             btnsshow.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +205,11 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
 
                                     Intent sendStuff = new Intent(DoctorCallActivity.this, PatientFullImageShow.class);
-                                    sendStuff.putExtra("PatientPassId", URL);
+                                    sendStuff.putExtra("url1", URL);
+                                    sendStuff.putExtra("url2", URL1);
+                                    sendStuff.putExtra("url3", URL2);
+                                    sendStuff.putExtra("url4", URL3);
+                                    sendStuff.putExtra("url5", URL4);
                                     startActivity(sendStuff);
 
                                 }
@@ -221,35 +246,7 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
 
 
-        past = findViewById(R.id.past);
-        past.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent chemistinten = new Intent(DoctorCallActivity.this, DoctorSidePastConsulation.class);
-                startActivity(chemistinten);
-            }
-        });
 
-        Followup = findViewById(R.id.followup);
-        Followup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent chemistinten = new Intent(DoctorCallActivity.this, DoctorSideFollowupConsulation.class);
-                startActivity(chemistinten);
-            }
-        });
-
-        Current = findViewById(R.id.card);
-        Current.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent chemistinten = new Intent(DoctorCallActivity.this, DoctorSideNew.class);
-                startActivity(chemistinten);
-            }
-        });
 
 
 
@@ -262,21 +259,23 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
 
                 isVideo=false;
 
-                DocumentReference ststusup = fStore.collection("ScratchCard").document(Patientcard);
-               /* ststusup.update("Status","2");*/
-                ststusup.update("ConsultationID",consultitemid)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(DoctorCallActivity.this, "changed status", Toast.LENGTH_SHORT).show();
-                                sendSMS(DoctorName,Pname);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                if (Patientcard != null) {
+                    DocumentReference ststusup = fStore.collection("ScratchCard").document(Patientcard);
+                    /* ststusup.update("Status","2");*/
+                    ststusup.update("ConsultationID", consultitemid)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(DoctorCallActivity.this, "changed status", Toast.LENGTH_SHORT).show();
+                                    sendSMS(DoctorName, Pname);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                    }
-                });
+                        }
+                    });
+                }
 
 
                 DocumentReference consult = fStore.collection("Patient").document(itemid);
@@ -334,17 +333,17 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                 } else {
 
 
-                    if (Dname.isEmpty()) {
+                    if (DoctorNum.isEmpty()) {
                         Toast.makeText(DoctorCallActivity.this, "Please enter a name", Toast.LENGTH_LONG).show();
                         return;
                     }
 
-                    if (!Dname.equals(getSinchServiceInterface().getUserName())) {
+                    if (!DoctorNum.equals(getSinchServiceInterface().getUserName())) {
                         getSinchServiceInterface().stopClient();
                     }
 
                     if (!getSinchServiceInterface().isStarted()) {
-                        getSinchServiceInterface().startClient(Dname);
+                        getSinchServiceInterface().startClient(DoctorNum);
                         showSpinner();
                     } else {
                         openPlaceCallActivity();
@@ -372,6 +371,16 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
                 Intent sendStuff = new Intent(DoctorCallActivity.this, UploadImage.class);
                 sendStuff.putExtra("DocuId", consultitemid);
                 sendStuff.putExtra("patientphone", PatientPassId);
+                startActivity(sendStuff);
+            }
+        });
+
+        sendpdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent sendStuff = new Intent(DoctorCallActivity.this, ViewUploadsActivity.class);
+                sendStuff.putExtra("cid", consultitemid);
                 startActivity(sendStuff);
             }
         });
@@ -430,21 +439,24 @@ public class DoctorCallActivity extends BaseActivity implements SinchService.Sta
         isVideo=true;
 
 
-        DocumentReference ststusup = fStore.collection("ScratchCard").document(Patientcard);
-       /* ststusup.update("Status","Completed");*/
-        ststusup.update("ConsultationID",consultitemid)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(DoctorCallActivity.this, "changed status", Toast.LENGTH_SHORT).show();
-                        //sendSMS(DoctorName,Pname);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
 
-            }
-        });
+        if (Patientcard != null) {
+            DocumentReference ststusup = fStore.collection("ScratchCard").document(Patientcard);
+            /* ststusup.update("Status","Completed");*/
+            ststusup.update("ConsultationID", consultitemid)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(DoctorCallActivity.this, "changed status", Toast.LENGTH_SHORT).show();
+                            //sendSMS(DoctorName,Pname);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }
 
 
         try {

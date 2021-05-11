@@ -33,7 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -53,10 +55,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+
+import javax.annotation.Nullable;
+
 import app.sinch.BaseActivity;
 import app.sinch.SinchService;
 import app.telesevek.Models.FirebaseUserModel;
 import app.telesevek.Models.Doctor;
+import app.telesevek.uploadpkg.ShowImageActivity;
 import cz.msebera.android.httpclient.HttpHeaders;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import okhttp3.ResponseBody;
@@ -101,7 +107,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
     private static final String TAG2 = "AddPatiant";
     String id_consult;
     private Button btnLogin;
-
+    String status;
     String currentDeviceId;
 
     Doctor user = Doctor.getInstance();
@@ -261,7 +267,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         id_consult = fStore.collection("Consultation").document().getId();
 
 
-        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+       /* BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.consultDoctor);
 
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -273,10 +279,10 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.buyCard:
+                  *//*  case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*//*
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));
@@ -288,7 +294,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 }
                 return false;
             }
-        });
+        });*/
         /*
         past = findViewById(R.id.Past);
         past.setOnClickListener(new View.OnClickListener() {
@@ -353,6 +359,23 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
        /* mPhone.setText(phone);
         mPhone.setEnabled(false);*/
 
+        DocumentReference get = fStore.collection("ScratchCard").document(card);
+        get.addSnapshotListener(AddPatiant.this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (documentSnapshot.exists()) {
+                    status = documentSnapshot.getString("SerialNumber");
+
+
+
+                } else {
+                    Log.d("tag", "onEvent: Document do not exists");
+
+                }
+
+
+            }
+        });
 
         Date dateonly = new Date();
         SimpleDateFormat dateFormatWithZone = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -382,17 +405,17 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
 
                 if(TextUtils.isEmpty(fullName)){
-                    mFullName.setError("name is Required.");
+                    mFullName.setError("कृपया मरीज का नाम लिखें.");
                     return;
                 }
 
                 if(TextUtils.isEmpty(symtoms)){
-                    mSymptoms.setError("symtoms is Required.");
+                    mSymptoms.setError("कृपया मरीज के लक्षण लिखें.");
                     return;
                 }
 
                 if(mPhone.length() < 10){
-                    mPhone.setError("phone Must be >= 10 Number");
+                    mPhone.setError("कृपया मोबाइल नंबर लिखें");
                     return;
                 }
 
@@ -466,6 +489,7 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
                         SharedPreferences.Editor image = getSharedPreferences("Image", MODE_PRIVATE).edit();
                         image.putString("pimageid", phone);
+                        image.putString("pnamefull", fullName);
                         image.commit();
 
                         //sending emails
@@ -537,7 +561,6 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
 
 
 
-
                 DocumentReference ststusup = fStore.collection("ScratchCard").document(card);
                 ststusup.update("Code",card);
                 ststusup.update("RemainingConsultations",remainconsult)
@@ -575,12 +598,14 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
                 user2.put("DateTime",date2);
                 user2.put("Status","Requested");
                 user2.put("TypeOfConsultation","Primary");
+                user2.put("TypeOfDoctor","4");
                 user2.put("Time",currentTime);
                 user2.put("url","");
                 user2.put("urldescription","");
                 user2.put("urludate","null");
                 user2.put("urlupatient","null");
                 user2.put("urlupatientdesc","null");
+                user2.put("urlpdf","null");
                 user2.put("TokenFCM","null");
                 documentReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -841,9 +866,19 @@ public class AddPatiant extends BaseActivity implements SinchService.StartFailed
         }else
         {
             if (hr>=9&&hr<18){
+                Intent sendStuff = new Intent(AddPatiant.this, NewDoctorWillCallOffiline.class);
+                startActivity(sendStuff);
+                /*if ("call".equals(status)){
+                    Intent sendStuff = new Intent(AddPatiant.this, NewDoctorWillCall.class);
+                    sendStuff.putExtra("scartchcardno", status);
+                    startActivity(sendStuff);
+                }
+                else {
+                    Intent sendStuff = new Intent(AddPatiant.this, NewDoctorWillCallOffiline.class);
+                    startActivity(sendStuff);
+                }*/
                 Log.i("HOUR",String.valueOf(hr));
-                Intent intent = new Intent(AddPatiant.this, Doctowillcallyou.class);
-                startActivity(intent);
+
                 //status();
             }else {
 

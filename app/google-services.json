@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "151360520671-6jcbj3474mns25hnqqch963dn2m162jn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.sagar.telesevek",
+            "certificate_hash": "1fdc655e055205c4f0308cc339f46d78b803dc66"
+          }
+        },
+        {
           "client_id": "151360520671-7bicnkt837j4u8iukehk03oj5mbalg9b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -28,14 +36,6 @@
           "android_info": {
             "package_name": "app.sagar.telesevek",
             "certificate_hash": "7c4bdc48ed801e43b582ff06a86f9afe3fbf50fd"
-          }
-        },
-        {
-          "client_id": "151360520671-6jcbj3474mns25hnqqch963dn2m162jn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "app.sagar.telesevek",
-            "certificate_hash": "1fdc655e055205c4f0308cc339f46d78b803dc66"
           }
         },
         {
@@ -67,6 +67,38 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "151360520671-3ru53jpdrh293qhqq2k5nth5o1b2o5am.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.telesevek",
+            "certificate_hash": "7c4bdc48ed801e43b582ff06a86f9afe3fbf50fd"
+          }
+        },
+        {
+          "client_id": "151360520671-j2i9d16ggvrkp5m4l7e66iiepvpghvh5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.telesevek",
+            "certificate_hash": "38772431b70088ea9d22f218c2efb654059eca3a"
+          }
+        },
+        {
+          "client_id": "151360520671-j2qunihq8babij3afpui063kfbupr858.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.telesevek",
+            "certificate_hash": "84c063f1d5b1d0812e27dd06d3b24ebf7da5687c"
+          }
+        },
+        {
+          "client_id": "151360520671-k6hqo3sjgvbg9cq6a7ouik0k2ge07ila.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.telesevek",
+            "certificate_hash": "89752e172fcff73f205d81f57fb15b1d607bb357"
+          }
+        },
         {
           "client_id": "151360520671-l3dvkcapsr8vt4fdicpk9v43bn092lmd.apps.googleusercontent.com",
           "client_type": 1,

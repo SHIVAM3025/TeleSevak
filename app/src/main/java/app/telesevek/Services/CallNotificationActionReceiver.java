@@ -64,23 +64,23 @@ public class CallNotificationActionReceiver extends BroadcastReceiver  {
 
             if (checkAppPermissions()) {
                 Intent intentCallReceive = new Intent(mContext, Doctowillcallyou.class);
-                intentCallReceive.putExtra("Call", "incoming");
-                intentCallReceive.putExtra("CallID", CallID);
+               /* intentCallReceive.putExtra("Call", "incoming");
+                intentCallReceive.putExtra("CALL_ID", CallID);
                 intentCallReceive.putExtra("username",username);
-                intentCallReceive.putExtra("CallFrom","call from push");
-                intentCallReceive.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentCallReceive.putExtra("CallFrom","call from push");*/
+                intentCallReceive.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intentCallReceive.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intentCallReceive);
+
                 // audioPlayer.stopRingtone();
                 //stopPlayer();
                 closeNotification();
             }
             else{
                 Intent intent = new Intent(mContext, Doctowillcallyou.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("CallFrom","call from push");
-                intent.putExtra("CallID", CallID);
-                intent.putExtra("username",username);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
+
                 //stopPlayer();
                 closeNotification();
 
@@ -90,10 +90,10 @@ public class CallNotificationActionReceiver extends BroadcastReceiver  {
 
             // show ringing activity when phone is locked
             Intent intent = new Intent(mContext, Doctowillcallyou.class);
-            intent.putExtra("CallID", CallID);
+            /*intent.putExtra("CALL_ID", CallID);
             intent.putExtra("CallFrom","call from push");
-            intent.putExtra("username",username);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("username",username);*/
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
             //stopPlayer();
             //closeNotification();
@@ -103,6 +103,7 @@ public class CallNotificationActionReceiver extends BroadcastReceiver  {
             context.stopService(new Intent(context, CallNotificationService.class));
             Intent it = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
             context.sendBroadcast(it);
+
             // audioPlayer.stopRingtone();
             // stopPlayer();
             closeNotification();

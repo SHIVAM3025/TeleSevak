@@ -19,8 +19,10 @@ public class ConsultResponse {
     private String Age;
     private String Gender;
     private String Symtoms;
+    private String TypeOfDoctor;
 
-    public ConsultResponse(String Block, String ConsultationId, String DateTime, String DoctorId, String PName, String PatientId, String PatientCard, String PatientPhone, String Status, String ItemId, String Time, String DoctorName, String Age, String Gender, String Symtoms) {
+
+    public ConsultResponse(String Block, String ConsultationId, String DateTime, String DoctorId, String PName, String PatientId, String PatientCard, String PatientPhone, String Status, String ItemId, String Time, String DoctorName, String Age, String Gender, String Symtoms, String TypeOfDoctor) {
         this.Block = Block;
         this.ConsultationId = ConsultationId;
         this.DateTime = DateTime;
@@ -36,6 +38,7 @@ public class ConsultResponse {
         this.Gender = Gender;
         this.Symtoms = Symtoms;
         this.ItemId= ItemId;
+        this.TypeOfDoctor = TypeOfDoctor;
 
 
     }
@@ -162,6 +165,14 @@ public class ConsultResponse {
 
     public void setItemId(String itemId) {
         ItemId = itemId;
+    }
+
+    public String getTypeOfDoctor() {
+        return TypeOfDoctor;
+    }
+
+    public void setTypeOfDoctor(String typeOfDoctor) {
+        TypeOfDoctor = typeOfDoctor;
     }
 
 }

@@ -120,6 +120,8 @@ public class ShowImageActivity extends AppCompatActivity {
     public static String from;
 
    Button imagepbutton;
+   /*Button showpdf;*/
+    String linkOfImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,9 +132,11 @@ public class ShowImageActivity extends AppCompatActivity {
         ls.add("+919599225823");*/
 
         receiveCredentials();
+        DoctorPhone = "123";
 
         followup = findViewById(R.id.btFollowUp);
         imagepbutton = findViewById(R.id.sendtodoctor);
+     /*   showpdf = findViewById(R.id.showpdf);*/
 
 
 
@@ -213,6 +217,16 @@ public class ShowImageActivity extends AppCompatActivity {
         remain = bundle.getInt("remainconsult");
         CARD = bundle.getString("cardpass");
         Docuphone = bundle.getString("Docuphone");
+
+      /*  showpdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),BasicActivity.class);
+                intent.putExtra("CID",DocID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });*/
 
         if (0 == remain){
             followup.setVisibility(View.GONE);
@@ -302,12 +316,11 @@ public class ShowImageActivity extends AppCompatActivity {
 
 
 
-                        String linkOfImage = documentSnapshot.getString("url");
-                        assert linkOfImage != null;
-                        if(!linkOfImage.equals("")) {
+                        linkOfImage = documentSnapshot.getString("url");
+                         if(linkOfImage !=null) {
                             //pb.setIndeterminate(true);
                             prescriptionUploaded=true;
-                            result = getImageName(linkOfImage);
+                            /*result = getImageName(linkOfImage);*/
                             //String desc = documentSnapshot.getString("urldescription");
                             //nameOfImageET.setText(desc);
                             Glide.with(ShowImageActivity.this)
@@ -319,13 +332,12 @@ public class ShowImageActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     Intent sendStuff = new Intent(ShowImageActivity.this, PatientFullImageShow.class);
-                                    sendStuff.putExtra("PatientPassId",linkOfImage);
+                                    sendStuff.putExtra("url",linkOfImage);
                                     startActivity(sendStuff);
                                 }
                             });
                         }
                         else {
-                            Toast.makeText(getApplicationContext(),"No Prescription has been uploaded",Toast.LENGTH_LONG).show();
                             prescriptionUploaded=false;
                             downloadedIV.setImageDrawable(getDrawable(R.drawable.ic_documentation_new_new));
                             pb.setVisibility(View.GONE);
@@ -352,12 +364,12 @@ public class ShowImageActivity extends AppCompatActivity {
 
 
 
-            findViewById(R.id.btDownload).setOnClickListener(new View.OnClickListener() {
+           /* findViewById(R.id.btDownload).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     download();
                 }
-            });
+            });*/
 
             findViewById(R.id.btDownloadImage).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -371,7 +383,7 @@ public class ShowImageActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     DocumentReference consultitem = fStore.collection("Consultation").document(DocID);
-                    consultitem.update("TypeOfConsultation", "Followup")
+                    consultitem.update("TypeOfConsultation", "Primary")
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -419,11 +431,15 @@ public class ShowImageActivity extends AppCompatActivity {
 
     public void download(){
 
-        if(!prescriptionUploaded){
-            Toast.makeText(getApplicationContext(),"Could Not Download. Prescription has not been uploaded.",Toast.LENGTH_LONG).show();
+
+
+        if(linkOfImage != null){
+            downloadfiles(getApplicationContext(), "Prescription", ".jpg", DIRECTORY_DOWNLOADS, linkOfImage);
         }
         else {
+            Toast.makeText(getApplicationContext(),"Could Not Download. Prescription has not been uploaded.",Toast.LENGTH_LONG).show();
 
+/*
             Toast.makeText(getApplicationContext(), "Downloading", Toast.LENGTH_SHORT).show();
             StorageReference storageReference = firebaseStorage.getReference();
             Log.i("url", result);
@@ -435,8 +451,7 @@ public class ShowImageActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             String url = uri.toString();
-                            downloadfiles(getApplicationContext(), "Prescription", ".jpg", DIRECTORY_DOWNLOADS, url);
-                            Toast.makeText(ShowImageActivity.this, "Downloaded Successfully!", Toast.LENGTH_SHORT).show();
+                             Toast.makeText(ShowImageActivity.this, "Downloaded Successfully!", Toast.LENGTH_SHORT).show();
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -444,7 +459,7 @@ public class ShowImageActivity extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(ShowImageActivity.this, "Could not Download. Please check your internet ", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
 
     }
@@ -457,6 +472,8 @@ public class ShowImageActivity extends AppCompatActivity {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationInExternalFilesDir(context,destinationDirectory,fileName+fileExtension);
         downloadManager.enqueue(request);
+
+        Toast.makeText(this, "प्रिस्क्रिप्शन  डाउनलोड हो गया है", Toast.LENGTH_SHORT).show();
     }
 
     public String getImageName(String url){
@@ -624,24 +641,25 @@ public class ShowImageActivity extends AppCompatActivity {
     }
 
     public void addDoctor(){
-        DocumentReference reference=fStore.collection("Doctor").document(DoctorPhone);
-        reference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                assert value != null;
-                if(value.exists()){
-                    String email=value.getString("Email");
-                    Log.i("Email",email);
-                    if(!email.equals("")){
+        if (!DoctorPhone.isEmpty()) {
+            DocumentReference reference = fStore.collection("Doctor").document(DoctorPhone);
+            reference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    assert value != null;
+                    if (value.exists()) {
+                        String email = value.getString("Email");
+                        /*   Log.i("Email",email);*/
+                   /* if(!email.equals("")){
                         allEmails+=email+",";
+                    }*/
+                        /*Log.i("Email",allEmails);*/
+                    } else {
+                        Log.i("fail", "Could not get email");
                     }
-                    Log.i("Email",allEmails);
                 }
-                else {
-                    Log.i("fail","Could not get email");
-                }
-            }
-        });
+            });
+        }
     }
 
     interface TwilioApi {

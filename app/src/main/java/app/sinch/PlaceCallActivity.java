@@ -2,6 +2,7 @@ package app.sinch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,14 +40,33 @@ public class PlaceCallActivity extends BaseActivity {
     String id_con;
     String PatientPassId;
 
+    TextView timer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snich_place_call);
 
+        timer = findViewById(R.id.timer);
+        mCallButton = (Button) findViewById(R.id.callButton);
+
+        new CountDownTimer(15000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                timer.setText("seconds remaining: " + millisUntilFinished / 1000);
+                //here you can have your logic to set text to edittext
+
+            }
+
+            public void onFinish() {
+                timer.setText("done! Patient is Ready");
+                mCallButton.setVisibility(View.VISIBLE);
+            }
+
+        }.start();
+
         //initializing UI elements
         mCallName = (EditText) findViewById(R.id.callName);
-        mCallButton = (Button) findViewById(R.id.callButton);
         mCallButton.setEnabled(false);
         mCallButton.setOnClickListener(buttonClickListener);
 
@@ -94,7 +114,7 @@ public class PlaceCallActivity extends BaseActivity {
             return;
         }
 
-        Call call = getSinchServiceInterface().callUserVideo(userName);
+        Call call = getSinchServiceInterface().callUserVideo(PatientPassId);
         String callId = call.getCallId();
 
         Intent callScreen = new Intent(this, CallScreenActivity.class);

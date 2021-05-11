@@ -77,7 +77,7 @@ public class DoctorSideSpecial extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavDoctor = findViewById(R.id.bottomNavFollow);
-        bottomNavDoctor.setSelectedItemId(R.id.specialist_menu);
+        bottomNavDoctor.setSelectedItemId(R.id.viewPast_menu);
 
         bottomNavDoctor.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -89,16 +89,10 @@ public class DoctorSideSpecial extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
 
-                    case R.id.followUp_menu:
-                        startActivity(new Intent(getApplicationContext(), DoctorSideFollowupConsulation.class));
-                        overridePendingTransition(0, 0);
-                        return true;
 
                     case R.id.current_menu:
                         startActivity(new Intent(getApplicationContext(), DoctorSideNew.class));
                         overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.specialist_menu:
                         return true;
                 }
                 return false;
@@ -128,13 +122,14 @@ public class DoctorSideSpecial extends AppCompatActivity {
         */
 
 
-        SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
-        String phonenumber = prefs.getString("phone", null);
+        SharedPreferences prefs = getSharedPreferences("doctornamevideocall", MODE_PRIVATE);
+        String dtype = prefs.getString("dtype", null);
+
 
 
         fStore = FirebaseFirestore.getInstance();
 
-        fStore.collection("Doctor").document(phonenumber)
+       /* fStore.collection("Doctor").document(phonenumber)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -148,8 +143,8 @@ public class DoctorSideSpecial extends AppCompatActivity {
                 Toast.makeText(DoctorSideSpecial.this, "Could not get Doctor", Toast.LENGTH_SHORT).show();
             }
         });
-
-        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfDoctor",typeOfDoctor).orderBy("Time",Query.Direction.DESCENDING
+*/
+        Query query = fStore.collection("Consultation").whereEqualTo("TypeOfDoctor",dtype).orderBy("Time",Query.Direction.DESCENDING
         );
 
 
@@ -163,7 +158,7 @@ public class DoctorSideSpecial extends AppCompatActivity {
             public void onBindViewHolder(final DoctorSideSpecial.FriendsHolder holder, int position, final ConsultResponse model) {
                 progressBar.setVisibility(View.GONE);
                 holder.textName.setText(model.getPName());
-                holder.textCompany.setText(model.getDateTime());
+                holder.textCompany.setText(model.getTime());
 
 
                 holder.reject.setOnClickListener(new View.OnClickListener() {

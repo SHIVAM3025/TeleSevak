@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,6 +32,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import javax.annotation.Nullable;
 
@@ -45,7 +49,7 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
     String Strname;
     String Strphone;
     String Strdate;
-
+    TextView val;
     String Strfollowname;
     String Strdatefollow;
 
@@ -57,12 +61,15 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
     TextView followdate;
 
     Thread t;
+    Query query;
 
     String notificationtrue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_side_past_consulation);
+
+        val = findViewById(R.id.tex_val);
 
         SharedPreferences prefs = getSharedPreferences("User", MODE_PRIVATE);
         String phonenumber = prefs.getString("phone", null);
@@ -95,17 +102,8 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
                     case R.id.viewPast_menu:
                         return true;
 
-                    case R.id.followUp_menu:
-                        startActivity(new Intent(getApplicationContext(),DoctorSideFollowupConsulation.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
                     case R.id.current_menu:
                         startActivity(new Intent(getApplicationContext(),DoctorSideNew.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.specialist_menu:
-                        startActivity(new Intent(getApplicationContext(),DoctorSideSpecial.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -136,11 +134,32 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
 
 
         fStore = FirebaseFirestore.getInstance();
-        Query query = fStore.collection("Consultation").whereEqualTo("DoctorId",phonenumber).orderBy("Time",Query.Direction.DESCENDING);
+
+        SharedPreferences type = getSharedPreferences("doctornamevideocall", MODE_PRIVATE);
+        String dtype = type.getString("dtype", null);
+
+        if (dtype.equals("0")) {
+            query = fStore.collection("Consultation").whereEqualTo("Status","Completed").orderBy("DateTime",Query.Direction.DESCENDING);
+
+        }else {
+             query = fStore.collection("Consultation").whereEqualTo("DoctorId",phonenumber).orderBy("DateTime",Query.Direction.DESCENDING).whereEqualTo("Status","Completed");
+        }
 
         FirestoreRecyclerOptions<ConsultResponse> response = new FirestoreRecyclerOptions.Builder<ConsultResponse>()
                 .setQuery(query, ConsultResponse.class)
                 .build();
+
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.getResult().isEmpty()){
+                    progressBar.setVisibility(View.GONE);
+                    val.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
 
 
         adapter = new FirestoreRecyclerAdapter<ConsultResponse, DoctorSidePastConsulation.FriendsHolder>(response) {
@@ -148,17 +167,15 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
             public void onBindViewHolder(final DoctorSidePastConsulation.FriendsHolder holder, int position, final ConsultResponse model) {
                 progressBar.setVisibility(View.GONE);
                 holder.textName.setText(model.getPName());
-                holder.textCompany.setText(model.getDateTime());
+                holder.textCompany.setText(model.getSymtoms());
+                holder.doctor.setText(model.getDoctorName());
+
+                holder.date.setText(model.getDateTime());
 
 
 
-                holder.reject.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        holder.itemView.setVisibility(View.INVISIBLE);
-                    }
-                });
+
+
 
 
 
@@ -176,6 +193,7 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
                                 sendStuff.putExtra("pgender", model.getGender());
                                 sendStuff.putExtra("itemid", model.getItemId());
                                 sendStuff.putExtra("consultitemid", model.getConsultationId());
+                                sendStuff.putExtra("DoctorNum",phonenumber);
                                 startActivity(sendStuff);
 
 
@@ -189,7 +207,7 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
             @Override
             public FriendsHolder onCreateViewHolder(ViewGroup group, int i) {
                 View view = LayoutInflater.from(group.getContext())
-                        .inflate(R.layout.list_item_consultation, group, false);
+                        .inflate(R.layout.list_item_consultation_past, group, false);
 
                 return new FriendsHolder(view);
             }
@@ -272,16 +290,20 @@ public class DoctorSidePastConsulation extends AppCompatActivity {
     public class FriendsHolder extends RecyclerView.ViewHolder {
         TextView textName;
         TextView textCompany;
-        TextView reject;
-        TextView call;
+        TextView doctor;
+        TextView date;
+        Button call;
 
         public FriendsHolder(View itemView) {
             super(itemView);
 
             textName = itemView.findViewById(R.id.D_degree);
-            textCompany = itemView.findViewById(R.id.date);
-            reject = itemView.findViewById(R.id.reject);
-            call = itemView.findViewById(R.id.call);
+            textCompany = itemView.findViewById(R.id.tv_real_sy);
+            doctor = itemView.findViewById(R.id.tv_real_doctor);
+            date = itemView.findViewById(R.id.date);
+
+
+            call = itemView.findViewById(R.id.consult);
         }
     }
 

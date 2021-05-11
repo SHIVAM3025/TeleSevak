@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/appBarPastConsult"
@@ -108,18 +107,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10"
         app:layout_constraintVertical_bias="0.07" />
 
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="डॉक्टर द्वारा दी गई प्रिस्क्रिप्शन"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.512" />
 
     <TextView
         android:id="@+id/tvPatient"
@@ -144,7 +131,7 @@
         android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/tvPatient" />
 
@@ -157,7 +144,7 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintHorizontal_bias="0.716"
+        app:layout_constraintHorizontal_bias="0.670"
         app:layout_constraintStart_toEndOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/tvDoctor" />
 
@@ -170,71 +157,141 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.785"
+        app:layout_constraintHorizontal_bias="0.755"
         app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
-    <ImageView
-        android:id="@+id/downloadImage"
-        android:layout_width="107dp"
-        android:layout_height="112dp"
 
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/linearimg"
+        android:weightSum="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/downloadImage"
+            android:layout_width="107dp"
+            android:layout_height="112dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <ImageView
+            android:id="@+id/downloadImage2"
+            android:layout_width="107dp"
+            android:layout_height="112dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/downloadImage3"
+            android:layout_width="107dp"
+            android:layout_height="112dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <ImageView
+            android:id="@+id/downloadImage4"
+            android:layout_width="107dp"
+            android:layout_height="112dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/downloadImage5"
+            android:layout_width="107dp"
+            android:layout_height="112dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/pbImageLoading"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/downloadImage"
-        app:layout_constraintEnd_toEndOf="@+id/downloadImage"
+        app:layout_constraintBottom_toBottomOf="@+id/linearimg"
+        app:layout_constraintEnd_toEndOf="@+id/linearimg"
         app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="@+id/downloadImage"
-        app:layout_constraintTop_toTopOf="@+id/downloadImage"
+        app:layout_constraintStart_toStartOf="@+id/linearimg"
+        app:layout_constraintTop_toTopOf="@+id/linearimg"
         app:layout_constraintVertical_bias="0.496" />
 
-    <ImageView
-        android:id="@+id/btDownload"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="32dp"
-
-        android:src="@drawable/ic_cloud_download"
-        android:tint="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/downloadImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btDownloadImage"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:background="@drawable/border_button"
-        android:text="डाउनलोड"
-        android:textColor="@color/white"
+        android:layout_width="300dp"
+        android:layout_height="49dp"
+        android:textStyle="bold"
+        android:background="@drawable/btborder"
+        android:text="प्रिस्क्रिप्शन डाउनलोड  करे "
+        android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.225"
-        app:layout_constraintStart_toEndOf="@+id/btDownload"
-        app:layout_constraintTop_toBottomOf="@+id/textView16"
-        app:layout_constraintVertical_bias="0.249" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearimg"
+       />
 
     <Button
         android:id="@+id/btFollowUp"
         android:layout_width="300dp"
         android:layout_height="49dp"
+        android:textStyle="bold"
         android:background="@drawable/border_button"
-        android:text="Follow Up"
+        android:text="फॉलोअप के लिए निवेदन करें"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/downloadImage" />
+        app:layout_constraintTop_toBottomOf="@+id/linearimg" />
 
+
+
+  <!--  <Button
+        android:id="@+id/showpdf"
+        android:layout_width="300dp"
+        android:layout_height="49dp"
+        android:textStyle="bold"
+        android:background="@drawable/border_button"
+        android:text="show pdf"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btFollowUp" />
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>

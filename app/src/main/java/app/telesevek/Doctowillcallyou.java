@@ -9,11 +9,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +23,7 @@ import com.sinch.android.rtc.SinchError;
 
 import app.sinch.BaseActivity;
 import app.sinch.SinchService;
+import app.telesevek.NewSceen.HomePatient;
 
 
 public class Doctowillcallyou extends BaseActivity implements SinchService.StartFailedListener {
@@ -32,10 +35,30 @@ public class Doctowillcallyou extends BaseActivity implements SinchService.Start
     String CallID;
     String username;
     Intent intent;
+    String pname;
+    TextView timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctowillcallyou);
+
+
+        timer = findViewById(R.id.mili);
+
+
+        new CountDownTimer(30000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                timer.setText("" + millisUntilFinished / 1000 + "");
+                //here you can have your logic to set text to edittext
+
+            }
+
+            public void onFinish() {
+                timer.setText("0");
+            }
+
+        }.start();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1)
         {
@@ -58,17 +81,22 @@ public class Doctowillcallyou extends BaseActivity implements SinchService.Start
 
 
 
-        Bundle bundle = getIntent().getExtras();
-        CallID = bundle.getString("CALL_ID");
-        username=bundle.getString("username");
+     /*  Bundle bundle = getIntent().getExtras();
+        CallID = bundle.getString("CALL_ID","nodate");
+        username=bundle.getString("username","nodate");*/
+
+       /* CallID = getIntent().getStringExtra("CALL_ID");
+        username = getIntent().getStringExtra("username");*/
 
         SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
         final String phonenumber = prefs.getString("pimageid", "nodata");
+        pname = prefs.getString("pnamefull","no");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                log();
-                Toast.makeText(Doctowillcallyou.this, "show", Toast.LENGTH_SHORT).show();
+                    log(pname);
+
+
 
             }
         }, 100);
@@ -79,7 +107,7 @@ public class Doctowillcallyou extends BaseActivity implements SinchService.Start
         findViewById(R.id.btHome).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+                Intent intent=new Intent(getApplicationContext(), HomePatient.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 overridePendingTransition(0,0);
                 startActivity(intent);
@@ -95,10 +123,10 @@ public class Doctowillcallyou extends BaseActivity implements SinchService.Start
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.buyCard:
+                    /*case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*/
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));
@@ -233,24 +261,21 @@ public class Doctowillcallyou extends BaseActivity implements SinchService.Start
         mSpinner.setMessage("Please wait...");
         mSpinner.show();
     }
-    public void log(){
-        if (username.isEmpty()) {
+    public void log(String uname){
+          if (uname.isEmpty()) {
             Toast.makeText(Doctowillcallyou.this, "Please enter a name", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (!username.equals(getSinchServiceInterface().getUserName())) {
+        if (!uname.equals(getSinchServiceInterface().getUserName())) {
             getSinchServiceInterface().stopClient();
         }
 
         if (!getSinchServiceInterface().isStarted()) {
-            getSinchServiceInterface().startClient(username);
+            getSinchServiceInterface().startClient(uname);
             showSpinner();
         }
-        else {
-            Intent intent = new Intent(Doctowillcallyou.this,Doctowillcallyou.class);
-            startActivity(intent);
-        }
+
 
     }
 

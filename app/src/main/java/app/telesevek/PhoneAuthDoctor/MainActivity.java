@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import app.telesevek.DoctorSideNew;
+import app.telesevek.PrePeringVideocallDoctor;
 import app.telesevek.R;
 
 import java.util.Objects;
@@ -78,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 if (Objects.equals(dname, "doctorname")) {
-                    startActivity(new Intent(getApplicationContext(), DoctorSideNew.class));
+                 startActivity(new Intent(getApplicationContext(), DoctorSideNew.class));
+                   /* startActivity(new Intent(getApplicationContext(), DoctorSideNew.class));*/
                 }
             }
 

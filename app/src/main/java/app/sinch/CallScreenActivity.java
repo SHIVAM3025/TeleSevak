@@ -1,12 +1,15 @@
 package app.sinch;
 
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +27,8 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import app.telesevek.DoctorCallActivity;
+import app.telesevek.DoctorSideNew;
 import app.telesevek.R;
 
 public class CallScreenActivity extends BaseActivity {
@@ -42,9 +47,9 @@ public class CallScreenActivity extends BaseActivity {
     private boolean mAddedListener = false;
     private boolean mVideoViewsAdded = false;
 
-    private TextView mCallDuration;
+   /* private TextView mCallDuration;
     private TextView mCallState;
-    private TextView mCallerName;
+    private TextView mCallerName;*/
 
     private class UpdateCallDurationTask extends TimerTask {
 
@@ -79,9 +84,9 @@ public class CallScreenActivity extends BaseActivity {
         setContentView(R.layout.activity_snich_call);
 
         mAudioPlayer = new AudioPlayer(this);
-        mCallDuration = (TextView) findViewById(R.id.callDuration);
+       /* mCallDuration = (TextView) findViewById(R.id.callDuration);
         mCallerName = (TextView) findViewById(R.id.remoteUser);
-        mCallState = (TextView) findViewById(R.id.callState);
+        mCallState = (TextView) findViewById(R.id.callState);*/
         Button endCallButton = (Button) findViewById(R.id.hangupButton);
 
         endCallButton.setOnClickListener(new OnClickListener() {
@@ -121,8 +126,8 @@ public class CallScreenActivity extends BaseActivity {
 
         Call call = getSinchServiceInterface().getCall(mCallId);
         if (call != null) {
-            mCallerName.setText(call.getRemoteUserId());
-            mCallState.setText(call.getState().toString());
+           /* mCallerName.setText(call.getRemoteUserId());
+            mCallState.setText(call.getState().toString());*/
             if (call.getState() == CallState.ESTABLISHED) {
                 //when the call is established, addVideoViews configures the video to  be shown
                 addVideoViews();
@@ -174,7 +179,7 @@ public class CallScreenActivity extends BaseActivity {
     //method to update live duration of the call
     private void updateCallDuration() {
         if (mCallStart > 0) {
-            mCallDuration.setText(formatTimespan(System.currentTimeMillis() - mCallStart));
+            /*mCallDuration.setText(formatTimespan(System.currentTimeMillis() - mCallStart));*/
         }
     }
 
@@ -238,7 +243,7 @@ public class CallScreenActivity extends BaseActivity {
         public void onCallEstablished(Call call) {
             Log.d(TAG, "Call established");
             mAudioPlayer.stopProgressTone();
-            mCallState.setText(call.getState().toString());
+            /*mCallState.setText(call.getState().toString());*/
             setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
             AudioController audioController = getSinchServiceInterface().getAudioController();
             audioController.enableSpeaker();

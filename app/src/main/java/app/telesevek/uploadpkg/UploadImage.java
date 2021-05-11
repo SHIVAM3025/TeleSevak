@@ -12,6 +12,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import app.telesevek.DoctorCallActivity;
+import app.telesevek.DoctorSideNew;
 import app.telesevek.R;
 import app.telesevek.SendSMSnoPhone;
 import okhttp3.ResponseBody;
@@ -48,7 +51,7 @@ import retrofit2.http.Path;
 public class UploadImage extends AppCompatActivity {
 
     ImageView uploadPicIV;
-    EditText uploadPicET;
+
 
     final int IMAGE_REQUST = 71;
     Uri imageLocationPath;
@@ -63,19 +66,28 @@ public class UploadImage extends AppCompatActivity {
     public static final String AUTH_TOKEN = "";
     List<String> ls=new ArrayList<>();
     Button Nophone;
+    TextView txt_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadimage);
         pd = new ProgressDialog(UploadImage.this);
         pd.setMessage("loading..");
-        uploadPicET = findViewById(R.id.imageNameET);
         uploadPicIV = findViewById(R.id.imageID);
+        txt_back = findViewById(R.id.backarrow);
         Nophone = findViewById(R.id.SENDSMS);
 
         objectStorageReference = FirebaseStorage.getInstance().getReference("ImageFolder");
         objectFirebaseFirestore = FirebaseFirestore.getInstance();
-        id = objectFirebaseFirestore.collection("Patient").document().getId();
+
+        txt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent go = new Intent(UploadImage.this, DoctorCallActivity.class);
+                startActivity(go);
+            }
+        });
+
 
         Bundle bundle = getIntent().getExtras();
         Docuidi = bundle.getString("DocuId");
@@ -125,7 +137,7 @@ public class UploadImage extends AppCompatActivity {
         pd.show();
         try {
             if (imageLocationPath != null) {
-                id = objectFirebaseFirestore.collection("Patient").document().getId() + "." + getExtension(imageLocationPath);
+                id = System.currentTimeMillis() + "." + getExtension(imageLocationPath);
                 final StorageReference imageRef = objectStorageReference.child(id);
 
                 UploadTask objectUploadTask = imageRef.putFile(imageLocationPath);
@@ -149,7 +161,7 @@ public class UploadImage extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(UploadImage.this, "Image is uploaded", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(UploadImage.this, "image has been sent to patient", Toast.LENGTH_LONG).show();
                                             pd.dismiss();
 
                                             /*startActivity(sendIntent);*/
@@ -173,21 +185,23 @@ public class UploadImage extends AppCompatActivity {
                                 }
                             });
 
-                            objectFirebaseFirestore.collection("Consultation").document(Docuidi)
+                           /* objectFirebaseFirestore.collection("Consultation").document(Docuidi)
                                     .update("urldescription",uploadPicET.getText().toString())
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(UploadImage.this, "Text is uploaded", Toast.LENGTH_LONG).show();
-                                            /*sendSMS(uploadPicET.getText().toString(),Patientphone);*/
+                                            pd.dismiss();
+                                            *//*sendSMS(uploadPicET.getText().toString(),Patientphone);*//*
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(UploadImage.this, "Image not upload" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    pd.dismiss();
                                 }
                             });
-
+*/
                             String CurrentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                             objectFirebaseFirestore.collection("Consultation").document(Docuidi)
@@ -211,6 +225,7 @@ public class UploadImage extends AppCompatActivity {
             }
             else {
                 Toast.makeText(this, "Please provide name for image", Toast.LENGTH_LONG).show();
+                pd.dismiss();
             }
         }
         catch (Exception e) {

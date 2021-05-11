@@ -104,7 +104,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Patel Medical Store"
                 android:textStyle="bold"
-                />
+             />
 
             <TextView
                 android:id="@+id/subTitle"
@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Seconary line text.Lorem ipsum dolor sit amt,
-consectetur adipiscing alit.nullia vel ornare ex,vel pulvinar sapien"
+                consectetur adipiscing alit.nullia vel ornare ex,vel pulvinar sapien"
                 android:layout_below="@+id/title2"
                 android:textColor="#02979c"
                 />

@@ -3,6 +3,7 @@ package app.telesevek.PhoneAuthDoctor;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
@@ -20,6 +23,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import app.telesevek.Activity.MainActivity;
 import app.telesevek.R;
@@ -34,17 +39,21 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText editText;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
+    String token;
+    FirebaseFirestore fStore;
+    String phonenumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_phone);
+        fStore = FirebaseFirestore.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
 
         progressBar = findViewById(R.id.progressbar);
         editText = findViewById(R.id.editTextCode);
 
-        String phonenumber = getIntent().getStringExtra("phonenumber");
+        phonenumber = getIntent().getStringExtra("phonenumber");
         sendVerificationCode(phonenumber);
 
         findViewById(R.id.buttonSignIn).setOnClickListener(new View.OnClickListener() {
@@ -96,6 +105,8 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                             editor.putString("name", phonenumber);
                             editor.apply();
 
+                            token();
+
                         } else {
                             Toast.makeText(VerifyPhoneActivity.this, "check sha1", Toast.LENGTH_LONG).show();
                         }
@@ -138,4 +149,23 @@ public class VerifyPhoneActivity extends AppCompatActivity {
             Toast.makeText(VerifyPhoneActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };
+
+
+
+    public void token(){
+        token= FirebaseInstanceId.getInstance().getToken();
+        fStore.collection("Doctor").document(phonenumber)
+                .update("TokenFCM",token)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i("tokenFCM","added successfully");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("tokenFCM","cannot be added");
+            }
+        });
+    }
 }

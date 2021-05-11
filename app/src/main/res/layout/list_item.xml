@@ -1,41 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:layout_height="124dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/corner"
+    android:layout_gravity="center_horizontal"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_height="124dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="vertical">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_doctor__1_"
+                app:civ_border_color="#ffffff"
+                app:civ_border_width="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:textColor="#525151"
+                    android:textSize="12sp"
+                    tools:text="डॉ रश्मि कुमार" />
+
+
+                <TextView
+                    android:id="@+id/degree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/name"
+                    android:layout_toRightOf="@+id/name"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="start"
+                    android:maxLines="2"
+                    android:textColor="#525151"
+                    android:textSize="10sp"
+                    tools:text="(MBBS,MX)" />
+
+            </LinearLayout>
+
+
             <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
+                android:id="@+id/anubav"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
-                android:textSize="20sp"
-                tools:text="Nur Rohman" />
-
+                android:gravity="center"
+                android:textColor="#525151"
+                android:textSize="10dp"
+                tools:text="अनुभव - ३५ वर्ष" />
 
 
             <TextView
-                android:id="@+id/company"
-                android:layout_width="wrap_content"
+                android:id="@+id/city"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
-                tools:text="Dicoding" />
+                android:gravity="center"
+                android:textColor="#525151"
+                android:textSize="10dp"
+                tools:text="लखनऊ" />
 
         </LinearLayout>
 
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView >
+</RelativeLayout >

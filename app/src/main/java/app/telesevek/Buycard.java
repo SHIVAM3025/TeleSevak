@@ -42,7 +42,6 @@ public class Buycard extends AppCompatActivity {
         getFriendList();
 
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
-        bottomNav.setSelectedItemId(R.id.buyCard);
 
 
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -54,8 +53,8 @@ public class Buycard extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.buyCard:
-                        return true;
+                   /* case R.id.buyCard:
+                        return true;*/
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));

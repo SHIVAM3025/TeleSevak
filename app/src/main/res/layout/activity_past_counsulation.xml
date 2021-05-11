@@ -10,8 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/appbar"
-        android:background="@color/fbutton_color_peter_river"
-        android:layout_height="70dp">
+        android:background="#36A8C1"
+        android:layout_height="56dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -270,6 +270,13 @@
         android:layout_marginTop="-1dp"
         android:layout_marginBottom="3dp"
         android:divider="#00000000" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_above="@id/bottomNav"
+        android:background="@drawable/shadow"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"

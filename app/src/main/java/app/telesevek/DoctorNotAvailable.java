@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import app.telesevek.NewSceen.HomePatient;
+
 public class DoctorNotAvailable extends AppCompatActivity {
 
     @Override
@@ -24,7 +26,7 @@ public class DoctorNotAvailable extends AppCompatActivity {
         findViewById(R.id.btnHome).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),ScratchCardNew.class);
+                Intent intent=new Intent(getApplicationContext(), HomePatient.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 overridePendingTransition(0,0);
                 startActivity(intent);
@@ -40,10 +42,10 @@ public class DoctorNotAvailable extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.buyCard:
+                    /*case R.id.buyCard:
                         startActivity(new Intent(getApplicationContext(),Buycard.class));
                         overridePendingTransition(0,0);
-                        return true;
+                        return true;*/
 
                     case R.id.ourDoctors:
                         startActivity(new Intent(getApplicationContext(),OurDoctor.class));
