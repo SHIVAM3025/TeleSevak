@@ -1,17 +1,16 @@
 package app.telesevek.NewSceen;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -35,15 +35,18 @@ import app.telesevek.SpecialDoctors;
 import app.telesevek.uploadpkg.ShowImageActivity;
 
 public class HomePatient extends AppCompatActivity {
-    Button bt_online,bt_scratch;
+    Button bt_online, bt_scratch;
     Button parcha;
     TextView doctorwillcall;
-    RelativeLayout doctorcall,drcall;
+    RelativeLayout doctorcall, drcall;
     FirebaseFirestore fStore;
+
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_patient);
+
         bt_online = findViewById(R.id.bt_online);
         bt_scratch = findViewById(R.id.helth);
 
@@ -65,38 +68,35 @@ public class HomePatient extends AppCompatActivity {
         bt_scratch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i_o =new Intent(HomePatient.this, ScratchCardNew.class);
+                Intent i_o = new Intent(HomePatient.this, ScratchCardNew.class);
                 startActivity(i_o);
             }
         });
 
-        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.consultDoctor);
 
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    case R.id.pastConsult:
-                        startActivity(new Intent(getApplicationContext(), PastConsultationNewLoginScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.pastConsult:
+                    startActivity(new Intent(getApplicationContext(), PastConsultationNewLoginScreen.class));
+                    overridePendingTransition(0, 0);
+                    return true;
 
-                   /* case R.id.buyCard:
-                        startActivity(new Intent(getApplicationContext(),Buycard.class));
-                        overridePendingTransition(0,0);
-                        return true;*/
+               /* case R.id.buyCard:
+                    startActivity(new Intent(getApplicationContext(),Buycard.class));
+                    overridePendingTransition(0,0);
+                    return true;*/
 
-                    case R.id.ourDoctors:
-                        startActivity(new Intent(getApplicationContext(), OurDoctor.class));
-                        overridePendingTransition(0,0);
-                        return true;
+                case R.id.ourDoctors:
+                    startActivity(new Intent(getApplicationContext(), OurDoctor.class));
+                    overridePendingTransition(0, 0);
+                    return true;
 
-                    case R.id.consultDoctor:
-                        return true;
-                }
-                return false;
+                case R.id.consultDoctor:
+                    return true;
             }
+            return false;
         });
 
         SharedPreferences prefs = getSharedPreferences("Consultpre", MODE_PRIVATE);
@@ -116,23 +116,20 @@ public class HomePatient extends AppCompatActivity {
                         String typeofcon = documentSnapshot.getString("TypeOfConsultation");
                         final String scratcard = documentSnapshot.getString("PatientCard");
 
-                        if (typeofcon.equals("Primary")){
+                        if (Objects.equals(typeofcon, "Primary")) {
                             drcall.setVisibility(View.VISIBLE);
                             doctorcall.setVisibility(View.GONE);
                             parcha.setVisibility(View.GONE);
                         }
 
-                        if(doctorname.isEmpty()) {
+                        if (doctorname.isEmpty()) {
 
-                        }
-                        else {
+                        } else {
 
                             drcall.setVisibility(View.GONE);
                             doctorcall.setVisibility(View.VISIBLE);
                             parcha.setVisibility(View.GONE);
                             doctorwillcall.setText(doctorname + " आपको थोड़ी देर में सम्पर्क करेंगे");
-
-
 
 
                         }
@@ -151,8 +148,8 @@ public class HomePatient extends AppCompatActivity {
                                     @Override
                                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                                         if (documentSnapshot.exists()) {
-                                            Integer oldcardNEW = (Integer) documentSnapshot.getLong("RemainingConsultations").intValue();
-                                            if(0 < oldcardNEW){
+                                            Integer oldcardNEW = documentSnapshot.getLong("RemainingConsultations").intValue();
+                                            if (0 < oldcardNEW) {
                                                 Integer carde = oldcardNEW - 1;
                                                 Integer carde2 = oldcardNEW;
                                                 Intent sendStuff = new Intent(HomePatient.this, ShowImageActivity.class);
@@ -160,8 +157,7 @@ public class HomePatient extends AppCompatActivity {
                                                 sendStuff.putExtra("remainconsult", carde);
                                                 sendStuff.putExtra("DocuId", cid);
                                                 startActivity(sendStuff);
-                                            }
-                                            else {
+                                            } else {
                                                 Intent sendStuff = new Intent(HomePatient.this, ShowImageActivity.class);
                                                 sendStuff.putExtra("cardpass", scratcard);
                                                 sendStuff.putExtra("remainconsult", "0");
@@ -177,8 +173,8 @@ public class HomePatient extends AppCompatActivity {
                             }
                         });
 
-                        if(FinalDate.equals("null")) { }
-                        else {
+                        if (FinalDate.equals("null")) {
+                        } else {
                             Date date1 = null;
                             Date date2 = null;
                             SimpleDateFormat dates = new SimpleDateFormat("yyyy-MM-dd");
@@ -202,14 +198,8 @@ public class HomePatient extends AppCompatActivity {
                                 drcall.setVisibility(View.GONE);
 
 
-
-
-
                             }
                         }
-
-
-
 
 
                     }else {

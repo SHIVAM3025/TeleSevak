@@ -15,7 +15,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="डॉक्टर से परामर्श लें"
+            android:text="@string/consult_a_doctor"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:drawableLeft="@drawable/ic_baseline_arrow_back_ios_24"
@@ -37,7 +37,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="कार्ड क्रमांक:"
+            android:text="@string/card_number"
             android:layout_weight="1"
             android:textSize="14dp"
             android:textColor="#868F91"
@@ -68,7 +68,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="कार्ड कीमत:"
+            android:text="@string/card_price"
             android:layout_weight="1"
             android:textSize="14dp"
             android:textColor="#868F91"
@@ -112,7 +112,7 @@
             android:textSize="12dp">
             <TextView
                 android:layout_width="match_parent"
-                android:text="पुराने परामर्श"
+                android:text="@string/old_consultation"
                 android:layout_marginTop="20dp"
                 android:textColor="#454646"
                 android:textSize="16dp"
@@ -145,7 +145,7 @@
             android:textSize="12dp">
             <TextView
                 android:layout_width="match_parent"
-                android:text="परामर्श बाकि"
+                android:text="@string/counseling_remaining"
                 android:textColor="#454646"
                 android:textSize="16dp"
                 android:layout_marginTop="20dp"
@@ -178,7 +178,7 @@
             android:textSize="12dp">
             <TextView
                 android:layout_width="match_parent"
-                android:text="कार्ड वैधता"
+                android:text="@string/card_validity"
                 android:textColor="#454646"
                 android:textSize="16dp"
                 android:layout_marginTop="20dp"
@@ -207,7 +207,7 @@
         android:layout_height="39dp"
         android:background="@drawable/border_button"
         android:gravity="center"
-        android:text="नया परामर्ष शुरू कैरे"
+        android:text="@string/new_consultation_starts"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/bootombutton"
         android:layout_centerHorizontal="true"

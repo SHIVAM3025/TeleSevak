@@ -16,10 +16,9 @@
         android:gravity="center"
         android:minLines="3"
         android:layout_centerVertical="true"
-        android:layout_below="@+id/box"
         android:layout_marginTop="50dp"
         android:textSize="16dp"
-        android:text="Follow up Successfully"/>
+        android:text="@string/follow_up_successfully" />
 
 
 
@@ -35,7 +34,7 @@
         android:layout_below="@+id/doctorcallpatiet"
         android:layout_marginTop="10dp"
         android:textSize="16dp"
-        android:text="कृपया थोड़ी देर वेट करे डॉक्टर दुरा आपको वीडियो या एडीओ कॉल आ जाएगा "/>
+        android:text="@string/wait_doctor_will_get_an_audio" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

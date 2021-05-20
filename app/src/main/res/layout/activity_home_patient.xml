@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="15 मिनट में अनुभवी डॉक्टरों से कराएं इलाज" />
+            android:text="@string/get_experience_fifteen_minutes" />
 
         <ImageView
             android:id="@+id/imageView7"
@@ -90,7 +90,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:text="विशेषज्ञ डॉक्टरों से परामर्श शुरू करें"
+                android:text="@string/start_consulting_specialist_doctors"
                 android:layout_weight="1"
                 android:maxLines="2"
                 android:layout_gravity="center_vertical"
@@ -100,9 +100,10 @@
                 android:textSize="20dp"
                 android:textColor="#1DA1B4"
                 android:layout_height="wrap_content"/>
+
             <Button
                 android:layout_width="match_parent"
-                android:text="आगे बढ़े"
+                android:text="@string/proceed"
                 android:textSize="15dp"
                 android:layout_marginLeft="25dp"
                 android:id="@+id/bt_online"
@@ -133,19 +134,19 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:text="स्वास्थ्य कार्ड के माध्यम से परामर्श लें"
-                android:textSize="16dp"
-                android:layout_marginLeft="25dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="24dp"
+                android:drawableEnd="@drawable/ic_vector2"
                 android:id="@+id/helth"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
-                android:layout_marginRight="24dp"
-                android:layout_weight="1"
+                android:text="@string/consult_through_health_card"
                 android:gravity="center"
                 android:background="@drawable/border_button"
-                android:drawableRight="@drawable/ic_vector2"
+                android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:layout_height="48dp"/>
+                android:textSize="16sp" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -194,27 +195,23 @@
             android:orientation="horizontal">
 
 
-
-
             <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/icon"
                 android:layout_width="41dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_height="41dp"
                 android:src="@drawable/newcallicon"
                 />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/callb"
                 android:layout_width="18dp"
                 android:background="@drawable/callbutton"
                 android:layout_gravity="center"
-                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
                 android:layout_marginBottom="10dp"
                 android:layout_height="18dp"
                 app:civ_border_width="1dp"
@@ -228,10 +225,9 @@
                 android:id="@+id/drnametitile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:layout_weight="1"
+                android:text="@string/rashmi_will_contact_you"
                 android:textColor="#525151"
-                android:text="डॉ रश्मि कुमार आपको थोड़ी देर में सम्पर्क करेंगे "
+                android:textSize="12sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/icon"
@@ -247,20 +243,15 @@
                 android:layout_marginTop="9dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="#606059"
-                android:text="( MBBS, MD )           |          अनुभव - ७ वर्ष           |           लखनऊ "
+                android:text="@string/mbbs_md"
                 android:layout_toRightOf="@+id/icon"
                 android:layout_below="@+id/drnametitile"
                 />
 
 
-
-
-
         </RelativeLayout>
 
     </RelativeLayout>
-
-
 
 
     <RelativeLayout
@@ -285,11 +276,7 @@
             android:gravity="start"
             android:orientation="horizontal">
 
-
-
-
             <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/icon2"
                 android:layout_width="41dp"
                 android:layout_gravity="center"
@@ -324,7 +311,7 @@
                 android:layout_weight="1"
                 android:layout_centerInParent="true"
                 android:textColor="#525151"
-                android:text="डॉक्टर आपको थोड़ी देर में सम्पर्क करेंगे "
+                android:text="@string/doctor_will_while_you_in_a_while"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/icon2"
                 android:layout_toEndOf="@+id/icon2" />
@@ -334,10 +321,6 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
-
-
-
 
     <View
         android:layout_width="match_parent"

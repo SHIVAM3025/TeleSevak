@@ -14,7 +14,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="कार्ड खरीदें"
+            android:text="@string/buy_card"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:layout_marginLeft="20dp"
@@ -27,7 +27,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="इन केमिस्ट स्टोर्स से खरीदें कार्ड"
+        android:text="@string/buy_card_from_these_chemist_stores"
         android:textColor="#4A86E8"
         android:textSize="20dp"
         android:id="@+id/buytitla"

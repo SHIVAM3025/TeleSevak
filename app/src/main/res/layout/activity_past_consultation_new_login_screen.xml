@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="पुराने परामर्श"
+            android:text="@string/old_consultation"
             android:layout_marginLeft="20dp"
             android:textColor="#ffffff"
             android:textSize="20dp" />
@@ -98,7 +98,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
-        android:text="पुराने परमर्श दखने के लिए फ़ोन नम्बर या कार्ड नम्बर डाले"
+        android:text="@string/enter_the_phone_or_card_number"
         android:textColor="#707070"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/etEnterNumber"
@@ -226,7 +226,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/ibCall"
                 android:layout_toEndOf="@+id/ibCall"
-                android:text="फ़ोन नंबर"
+                android:text="@string/phone_number"
                 android:textColor="#ffffff"
                 android:textSize="14dp" />
 
@@ -260,7 +260,7 @@
                 android:id="@+id/tvCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="कार्ड नंबर"
+                android:text="@string/card_number"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/ivCard"
                 android:layout_toEndOf="@+id/ivCard"
@@ -272,7 +272,6 @@
                 android:layout_centerVertical="true"
                 android:layout_width="50dp"
                 android:layout_height="23dp"
-
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/ic_card_scratch_new"
                 android:tint="#D1CDCD" />
@@ -291,7 +290,7 @@
         android:background="@drawable/light_box"
         android:textSize="14dp"
         android:fontFamily="sans-serif"
-        android:hint="फ़ोन नंबर भरें"
+        android:hint="@string/enter_phone_number"
         android:inputType="number"
         android:paddingStart="20dp"
         android:textAlignment="textStart"
@@ -307,7 +306,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/border_button"
-        android:text="आगे बढ़े"
+        android:text="@string/proceed"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
@@ -330,11 +329,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnContinue"
         app:layout_constraintVertical_bias="0.20 " />
-
-
-
-
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavPastLoginNew"
@@ -363,4 +357,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNavPastLoginNew"
         android:background="@drawable/shadow"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

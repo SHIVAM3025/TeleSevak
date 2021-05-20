@@ -16,10 +16,9 @@
         android:gravity="center"
         android:minLines="3"
         android:layout_centerVertical="true"
-        android:layout_below="@+id/box"
         android:layout_marginTop="50dp"
-        android:textSize="16dp"
-        android:text="Scratch card Already Used"/>
+        android:text="@string/scratch_card_already_used"
+        android:textSize="16sp" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

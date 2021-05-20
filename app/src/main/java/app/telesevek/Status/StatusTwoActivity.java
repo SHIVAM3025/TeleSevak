@@ -1,8 +1,5 @@
 package app.telesevek.Status;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,7 +46,6 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
-import app.telesevek.Buycard;
 import app.telesevek.Models.Doctor;
 import app.telesevek.Models.FirebaseUserModel;
 import app.telesevek.OurDoctor;
@@ -93,8 +92,6 @@ public class StatusTwoActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Card = bundle.getString("card");
 
-
-
         pd = new ProgressDialog(StatusTwoActivity.this);
         pd.setMessage("loading..");
 
@@ -103,7 +100,7 @@ public class StatusTwoActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("Image", MODE_PRIVATE);
         final String phonenumber = prefs.getString("pimageid", "nodata");
 
-        SharedPreferences sharedpreferences = getSharedPreferences(user.appPreferences, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(Doctor.appPreferences, Context.MODE_PRIVATE);
         user.sharedpreferences = sharedpreferences;
 
         currentDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);

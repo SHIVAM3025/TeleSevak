@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
     android:layout_height="match_parent"
     tools:context=".DoctorConfirm">
@@ -18,10 +17,9 @@
         android:gravity="center"
         android:minLines="3"
         android:layout_centerVertical="true"
-        android:layout_below="@+id/box"
         android:layout_marginTop="50dp"
         android:textSize="16dp"
-        android:text="Primary have Used FollowUp Remaining"/>
+        android:text="@string/primary_have_used_followup_remaining" />
 
 
     <Button
@@ -39,7 +37,7 @@
         android:background="@color/fbutton_color_peter_river"
         android:gravity="center"
         android:textAllCaps="false"
-        android:text="11,2020 सितंबर को अंतिम परामर्श देखें" />
+        android:text="@string/see_final_consultation_on_september" />
 
     <Button
         android:layout_width="match_parent"
@@ -56,7 +54,7 @@
         android:id="@+id/followup"
         android:background="@color/fbutton_color_peter_river"
         android:gravity="center"
-        android:text="अंतिम परामर्श के लिए अनुरोध का पालन करें" />
+        android:text="@string/follow_request_for_final_consultation" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

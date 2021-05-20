@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -13,7 +11,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="Send Scan"
+            android:text="@string/send_scan"
             android:textColor="#FFFFFF"
             android:id="@+id/backarrow"
             android:textSize="20dp"
@@ -45,18 +43,18 @@
         android:id="@+id/chooseBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose Image"
+        android:text="@string/choose_image"
         android:layout_marginTop="5dp"
         android:background="@color/colorPrimary"
         android:textColor="#ffffff"
         android:layout_below="@+id/imageID"
         android:onClick="selectImage"/>
-    
+
     <Button
         android:id="@+id/uploadBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload Image"
+        android:text="@string/uplaod_image"
         android:background="@color/colorPrimary"
         android:textColor="#ffffff"
         android:layout_marginTop="5dp"
@@ -68,7 +66,7 @@
         android:id="@+id/SENDSMS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send SMS to No Phone"
+        android:text="@string/send_sms_to_no_phone"
         android:background="@color/colorPrimary"
         android:textColor="#ffffff"
         android:layout_marginTop="5dp"

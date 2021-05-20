@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +15,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="Patient Details"
+            android:text="@string/patient_details"
             android:textColor="#FFFFFF"
             android:id="@+id/backarrow"
             android:textSize="20dp"
@@ -39,7 +38,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="Patient Name:"
+        android:text="@string/patient_name"
         android:layout_weight="1"
         android:textSize="14dp"
         android:layout_marginLeft="10dp"
@@ -68,7 +67,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="Patient Symptoms:"
+            android:text="@string/patient_symptoms"
             android:layout_weight="1"
             android:textSize="14dp"
             android:layout_marginLeft="10dp"
@@ -96,7 +95,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="Patient Phone Number:"
+            android:text="@string/patient_phone_number"
             android:layout_weight="1"
             android:textSize="14dp"
             android:layout_marginLeft="10dp"
@@ -124,7 +123,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="Patient Gender:"
+            android:text="@string/patient_gender"
             android:layout_weight="1"
             android:textSize="14dp"
             android:layout_marginLeft="10dp"
@@ -152,7 +151,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="Patient Age:"
+            android:text="@string/patient_age"
             android:layout_weight="1"
             android:textSize="14dp"
             android:layout_marginLeft="10dp"
@@ -185,7 +184,7 @@
         android:background="@color/fbutton_color_peter_river"
         android:gravity="center"
         android:textAllCaps="false"
-        android:text="Make Audio Call" />
+        android:text="@string/make_audio_call" />
 
     <Button
         android:layout_width="match_parent"
@@ -201,7 +200,7 @@
         android:background="@color/fbutton_color_peter_river"
         android:gravity="center"
         android:textAllCaps="false"
-        android:text="Make Video Call" />
+        android:text="@string/make_video_call" />
 
 
     <Button
@@ -218,7 +217,7 @@
         android:background="@color/fbutton_color_peter_river"
         android:gravity="center"
         android:textAllCaps="false"
-        android:text="Send Scan to Patient" />
+        android:text="@string/send_scan_to_patient" />
 
 
     <Button
@@ -235,7 +234,7 @@
         android:background="@color/fbutton_color_peter_river"
         android:gravity="center"
         android:textAllCaps="false"
-        android:text="Send pdf to Patient" />
+        android:text="@string/send_pdf_to_patient" />
 
 
     <Button
@@ -248,13 +247,10 @@
         android:layout_marginEnd="20dp"
         android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
         android:gravity="center"
-        android:text="show image from patient"
+        android:text="@string/show_image_from_patient"
         android:background="#f0ed93"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:layout_below="@+id/sendpdf"/>
-
-
-
 
 </RelativeLayout>
