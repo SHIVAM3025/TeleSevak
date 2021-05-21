@@ -1,17 +1,10 @@
 package app.telesevek;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -25,40 +18,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
-import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.sinch.android.rtc.SinchError;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-
-import javax.annotation.Nullable;
 
 import app.telesevek.NewSceen.HomePatient;
 import app.telesevek.RemoteConfig.UpdateHelper;
@@ -68,9 +51,6 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.MODIFY_AUDIO_SETTINGS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
-import static android.Manifest.permission.USE_FULL_SCREEN_INTENT;
-import static android.Manifest.permission.WAKE_LOCK;
-import static com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE;
 
 public class LogindcActivity extends AppCompatActivity implements UpdateHelper.OnUpdateCheckListener {
     Button mButton;
@@ -81,28 +61,32 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
     private static final int PERMISSION_REQUEST_CODE = 200;
     private View parentLayout;
     private ProgressDialog mSpinner;
-    int c=0;
+    private static final Integer[] IMAGES = {R.drawable.gc, R.drawable.gb, R.drawable.ga};
     FirebaseFirestore fStore;
-   /* public static String ACCOUNT_SID="account_sid";
-    public static String AUTH_TOKEN="auth_token";*/
-   private final int UPDATE_REQUEST_CODE=1234;
+    /* public static String ACCOUNT_SID="account_sid";
+     public static String AUTH_TOKEN="auth_token";*/
+    private final int UPDATE_REQUEST_CODE = 1234;
     private AppUpdateManager appUpdateManager;
 
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private static final Integer[] IMAGES= {R.drawable.gc,R.drawable.gb,R.drawable.ga};
-    private static final String[] TEXT= {"प्रसिद्द डॉक्टरों से करें परामर्श ","दवाइयों पर भारी बचत ","पूरे परिवार का इलाज कराएँ "};
-    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
-    private ArrayList<String> TEXTArray = new ArrayList<String>();
+    private final ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+    private final ArrayList<String> TEXTArray = new ArrayList<String>();
+    int c = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logindc);
 
-        init();
+        final String[] TEXT = {(String) this.getText(R.string.logindcActivity_first), (String) this.getText(R.string.logindcActivity_second), (String) this.getText(R.string.logindcActivity_third)};
+
+        init(TEXT);
+
         SharedPreferences settings = getApplicationContext().getSharedPreferences("Drselected", Context.MODE_PRIVATE);
         settings.edit().clear().commit();
+
 /*
 
         appUpdateManager = AppUpdateManagerFactory.create(this);
@@ -286,7 +270,7 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {
@@ -480,21 +464,19 @@ public class LogindcActivity extends AppCompatActivity implements UpdateHelper.O
     }
 
 
-    private void init() {
-        for(int i=0;i<IMAGES.length;i++)
-            ImagesArray.add(IMAGES[i]);
+    private void init(String[] TEXT) {
 
-        for(int i=0;i<TEXT.length;i++)
-            TEXTArray.add(TEXT[i]);
+        ImagesArray.addAll(Arrays.asList(IMAGES));
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        TEXTArray.addAll(Arrays.asList(TEXT));
 
-
-        mPager.setAdapter(new SlidingImage_Adapter(LogindcActivity.this,ImagesArray,TEXTArray));
+        mPager = findViewById(R.id.pager);
 
 
-        CirclePageIndicator indicator = (CirclePageIndicator)
-                findViewById(R.id.indicator);
+        mPager.setAdapter(new SlidingImage_Adapter(LogindcActivity.this, ImagesArray, TEXTArray));
+
+
+        CirclePageIndicator indicator = findViewById(R.id.indicator);
 
         indicator.setViewPager(mPager);
 

@@ -14,12 +14,7 @@
         android:layout_height="200dp"
         android:background="@color/fbutton_color_peter_river">
 
-
-
     </RelativeLayout>
-
-
-
 
     <EditText
         android:id="@+id/editTextCode"
@@ -29,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:digits="0123456789"
         android:textColorHint="#707070"
-        android:hint="कृपया ओ टी पि दर्ज कैरे"
+        android:hint="@string/please_type_otp_correctly"
         android:maxLength="6" />
 
 
@@ -59,7 +54,7 @@
         android:id="@+id/buttonSignIn"
         android:layout_marginTop="20dp"
         android:textSize="12dp"
-        android:text="साइन इन करें"
+        android:text="@string/sign_in"
         android:layout_marginRight="75dp"
         android:layout_marginLeft="75dp"
         fbutton:shadowHeight="5dp"

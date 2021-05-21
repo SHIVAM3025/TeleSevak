@@ -1,6 +1,5 @@
 package app.telesevek.Activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +30,6 @@ import javax.annotation.Nullable;
 import app.telesevek.DoctorSideNew;
 import app.telesevek.Models.Doctor;
 import app.telesevek.Models.FirebaseUserModel;
-import app.telesevek.PrePeringVideocallDoctor;
 import app.telesevek.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     String currentDeviceId;
 
     Doctor user = Doctor.getInstance();
-
 
     FirebaseDatabase database;
     DatabaseReference usersRef;
@@ -100,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-            SharedPreferences sharedpreferences = getSharedPreferences(user.appPreferences, Context.MODE_PRIVATE);
+            SharedPreferences sharedpreferences = getSharedPreferences(Doctor.appPreferences, Context.MODE_PRIVATE);
         user.sharedpreferences = sharedpreferences;
 
         currentDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);

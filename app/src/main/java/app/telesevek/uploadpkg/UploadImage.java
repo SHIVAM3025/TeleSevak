@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +36,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import app.telesevek.DoctorCallActivity;
-import app.telesevek.DoctorSideNew;
 import app.telesevek.R;
 import app.telesevek.SendSMSnoPhone;
 import okhttp3.ResponseBody;
@@ -71,6 +69,7 @@ public class UploadImage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadimage);
+
         pd = new ProgressDialog(UploadImage.this);
         pd.setMessage("loading..");
         uploadPicIV = findViewById(R.id.imageID);

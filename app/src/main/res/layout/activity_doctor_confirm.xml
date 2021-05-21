@@ -19,7 +19,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginLeft="20dp"
         android:textSize="20dp"
-        android:text="डॉक्टर ने पुष्टि की"/>
+        android:text="@string/doctor_confirmed" />
 
     <RelativeLayout
         android:layout_width="250dp"
@@ -85,7 +85,7 @@
         android:layout_below="@+id/box"
         android:layout_marginTop="50dp"
         android:textSize="16dp"
-        android:text="कृपया थोड़ी देर वेट करे डॉक्टर दुरा आपको वीडियो या एडीओ कॉल आ जाएगा "/>
+        android:text="@string/please_wait_for_a_while_doctor_dura_you_will_get_a_video_or_an_ado_call" />
 
 
     <!--<Button
@@ -113,7 +113,7 @@
         android:layout_marginLeft="200dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/ViewPastConsultations"
-        android:text="डॉक्टर को स्कैन भेजें"
+        android:text="@string/send_scan_to_doctor"
         fbutton:shadowHeight="5dp"
         fbutton:cornerRadius="5dp"
         />

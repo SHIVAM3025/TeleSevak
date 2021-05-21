@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -26,15 +25,10 @@ import app.telesevek.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService  {
 
-
-
-
-
     private static final String TAG = "MyFirebaseMsgService";
     Intent intent;
     String CallID;
     String username;
-
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

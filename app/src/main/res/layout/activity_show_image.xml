@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,7 +28,7 @@
             android:layout_marginTop="-7dp"
             android:layout_marginEnd="196dp"
             android:layout_marginBottom="19dp"
-            android:text="परामर्श का विवरण"
+            android:text="@string/description_of_consultation"
             android:textColor="#FFFFFF"
             android:textSize="22sp" />
 
@@ -48,7 +47,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="7dp"
             android:layout_marginEnd="16dp"
-            android:text="डॉक्टर के पास छवि भेजें"
+            android:text="@string/send_image_to_doctor"
             android:textColor="#000000"
             android:textSize="14sp" />
 
@@ -60,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="मरीज का नाम"
+        android:text="@string/patient_name"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="डॉक्टर का नाम"
+        android:text="@string/doctor_name"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="दिनांक"
+        android:text="@string/date"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -257,7 +256,7 @@
         android:layout_height="49dp"
         android:textStyle="bold"
         android:background="@drawable/btborder"
-        android:text="प्रिस्क्रिप्शन डाउनलोड  करे "
+        android:text="@string/download_prescription"
         android:textColor="@color/colorPrimary"
         android:layout_marginBottom="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -272,7 +271,7 @@
         android:layout_height="49dp"
         android:textStyle="bold"
         android:background="@drawable/border_button"
-        android:text="फॉलोअप के लिए निवेदन करें"
+        android:text="@string/request_follow_up"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -19,7 +19,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -30,10 +29,7 @@ import java.util.concurrent.TimeUnit;
 import app.telesevek.PhoneAuthDoctor.MainActivity;
 import app.telesevek.R;
 
-public class CallNotificationService extends Service implements MediaPlayer.OnPreparedListener
-
-    {
-
+public class CallNotificationService extends Service implements MediaPlayer.OnPreparedListener {
 
     public static final String NOTIFICATION_CHANNEL_ID = "com.sagar.chatdemo";
     private static final int NOTIFICATION_ID = 22011999;
@@ -42,11 +38,11 @@ public class CallNotificationService extends Service implements MediaPlayer.OnPr
     NotificationManager mNotificationManager;
 
 
-        Vibrator mvibrator;
-        AudioManager audioManager;
-        AudioAttributes  playbackAttributes;
-        private Handler handler;
-        AudioManager.OnAudioFocusChangeListener afChangeListener;
+    Vibrator mvibrator;
+    AudioManager audioManager;
+    AudioAttributes playbackAttributes;
+    private Handler handler;
+    AudioManager.OnAudioFocusChangeListener afChangeListener;
         private boolean status = false;
         private boolean vstatus = false;
 

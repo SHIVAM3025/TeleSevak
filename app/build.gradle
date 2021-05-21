@@ -16,6 +16,7 @@ android {
             keyPassword 'Rish@key99'
         }*/
     }
+    compileOptions.encoding = 'ISO-8859-1'
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
     defaultConfig {

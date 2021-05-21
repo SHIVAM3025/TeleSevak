@@ -17,7 +17,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="हमारे डॉक्टर"
+            android:text="@string/our_doctor"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:layout_marginLeft="20dp"

@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="परामर्श लें"
+        android:title="@string/consult"
         android:icon="@drawable/ic_consult_new_new"
         android:id="@+id/consultDoctor"/>
 
     <item
-        android:title="पुराने परामर्श"
+        android:title="@string/old_consultation"
         android:icon="@drawable/ic_documentation_new_new"
         android:id="@+id/pastConsult"/>
 
@@ -17,7 +17,7 @@
         android:id="@+id/buyCard"/>-->
 
     <item
-        android:title="हमारे डॉक्टर"
+        android:title="@string/our_doctor"
         android:icon="@drawable/ic_ourdoctors_new"
         android:id="@+id/ourDoctors"/>
 

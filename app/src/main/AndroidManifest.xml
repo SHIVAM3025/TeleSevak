@@ -30,7 +30,10 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewSceen.HomePatient"></activity>
+        <activity android:name=".LanguageActivity">
+
+        </activity>
+        <activity android:name=".NewSceen.HomePatient" />
         <activity android:name=".PrePeringVideocall" />
         <activity
             android:name=".SpecialDoctors"
@@ -204,11 +207,14 @@
             android:screenOrientation="portrait" />
         <activity android:name=".NewDoctorWillCallOffiline" />
         <activity android:name=".SplachScreen">
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".AddPatiant"
@@ -228,8 +234,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Services.MyFirebaseMessagingService"
-            >
+        <service android:name=".Services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -239,7 +244,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
